@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors Used in Tailwind Config */
+  
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    @apply min-h-screen font-normal antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    -webkit-text-size-adjust: 100%;
+    -ms-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern";
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.75rem;
+    background: #888;
+  }
+  img {
+    content-visibility: auto;
+  }
+  a {
+    @apply hover:cursor-pointer;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-heading;
+  }
+
+}
+
+@layer components {
+  .page {
+    @apply relative min-h-screen scroll-smooth antialiased;
+  }
+
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: calc(env(safe-area-inset-top));
+  }
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+  }
+}
