@@ -20,6 +20,8 @@
 # typescript
 *.tsbuildinfo
 
+pnpm-lock.yaml
+
 .DS_Store
 .__MacOSX
 ._*

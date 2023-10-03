@@ -5,6 +5,7 @@ const Home: NextPage = () => {
     <div className="flex flex-col gap-12">
       {/*  */}
       {/*  */}
+      <h1 className="text-4xl font-bold">Home</h1>
     </div>
   );
 };
