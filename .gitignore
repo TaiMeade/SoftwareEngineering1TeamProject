@@ -1,3 +1,25 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+/.vscode/settings.json
+/*.code-workspace
+
+# local env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
 .DS_Store
 .__MacOSX
 ._*
