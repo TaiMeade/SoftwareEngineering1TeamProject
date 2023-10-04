@@ -5,17 +5,29 @@ const Navbar: React.FC = () => {
   return (
     <nav
       role="navigation"
-      className="relative flex h-16 items-center justify-between bg-zinc-400 px-4 font-mono text-black shadow-sm"
+      className="relative flex h-16 items-center justify-between gap-4 bg-gray-300 px-4 text-black shadow-sm"
     >
-      <h1>Navbar</h1>
+      <h1 className="flex-1 font-medium">
+        <Link href="/" className="hover:underline">
+          Recipe App Name
+        </Link>
+      </h1>
 
       <ul className="flex flex-row gap-4">
         {NAV_ITEMS.map((item) => (
-          <Link key={item.label} href={item.href}>
-            <li>{item.label}</li>
-          </Link>
+          <li key={item.label} className="hover:text-gray-700 hover:underline">
+            <Link href={item.href}>{item.label}</Link>
+          </li>
         ))}
       </ul>
+
+      <div className="flex flex-col items-center justify-between gap-4">
+        {/* If Signed in, show avatar */}
+        {/* If not signed in, show sign in button */}
+        <button className="rounded-md bg-zinc-600 px-4 py-2 text-white shadow-sm">
+          Sign In
+        </button>
+      </div>
     </nav>
   );
 };
