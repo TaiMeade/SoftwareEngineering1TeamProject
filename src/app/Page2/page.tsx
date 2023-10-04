@@ -2,22 +2,21 @@ import { type Metadata, type NextPage } from "next";
 import ExampleComponent from "~/components/Example";
 import Link from 'next/link';
 
-
-const Home: NextPage = () => {
+const Page2: NextPage = () => {
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">Home</h1>
-      <ExampleComponent />
-
+      <h1 className="text-4xl font-bold">Homee</h1>
 
       <h2>
-        <Link href="/Page2">To Example page</Link>
+        <Link href="/">Back to home</Link>
       </h2>
+
+      <ExampleComponent />
     </div>
   );
 };
 
-export default Home;
+export default Page2;
 
 export const metadata: Metadata = {
   title: "Recipe App",
