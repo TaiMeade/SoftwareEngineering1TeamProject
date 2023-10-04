@@ -20,11 +20,6 @@ export default {
         heading: ["var(--font-poppins)", ...fontFamily.sans],
       },
       colors: {
-        "qhi-accent": "#162E64",
-        "qhi-bg": "#f7f7f7",
-        "qhi-secondary": "rgb(39, 39, 42)",
-        "qhi-bg-alt": "#1e293b",
-        "qhi-text": "#121212",
         "qhi-nav": "rgb(245, 245, 245)",
       },
     },

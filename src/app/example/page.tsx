@@ -1,7 +1,7 @@
 import { type Metadata, type NextPage } from "next";
 import ExampleComponent from "~/components/Example";
 
-const Home: NextPage = () => {
+const ExamplePage: NextPage = () => {
   return (
     <div className="flex flex-col gap-12">
       <h1 className="text-4xl font-bold">Home</h1>
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default ExamplePage;
 
 export const metadata: Metadata = {
   title: "Recipe App",
