@@ -1,7 +1,12 @@
 import Link from "next/link";
+import { getAuth } from "~/server/session";
 import { NAV_ITEMS } from "~/utils";
+import Avatar from "./auth/Avatar";
+import SignInButton from "./auth/SignInButton";
 
-const Navbar: React.FC = () => {
+const Navbar = async () => {
+  const session = await getAuth();
+
   return (
     <nav
       role="navigation"
@@ -24,9 +29,8 @@ const Navbar: React.FC = () => {
       <div className="flex flex-col items-center justify-between gap-4">
         {/* If Signed in, show avatar */}
         {/* If not signed in, show sign in button */}
-        <button className="rounded-md bg-zinc-600 px-4 py-2 text-white shadow-sm">
-          Sign In
-        </button>
+        {/* @ts-expect-error react server comp */}
+        {session?.user?.id ? <Avatar /> : <SignInButton />}
       </div>
     </nav>
   );

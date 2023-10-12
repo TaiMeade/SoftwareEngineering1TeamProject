@@ -27,6 +27,13 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT ?? "",
       clientSecret: env.GOOGLE_SECRET ?? "",
+      authorization: {
+        params: {
+          // Image, profile, email
+          scope:
+            "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+        },
+      },
     }),
   ],
   logger: {
