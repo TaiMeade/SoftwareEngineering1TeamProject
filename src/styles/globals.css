@@ -4,7 +4,12 @@
 
 :root {
   /* Colors Used in Tailwind Config */
-  
+  --icook-nav: rgb(245, 245, 245);
+  --icook-primary: #ff5722;
+  --icook-secondary: #2196f3;
+  --icook-accent: #4caf50;
+  --icook-text: #333;
+  --icook-background: #f5f5f5;
 }
 
 @layer base {
@@ -14,7 +19,7 @@
     box-sizing: border-box;
   }
   body {
-    @apply min-h-screen font-normal antialiased;
+    @apply min-h-screen bg-icook-background font-normal text-icook-text antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
@@ -39,14 +44,12 @@
   h5 {
     @apply font-heading;
   }
-
 }
 
 @layer components {
   .page {
-    @apply relative min-h-screen scroll-smooth antialiased;
+    @apply container relative min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 text-icook-text antialiased;
   }
-
 }
 
 @layer utilities {

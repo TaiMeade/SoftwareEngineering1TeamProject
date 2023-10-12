@@ -10,7 +10,7 @@ const Navbar = async () => {
   return (
     <nav
       role="navigation"
-      className="relative flex h-16 items-center justify-between gap-4 bg-gray-300 px-4 text-black shadow-sm"
+      className="relative flex h-16 items-center justify-between gap-4 border-b border-icook-text bg-icook-nav px-4 text-black"
     >
       <h1 className="flex-1 font-medium">
         <Link href="/" className="hover:underline">

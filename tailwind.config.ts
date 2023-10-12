@@ -10,17 +10,19 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      container: {
-        center: true,
-        // padding: "2rem",
-      },
+      container: { center: true },
       fontFamily: {
         sans: ["var(--font-noto)", ...fontFamily.sans],
         body: ["var(--font-noto)", ...fontFamily.sans],
         heading: ["var(--font-poppins)", ...fontFamily.sans],
       },
       colors: {
-        "qhi-nav": "rgb(245, 245, 245)",
+        "icook-nav": "rgb(245, 245, 245)",
+        "icook-primary": "#FF5722",
+        "icook-secondary": "#2196F3",
+        "icook-accent": "#4CAF50",
+        "icook-text": "#333",
+        "icook-background": "#F5F5F5",
       },
     },
   },
