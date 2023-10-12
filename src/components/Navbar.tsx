@@ -29,7 +29,6 @@ const Navbar = async () => {
       <div className="flex flex-col items-center justify-between gap-4">
         {/* If Signed in, show avatar */}
         {/* If not signed in, show sign in button */}
-        {/* @ts-expect-error react server comp */}
         {session?.user?.id ? <Avatar /> : <SignInButton />}
       </div>
     </nav>

@@ -33,7 +33,8 @@
     "src/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "tailwind.config.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

@@ -30,7 +30,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           poppins.variable,
         )}
       >
-        {/* @ts-expect-error react-server-component */}
         <Navbar />
         <main className="page">{children}</main>
         {/* Footer */}
