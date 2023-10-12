@@ -65,6 +65,7 @@ model User {
 
   // * Recipe App
   username String? @unique
+  password String?
 
   // role          Role      @default(USER)
   role String @default("USER")
