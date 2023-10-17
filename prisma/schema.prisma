@@ -7,12 +7,99 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql" // sqlite
+  provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-// Necessary for Next auth
+// * Recipe App Models
+
+// * Tags for recipe model
+enum Tag {
+  BREAKFAST
+  LUNCH
+  DINNER
+  DESSERT
+  SNACK
+  DRINK
+  OTHER
+}
+
+model Recipe {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  image       String?
+  // * Prisma mysql doesn't support array types, so we use Json instead
+  ingredients Json?
+  directions  Json?
+  tags        Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // * Relationships
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+
+  // * Users that have saved this recipe
+  savedBy User[] @relation("SavedRecipes")
+
+  @@index([authorId])
+}
+
+// * Comments for recipe model
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // * Relationships
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([recipeId])
+}
+
+// * All Models Below Are Necessary for Next auth
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  // * Recipe App
+  username String? @unique
+  password String?
+  // role String @default("USER")
+  role     Role    @default(USER)
+
+  // * Personal Info
+  bio          String?
+  favoriteFood String?
+  favoriteTag  Tag?
+
+  // * Relationships
+  recipes  Recipe[]
+  comments Comment[]
+
+  // * Users Saved / Favorited Recipes
+  savedRecipes Recipe[] @relation("SavedRecipes")
+
+  @@index([username])
+  @@index([email])
+}
+
 model Account {
   id                String  @id @default(cuid())
   type              String
@@ -47,28 +134,9 @@ model Session {
   @@index([userId], name: "sessionUserId")
 }
 
-// enum Role {
-//   USER
-//   ADMIN
-// }
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-
-  // * Recipe App
-  username String? @unique
-  password String?
-
-  // role          Role      @default(USER)
-  role String @default("USER")
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {

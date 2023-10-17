@@ -7,9 +7,7 @@ const Page2: NextPage = () => {
     <div className="flex flex-col gap-12">
       <h1 className="text-4xl font-bold">Page 2</h1>
 
-      <h2>
-        <Link href="/">Back to home</Link>
-      </h2>
+      <Link href="/">Back to home</Link>
 
       <ExampleComponent />
     </div>
@@ -19,6 +17,5 @@ const Page2: NextPage = () => {
 export default Page2;
 
 export const metadata: Metadata = {
-  title: "Recipe App",
-  description: "Recipe App Description",
+  title: "iCook | Page 2",
 };

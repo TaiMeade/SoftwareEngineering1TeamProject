@@ -2,7 +2,10 @@ export const NAV_ITEMS: NavItemProps[] = [
   // Example Navbar Items
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Recipes", href: "/recipes" },
+  { label: "Profile", href: "/profile" },
+  { label: "Example", href: "/example" },
+  { label: "Page2", href: "/Page2" },
 ];
 
 interface Omit {

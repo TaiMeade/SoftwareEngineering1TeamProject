@@ -8,9 +8,20 @@ const Home: NextPage = () => {
       <h1 className="text-4xl font-bold">Home</h1>
       <ExampleComponent />
 
-      <h2>
-        <Link href="/Page2">To Example page</Link>
-      </h2>
+      <div className="flex flex-col items-start justify-center gap-2">
+        <Link href="/login" className="link">
+          Login page
+        </Link>
+        <Link href="/logout" className="link">
+          Logout page
+        </Link>
+        <Link href="/Page2" className="link">
+          Example page
+        </Link>
+        <Link href="/profile" className="link">
+          My Profile page
+        </Link>
+      </div>
     </div>
   );
 };
@@ -18,6 +29,5 @@ const Home: NextPage = () => {
 export default Home;
 
 export const metadata: Metadata = {
-  title: "Recipe App",
-  description: "Recipe App Description",
+  title: "iCook",
 };

@@ -10,6 +10,7 @@
   --icook-accent: #4caf50;
   --icook-text: #333;
   --icook-background: #f5f5f5;
+  --navbar-height: 4rem;
 }
 
 @layer base {
@@ -41,14 +42,18 @@
   h2,
   h3,
   h4,
-  h5 {
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
 
 @layer components {
   .page {
-    @apply container relative min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 text-icook-text antialiased;
+    @apply container relative min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
+  }
+  .link {
+    @apply text-icook-text/70 transition-all duration-75 ease-in-out hover:text-icook-text hover:underline;
   }
 }
 

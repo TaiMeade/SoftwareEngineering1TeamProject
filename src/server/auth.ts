@@ -1,15 +1,14 @@
 import type { AuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
-import GoogleProvider from "next-auth/providers/google";
-
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
-// https://next-auth.js.org/configuration/nextjs
+import GoogleProvider from "next-auth/providers/google";
+
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
+ * @see https://next-auth.js.org/configuration/nextjs
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: AuthOptions = {
@@ -29,7 +28,6 @@ export const authOptions: AuthOptions = {
       clientSecret: env.GOOGLE_SECRET ?? "",
       authorization: {
         params: {
-          // Image, profile, email
           scope:
             "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
         },
@@ -46,8 +44,8 @@ export const authOptions: AuthOptions = {
   },
   pages: { error: "/" },
   theme: {
-    // brandColor: "#ff6b6b",
-    // buttonText: "#eaeaea",
+    brandColor: "var(--icook-primary)",
+    buttonText: "var(--icook-text)",
     colorScheme: "dark",
     // logo: "/android-chrome-192x192.png",
   },

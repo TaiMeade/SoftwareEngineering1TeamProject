@@ -13,6 +13,5 @@ const ExamplePage: NextPage = () => {
 export default ExamplePage;
 
 export const metadata: Metadata = {
-  title: "Recipe App",
-  description: "Recipe App Description",
+  title: "iCook | Example",
 };

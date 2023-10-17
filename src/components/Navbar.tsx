@@ -10,11 +10,11 @@ const Navbar = async () => {
   return (
     <nav
       role="navigation"
-      className="relative flex h-16 items-center justify-between gap-4 border-b border-icook-text bg-icook-nav px-4 text-black"
+      className="fixed z-10 flex h-[var(--navbar-height)] w-full items-center justify-between gap-4 border-b border-icook-text bg-icook-nav px-4 text-black"
     >
       <h1 className="flex-1 font-medium">
         <Link href="/" className="hover:underline">
-          Recipe App Name
+          iCook
         </Link>
       </h1>
 

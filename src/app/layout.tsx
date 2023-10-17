@@ -39,7 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 }
 
 export const metadata: Metadata = {
-  title: "Recipe App",
-  description: "Recipe App Description",
+  title: "iCook",
+  description: "iCook Description",
   // image: "/assets/og-image.png",
 };
