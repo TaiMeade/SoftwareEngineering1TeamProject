@@ -4,12 +4,11 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
-    // DATABASE_URL: z.string().min(1),
-    DATABASE_URL: z.string().optional().default("file:./db.sqlite"),
+    DATABASE_URL: z.string().min(1),
     NEXTAUTH_URL: z.string().optional().default("http://localhost:3000"),
     NEXTAUTH_SECRET: z.string().optional(),
-    GOOGLE_CLIENT: z.string().optional(),
-    GOOGLE_SECRET: z.string().optional(),
+    GOOGLE_CLIENT: z.string().min(1),
+    GOOGLE_SECRET: z.string().min(1),
   },
   client: {
     // NEXT_PUBLIC_GA_ID: z.string().min(1),
