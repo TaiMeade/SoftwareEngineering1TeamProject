@@ -34,6 +34,7 @@ const UserProfilePage: NextPage = async () => {
           </h2>
         </div>
         <Link href="/">Go Home</Link>
+        <Link href="/editProfile">Edit Profile</Link>
         {/* Link to creating a new recipe "/createRecipe" */}
         <h1 className="text-2xl font-bold">Create a New Recipe</h1>
         <Link href="/createRecipe">
