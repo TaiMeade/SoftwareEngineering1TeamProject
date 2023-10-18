@@ -1,5 +1,5 @@
 import { type Metadata, type NextPage } from "next";
-import NotFound from "~/components/recipe/NotFound";
+import UserNotFound from "~/components/profile/UserNotFound";
 import { prisma } from "~/server/db";
 
 interface RecipesPageProps {
@@ -14,14 +14,17 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
 
   if (!id || id.length < 1) {
-    // Need new not found
-    return <NotFound />; // notFound();
+    return <UserNotFound />; // notFound();
   }
 
   const user = await prisma.user.findUnique({
     where: { id },
     include: { recipes: { take: 5 } },
   });
+
+  if (!user) {
+    return <UserNotFound />; // notFound();
+  }
 
   return (
     <div className="flex flex-col gap-12">
