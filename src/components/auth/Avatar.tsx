@@ -20,7 +20,7 @@ const Avatar = async () => {
               className="h-10 w-10 rounded-full border border-slate-600"
             />
           ) : (
-            <FakeAvatar />
+            <FakeAvatar className="" />
           )}
           {/* </button> */}
         </div>

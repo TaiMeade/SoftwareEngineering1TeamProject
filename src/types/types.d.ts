@@ -9,6 +9,15 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
+interface PageProps {
+  params: {
+    [key: string]: string | undefined; // string[]
+  };
+  searchParams: {
+    [key: string]: string | undefined; // string[]
+  };
+}
+
 interface Ingredient {
   name: string;
   quantity: number;

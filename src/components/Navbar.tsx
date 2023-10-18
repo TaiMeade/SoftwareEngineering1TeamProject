@@ -3,6 +3,7 @@ import { getAuth } from "~/server/session";
 import { NAV_ITEMS } from "~/utils";
 import Avatar from "./auth/Avatar";
 import SignInButton from "./auth/SignInButton";
+import SearchBar from "./search/SearchBar";
 
 const Navbar = async () => {
   const session = await getAuth();
@@ -18,7 +19,10 @@ const Navbar = async () => {
         </Link>
       </h1>
 
-      <ul className="flex flex-row gap-4">
+      <ul className="flex flex-row items-center gap-4">
+        <li className="hidden md:block">
+          <SearchBar />
+        </li>
         {NAV_ITEMS.map((item) => (
           <li key={item.label} className="hover:text-gray-700 hover:underline">
             <Link href={item.href}>{item.label}</Link>
