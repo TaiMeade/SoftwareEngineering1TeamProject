@@ -8,3 +8,14 @@ interface NavItemProps {
 interface RootLayoutProps {
   children: React.ReactNode;
 }
+
+interface Ingredient {
+  name: string;
+  quantity: number;
+  unit: string;
+}
+
+// (keyof typeof Tag)[]
+type Tag = string[];
+
+type Directions = string[];

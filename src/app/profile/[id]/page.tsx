@@ -1,8 +1,6 @@
 import { type Metadata, type NextPage } from "next";
-import { prisma } from "~/server/db";
-
 import NotFound from "~/components/recipe/NotFound";
-import RecipePage from "~/components/recipe/RecipePage";
+import { prisma } from "~/server/db";
 
 interface RecipesPageProps {
   params: { id: string };
@@ -16,23 +14,19 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
 
   if (!id || id.length < 1) {
+    // Need new not found
     return <NotFound />; // notFound();
   }
 
-  const recipe = await prisma.recipe.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id },
-    include: { author: { select: { name: true } }, comments: true },
+    include: { recipes: { take: 5 } },
   });
-
-  if (!recipe) {
-    return <NotFound />; // notFound();
-  }
 
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">Recipe Page</h1>
-
-      <RecipePage recipe={recipe} />
+      <h1 className="text-4xl font-bold">User {id} Page</h1>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </div>
   );
 };
@@ -40,5 +34,5 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
 export default RecipesPage;
 
 export const metadata: Metadata = {
-  title: "iCook | Recipe",
+  title: "iCook | User Page",
 };
