@@ -39,7 +39,7 @@ const UserProfilePage: NextPage = async () => {
               alt="User Profile Picture"
               width={100}
               height={100}
-              className="rounded-full object-cover transition-all duration-300 ease-in-out hover:scale-110"
+              className="rounded-full border-4 border-icook-primary object-cover transition-all duration-300 ease-in-out hover:scale-110"
             />
           )}
           <h2 className="text-3xl font-medium">
@@ -48,6 +48,14 @@ const UserProfilePage: NextPage = async () => {
         </div>
 
         <Link href="/">Go Home</Link>
+
+        {/* Link to creating a new recipe "/createRecipe" */}
+        <h1 className="text-2xl font-bold">Create a New Recipe</h1>
+        <Link href="/createRecipe">
+          <button className="h-64 w-64 rounded bg-gray-400 text-3xl font-bold text-gray-300 text-opacity-60 hover:bg-gray-500">
+            +
+          </button>
+        </Link>
       </div>
     </div>
   );

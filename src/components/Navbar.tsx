@@ -12,8 +12,8 @@ const Navbar = async () => {
       role="navigation"
       className="fixed z-10 flex h-[var(--navbar-height)] w-full items-center justify-between gap-4 border-b border-icook-text bg-icook-nav px-4 text-black"
     >
-      <h1 className="flex-1 font-medium">
-        <Link href="/" className="hover:underline">
+      <h1 className="flex-1">
+        <Link href="/" className="ml-2 text-4xl hover:underline">
           iCook
         </Link>
       </h1>
