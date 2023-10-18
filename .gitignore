@@ -21,7 +21,9 @@
 *.tsbuildinfo
 
 pnpm-lock.yaml
+package-lock.json
 
 .DS_Store
 .__MacOSX
 ._*
+
