@@ -8,15 +8,9 @@ interface ModifyUserImageProps {
 }
 
 const ModifyUserImage: React.FC<ModifyUserImageProps> = ({ userImage }) => {
-  // const [success, setSuccess] = useState<boolean>(false);
-
   /**
    * @see https://docs.uploadthing.com/api-reference/react#useuploadthing
    */
-  // const { startUpload, isUploading } = useUploadThing("imageUploader");
-
-  // Original image
-  // https://lh3.googleusercontent.com/a/ACg8ocK7FQVEQihFY9aoikiQUOrjPz1sxNRyfPCHZrdjwU-SPPE=s96-c
 
   return (
     <div className="flex flex-col gap-4">
