@@ -1,9 +1,11 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
 import ProfileLayout from "~/components/auth/ProfileLayout";
+import ProfileSideBar from "~/components/auth/ProfileSideBar";
+import UpdateUserForm from "~/components/profile/UpdateUserForm";
 import { getAuth } from "~/server/session";
 
-const UserSavedRecipesPage: NextPage = async () => {
+const EditProfilePage: NextPage = async () => {
   const session = await getAuth();
 
   // * If the user is not logged in, redirect them to the login page.
@@ -13,15 +15,18 @@ const UserSavedRecipesPage: NextPage = async () => {
 
   return (
     <ProfileLayout>
-      <div className="flex flex-col gap-12 pt-4">
-        <h1 className="text-4xl font-bold">User Saved Recipes Page</h1>
-      </div>
+      <UpdateUserForm
+        bio={session.user.bio}
+        userImage={session.user.image}
+        username={session.user.username}
+        password={"password"}
+      />
     </ProfileLayout>
   );
 };
 
-export default UserSavedRecipesPage;
+export default EditProfilePage;
 
 export const metadata: Metadata = {
-  title: "iCook | Saved Recipes",
+  title: "iCook | Edit Profile",
 };

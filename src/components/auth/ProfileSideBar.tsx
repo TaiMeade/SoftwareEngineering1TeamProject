@@ -9,6 +9,12 @@ const ProfileSideBar: React.FC = () => {
       <Link href="/profile/saved" className="link">
         Saved Recipes
       </Link>
+      <Link href="/profile/create" className="link">
+        Create Recipe
+      </Link>
+      <Link href="/profile/edit" className="link">
+        Edit Profile
+      </Link>
       <Link href="/profile/settings" className="link">
         Settings
       </Link>
