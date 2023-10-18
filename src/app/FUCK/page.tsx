@@ -1,13 +1,29 @@
 import { type Metadata, type NextPage } from "next";
+import { prisma } from "~/server/db";
 // import Link from "next/link";
 // import Image from "next/image";
 
 // import { getAuth } from "~/server/session";
 
 const editProfile: NextPage = () => {
+
+  const usr = await prisma.user.findFirst
+  ({
+    where: {
+      email: {
+        contains: 'fmutert',
+      },
+    },
+    take: 1,
+  })
+  
+  let bitch = usr?.name;
+
+  }
+
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">Create your recipe!</h1>
+      <h1 className="text-4xl font-bold">bitch </h1>
       <form className="">
         {/* This section is for inserting the title */}
         <h1 className="flex-fit mb-2 text-2xl font-bold">Title</h1>
