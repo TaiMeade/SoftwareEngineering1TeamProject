@@ -66,3 +66,22 @@ export const parseIngredients = (_ingredients: JsonValue) => {
   }
   return [data];
 };
+
+export const updateUserSchema = z.object({
+  bio: z
+    .string()
+    .max(200, {
+      message: "Bio must be less than 200 characters",
+    })
+    .optional(),
+  username: z.string().min(3).max(20).optional(),
+  password: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters",
+    })
+    .max(20, {
+      message: "Password must be less than 20 characters",
+    })
+    .optional(),
+});

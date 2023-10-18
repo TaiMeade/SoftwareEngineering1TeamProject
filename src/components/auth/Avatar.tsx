@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getAuth } from "~/server/session";
+import FakeAvatar from "../FakeAvatar";
 
 const Avatar = async () => {
   const session = await getAuth();
+
   return (
     <div className="flex flex-col items-center justify-between gap-4">
       <Link href="/profile">
@@ -11,25 +13,14 @@ const Avatar = async () => {
           {/* <button id="menu-button" aria-expanded="false" aria-haspopup="false"> */}
           {session?.user?.image ? (
             <Image
-              src={session?.user?.image}
+              src={session.user.image}
               alt="avatar"
-              width={55}
-              height={55}
-              className="h-15 w-15 rounded-full border-2 border-icook-primary"
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full border border-slate-600"
             />
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 rounded-full"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10 11a3 3 0 100-6 3 3 0 000 6zm0 1c-2.67 0-8 1.34-8 4v1h16v-1c0-2.66-5.33-4-8-4z"
-              />
-            </svg>
+            <FakeAvatar />
           )}
           {/* </button> */}
         </div>

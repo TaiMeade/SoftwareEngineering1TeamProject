@@ -1,7 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import ProfileLayout from "~/components/auth/ProfileLayout";
-import UpdateUserForm from "~/components/profile/UpdateUserForm";
+import AuthLayout from "~/components/auth/AuthLayout";
 import { getAuth } from "~/server/session";
 
 const UserSettingsPage: NextPage = async () => {
@@ -13,14 +12,11 @@ const UserSettingsPage: NextPage = async () => {
   }
 
   return (
-    <ProfileLayout>
-      <UpdateUserForm
-        bio={session.user.bio}
-        userImage={session.user.image}
-        username={session.user.username}
-        password={"password"}
-      />
-    </ProfileLayout>
+    <AuthLayout>
+      <h1 className="text-4xl font-bold">User Settings Page</h1>
+
+      {/* Dark Mode?, Email Notifications?, and Privacy. */}
+    </AuthLayout>
   );
 };
 

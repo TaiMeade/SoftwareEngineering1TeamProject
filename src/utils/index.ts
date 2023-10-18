@@ -4,8 +4,6 @@ export const NAV_ITEMS: NavItemProps[] = [
   { label: "About", href: "/about" },
   { label: "Recipes", href: "/recipes" },
   { label: "Profile", href: "/profile" },
-  { label: "Example", href: "/example" },
-  { label: "Page2", href: "/Page2" },
 ];
 
 interface Omit {

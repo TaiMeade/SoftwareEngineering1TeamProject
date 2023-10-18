@@ -3,7 +3,9 @@ import { type Metadata } from "next";
 
 import { cn } from "~/utils/tw";
 import { Poppins, Noto_Sans } from "next/font/google";
+
 import Navbar from "~/components/Navbar";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   display: "swap",
@@ -31,7 +33,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <Navbar />
-        <main className="page">{children}</main>
+        <main className="page">
+          {children}
+          <Toaster />
+        </main>
         {/* Footer */}
       </body>
     </html>

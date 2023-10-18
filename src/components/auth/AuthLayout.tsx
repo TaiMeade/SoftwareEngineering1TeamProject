@@ -4,13 +4,13 @@ interface ProfileLayoutProps {
   children?: React.ReactNode;
 }
 
-const ProfileLayout: React.FC<ProfileLayoutProps> = ({ children }) => {
+const AuthLayout: React.FC<ProfileLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-row items-start gap-12">
       <ProfileSideBar />
-      {children}
+      <div className="flex flex-col gap-12 pt-4">{children}</div>
     </div>
   );
 };
 
-export default ProfileLayout;
+export default AuthLayout;

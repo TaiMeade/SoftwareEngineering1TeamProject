@@ -1,7 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import ProfileLayout from "~/components/auth/ProfileLayout";
-import ProfileSideBar from "~/components/auth/ProfileSideBar";
+import AuthLayout from "~/components/auth/AuthLayout";
 import UpdateUserForm from "~/components/profile/UpdateUserForm";
 import { getAuth } from "~/server/session";
 
@@ -14,14 +13,15 @@ const EditProfilePage: NextPage = async () => {
   }
 
   return (
-    <ProfileLayout>
+    <AuthLayout>
+      <h1 className="text-4xl font-bold">Edit Profile Page</h1>
       <UpdateUserForm
         bio={session.user.bio}
         userImage={session.user.image}
         username={session.user.username}
         password={"password"}
       />
-    </ProfileLayout>
+    </AuthLayout>
   );
 };
 

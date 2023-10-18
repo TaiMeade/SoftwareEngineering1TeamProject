@@ -101,7 +101,7 @@ model User {
   role     Role    @default(USER)
 
   // * Personal Info
-  bio          String?
+  bio          String? @db.Text
   favoriteFood String?
   favoriteTag  Tag?
 

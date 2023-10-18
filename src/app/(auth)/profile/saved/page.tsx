@@ -1,6 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import ProfileLayout from "~/components/auth/ProfileLayout";
+import AuthLayout from "~/components/auth/AuthLayout";
 import { getAuth } from "~/server/session";
 
 const UserSavedRecipesPage: NextPage = async () => {
@@ -12,11 +12,9 @@ const UserSavedRecipesPage: NextPage = async () => {
   }
 
   return (
-    <ProfileLayout>
-      <div className="flex flex-col gap-12 pt-4">
-        <h1 className="text-4xl font-bold">User Saved Recipes Page</h1>
-      </div>
-    </ProfileLayout>
+    <AuthLayout>
+      <h1 className="text-4xl font-bold">User Saved Recipes Page</h1>
+    </AuthLayout>
   );
 };
 
