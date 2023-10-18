@@ -1,6 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import ProfileSideBar from "~/components/auth/ProfileSideBar";
+import ProfileLayout from "~/components/auth/ProfileLayout";
 import UpdateUserForm from "~/components/profile/UpdateUserForm";
 import { getAuth } from "~/server/session";
 
@@ -13,21 +13,19 @@ const UserSettingsPage: NextPage = async () => {
   }
 
   return (
-    <div className="flex flex-row items-start gap-12">
-      <ProfileSideBar />
-
+    <ProfileLayout>
       <UpdateUserForm
         bio={session.user.bio}
         userImage={session.user.image}
-        username={""}
-        password={"********"}
+        username={session.user.username}
+        password={"password"}
       />
-    </div>
+    </ProfileLayout>
   );
 };
 
 export default UserSettingsPage;
 
 export const metadata: Metadata = {
-  title: "iCook | Profile",
+  title: "iCook | Profile Settings",
 };

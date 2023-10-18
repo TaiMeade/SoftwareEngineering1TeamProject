@@ -1,32 +1,26 @@
 import { type Metadata, type NextPage } from "next";
+import { redirect } from "next/navigation";
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 // import Link from "next/link";
 // import Image from "next/image";
 
-const session = await getAuth();
+const EditProfile: NextPage = async () => {
+  const session = await getAuth();
 
-var usr = null;
+  if (!session?.user?.email) {
+    return redirect("/");
+  }
 
-if(session?.user.email != null)
-{
-  usr = await prisma.user.findFirst
-  ({
+  const usr = await prisma.user.findFirst({
     where: {
-
-     email: {
-       contains: session?.user.email,
-     },
+      email: {
+        contains: session?.user.email,
+      },
     },
     take: 1,
-  })
-}
-
-let userName = usr?.name;
-
-
-
-const editProfile: NextPage = () => {
+  });
+  const userName = usr?.name;
 
   return (
     <div className="flex flex-col gap-12">
@@ -112,9 +106,8 @@ const editProfile: NextPage = () => {
   );
 };
 
-export default editProfile;
+export default EditProfile;
 
 export const metadata: Metadata = {
-  title: "Recipe App",
-  description: "Recipe App Description",
+  title: "iCook",
 };
