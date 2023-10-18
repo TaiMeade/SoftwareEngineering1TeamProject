@@ -18,6 +18,9 @@ const UserProfilePage: NextPage = async () => {
         <Link href="/profile" className="link">
           Profile
         </Link>
+        <Link href="/editProfile" className="link">
+          Edit Profile
+        </Link>
         <Link href="/profile/saved" className="link">
           Saved Recipes
         </Link>
