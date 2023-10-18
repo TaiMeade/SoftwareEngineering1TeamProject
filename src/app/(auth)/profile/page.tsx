@@ -2,6 +2,7 @@ import { type Metadata, type NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import ProfileSideBar from "~/components/auth/ProfileSideBar";
 import { getAuth } from "~/server/session";
 
 const UserProfilePage: NextPage = async () => {
@@ -14,24 +15,10 @@ const UserProfilePage: NextPage = async () => {
 
   return (
     <div className="flex flex-row items-start gap-12">
-      <aside className="flex min-h-screen w-full max-w-[10rem] flex-col items-start gap-4 border-r-2 border-gray-900 pt-4">
-        <Link href="/profile" className="link">
-          Profile
-        </Link>
-        <Link href="/profile/saved" className="link">
-          Saved Recipes
-        </Link>
-        <Link href="/profile/settings" className="link">
-          Settings
-        </Link>
-        <Link href="/logout" className="link">
-          Logout
-        </Link>
-      </aside>
+      <ProfileSideBar />
 
       <div className="flex flex-col gap-12 pt-4">
         <h1 className="text-4xl font-bold">User Profile Page</h1>
-
         <div className="flex flex-row items-center gap-4">
           {session.user.image && (
             <Image
@@ -46,9 +33,7 @@ const UserProfilePage: NextPage = async () => {
             Welcome, {" " + (session.user.name ?? "")}.
           </h2>
         </div>
-
         <Link href="/">Go Home</Link>
-
         {/* Link to creating a new recipe "/createRecipe" */}
         <h1 className="text-2xl font-bold">Create a New Recipe</h1>
         <Link href="/createRecipe">
