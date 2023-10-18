@@ -6,6 +6,7 @@ import { prisma } from "~/server/db";
 const RecipesPage: NextPage = async () => {
   const recipes = await prisma.recipe.findMany({
     take: 10,
+    include: { author: { select: { name: true } } },
   });
 
   return (
@@ -13,7 +14,7 @@ const RecipesPage: NextPage = async () => {
       <h1 className="text-4xl font-bold">Browse Recipes Page</h1>
 
       {recipes.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {recipes.map((recipe) => (
             <RecipeCard recipe={recipe} key={recipe.id} />
           ))}

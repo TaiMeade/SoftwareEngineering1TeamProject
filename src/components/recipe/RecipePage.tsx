@@ -1,11 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-import { type Recipe } from "@prisma/client";
+import { type Comment, type Recipe } from "@prisma/client";
+import Link from "next/link";
+import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
 
 interface RecipePageProps {
-  recipe: Recipe;
+  recipe: Recipe & {
+    author: { name: string | null };
+    comments: Comment[];
+  };
 }
 
 const RecipePage: React.FC<RecipePageProps> = ({ recipe }) => {
+  const tags = parseTags(recipe.tags);
+  const directions = parseDirections(recipe.directions);
+  const ingredients = parseIngredients(recipe.ingredients);
+
   return (
     <div className="prose lg:prose-xl mx-auto rounded-lg bg-white p-8 shadow-md">
       {recipe.image && (
@@ -30,40 +39,70 @@ const RecipePage: React.FC<RecipePageProps> = ({ recipe }) => {
       <div className="mb-8">
         <h2 className="mb-4 text-2xl font-semibold">Ingredients</h2>
         <ul className="list-inside list-disc">
-          {/* {recipe.ingredients.map((ingredient: string, index: number) => (
-            <li key={index} className="text-lg">
-              {ingredient}
+          {ingredients?.map((ingredient, index: number) => (
+            <li
+              key={ingredient.name + index.toString()}
+              className="flex flex-row items-center justify-start gap-1 text-lg"
+            >
+              {ingredient.name} -{" "}
+              <p className="text-sm text-gray-600">
+                {ingredient.quantity.toString()} {ingredient.unit}
+              </p>
             </li>
-          ))} */}
-          {JSON.stringify(recipe.ingredients ?? {}, null, 2)}
+          ))}
         </ul>
       </div>
       <div className="mb-8">
         <h2 className="mb-4 text-2xl font-semibold">Directions</h2>
         <ol className="list-inside list-decimal">
-          {/* {recipe.directions.map((direction: string, index: number) => (
+          {directions?.map((direction: string, index: number) => (
             <li key={index} className="text-lg">
               {direction}
             </li>
-          ))} */}
-          {JSON.stringify(recipe.directions ?? {}, null, 2)}
+          ))}
         </ol>
       </div>
       <div className="flex items-center justify-between">
-        <div className="text-lg text-gray-600">
-          <p>Author: {recipe.authorId}</p>
-        </div>
+        <Link
+          href={`/profile/${recipe.authorId}`}
+          className="link text-lg text-gray-600 hover:text-blue-600"
+        >
+          Author: {recipe.author.name}
+        </Link>
         <div className="space-x-2">
-          {/* {recipe.tags &&
-            recipe.tags.map((tag: string, index: number) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-blue-100 rounded-full text-blue-600 text-lg"
+          {tags?.map((tag: string, index: number) => (
+            <span
+              key={index}
+              className="rounded-full bg-blue-100 px-2 py-1 text-lg text-blue-600"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Comments */}
+      <div className="mt-12">
+        <h2 className="mb-4 text-2xl font-semibold">Comments</h2>
+        <div className="flex flex-col gap-4">
+          {recipe.comments.length > 0 ? (
+            recipe.comments.map((comment: Comment) => (
+              <div
+                key={comment.id}
+                className="flex flex-col gap-2 rounded-lg bg-gray-100 p-4"
               >
-                {tag}
-              </span>
-            ))} */}
-          {JSON.stringify(recipe.tags ?? {}, null, 2)}
+                <div className="flex flex-row items-center justify-between">
+                  <p className="text-lg font-semibold">{comment.authorId}</p>
+                  <p className="text-sm text-gray-600">
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <p className="text-lg">{comment.text}</p>
+              </div>
+            ))
+          ) : (
+            <p>No comments yet.</p>
+          )}
         </div>
       </div>
     </div>

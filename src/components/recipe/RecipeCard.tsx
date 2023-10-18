@@ -1,100 +1,62 @@
 /* eslint-disable @next/next/no-img-element */
 import { type Recipe } from "@prisma/client";
+import Link from "next/link";
+import { parseTags } from "~/utils/schemas";
 
 interface RecipeCardProps {
-  recipe: Recipe;
+  recipe: Recipe & {
+    author: { name: string | null };
+  };
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
+  const tags = parseTags(recipe.tags);
+
   return (
-    <div className="rounded-lg bg-white p-4 shadow-md">
-      {recipe.image && (
+    <Link
+      href={`/recipes/${recipe.id}`}
+      className="scale-100 transition-all duration-200 ease-in-out hover:scale-[1.01]"
+    >
+      <div className="flex h-full flex-col items-start justify-start rounded-lg bg-white p-4 shadow-md ">
         <div className="mb-4">
-          <img
-            src={recipe.image}
-            alt={recipe.title}
-            className="h-40 w-full rounded-lg object-cover"
-          />
+          {recipe.image ? (
+            <img
+              src={recipe.image}
+              alt={recipe.title}
+              className="h-56 w-full rounded-lg object-cover"
+            />
+          ) : (
+            <div className="h-56 w-full animate-pulse rounded-lg bg-gray-300" />
+          )}
         </div>
-      )}
-      <div className="mb-2">
-        <h2 className="text-xl font-semibold">{recipe.title}</h2>
-      </div>
-      {recipe.description && (
-        <p className="mb-4 text-sm text-gray-600">{recipe.description}</p>
-      )}
-      <div className="mb-2 text-sm text-gray-600">
-        <p>Created: {new Date(recipe.createdAt).toLocaleDateString()}</p>
-        <p>Updated: {new Date(recipe.updatedAt).toLocaleDateString()}</p>
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="text-xs text-gray-600">
-          <p>Author: {recipe.authorId}</p>
+
+        <div className="mb-2">
+          <h2 className="text-xl font-semibold">{recipe.title}</h2>
         </div>
-        <div className="space-x-2">
-          {/* {recipe.tags &&
-            recipe.tags.map((tag: string, index: number) => (
+        {recipe.description && (
+          <p className="mb-4 text-sm text-gray-600">{recipe.description}</p>
+        )}
+        <div className="mb-2 text-sm text-gray-600">
+          <p>Created: {new Date(recipe.createdAt).toLocaleDateString()}</p>
+        </div>
+        <div className="flex w-full flex-1 items-end justify-between">
+          <div className="text-xs text-gray-600">
+            <p>Author: {recipe.author.name}</p>
+          </div>
+          <div className="space-x-2">
+            {tags?.map((tag: string, index: number) => (
               <span
                 key={index}
                 className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-600"
               >
                 {tag}
               </span>
-            ))} */}
-          {JSON.stringify(recipe.tags ?? {}, null, 2)}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
-
-// const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
-//   return (
-//     <div className="overflow-hidden rounded-lg bg-white shadow-lg">
-//       {recipe.image && (
-//         <img
-//           src={recipe.image}
-//           alt={recipe.title}
-//           className="h-40 w-full object-cover"
-//         />
-//       )}
-//       <div className="p-4">
-//         <h3 className="text-xl font-semibold">{recipe.title}</h3>
-//         {recipe.description && (
-//           <p className="mt-2 text-gray-600">{recipe.description}</p>
-//         )}
-//         <div className="mt-4">
-//           <h4 className="text-lg font-semibold">Ingredients</h4>
-//           <ul className="list-disc pl-4">
-//             {/* {recipe.ingredients.map((ingredient: string, index: number) => (
-//               <li key={index}>{ingredient}</li>
-//             ))} */}
-//             {JSON.stringify(recipe.ingredients ?? {}, null, 2)}
-//           </ul>
-//         </div>
-//         <div className="mt-4">
-//           <h4 className="text-lg font-semibold">Directions</h4>
-//           <ol className="list-decimal pl-4">
-//             {/* {recipe.directions.map((direction: string, index: number) => (
-//               <li key={index}>{direction}</li>
-//             ))} */}
-//             {JSON.stringify(recipe.directions ?? {}, null, 2)}
-//           </ol>
-//         </div>
-//         <div className="mt-4">
-//           <h4 className="text-lg font-semibold">Tags</h4>
-//           <div className="flex flex-wrap">
-//             {JSON.stringify(recipe.tags ?? {}, null, 2)}
-//           </div>
-//         </div>
-//         <div className="mt-4 text-sm text-gray-600">
-//           <p>Created: {new Date(recipe.createdAt).toLocaleDateString()}</p>
-//           <p>Updated: {new Date(recipe.updatedAt).toLocaleDateString()}</p>
-//           <p>Author: {recipe.authorId}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default RecipeCard;

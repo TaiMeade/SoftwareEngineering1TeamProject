@@ -15,20 +15,36 @@ datasource db {
 // * Recipe App Models
 
 // * Tags for recipe model
+// * feel free to add any more tags
 enum Tag {
+  // * Different Meal Times
   BREAKFAST
   LUNCH
   DINNER
   DESSERT
-  SNACK
   DRINK
   OTHER
+  // * Levels
+  QUICK
+  SNACK
+  DIFFICULT
+  EASY
+  // * Diets
+  HEALTHY
+  VEGAN
+  VEGETARIAN
+  // * Cultures
+  HALAL
+  GREEK
+  ITALIAN
+  MEXICAN
+  INDIAN
 }
 
 model Recipe {
   id          String  @id @default(cuid())
   title       String
-  description String?
+  description String? @db.Text
   image       String?
   // * Prisma mysql doesn't support array types, so we use Json instead
   ingredients Json?
