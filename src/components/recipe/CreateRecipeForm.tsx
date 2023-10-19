@@ -29,7 +29,11 @@ const CreateRecipeForm: React.FC = () => {
     const res = await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        directions: dirs,
+        ingredients: ingdnts,
+      }),
     });
 
     if (!res.ok) {

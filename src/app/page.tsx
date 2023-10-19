@@ -15,9 +15,6 @@ const Home: NextPage = () => {
         <Link href="/logout" className="link">
           Logout page
         </Link>
-        <Link href="/Page2" className="link">
-          Example page
-        </Link>
         <Link href="/profile" className="link">
           My Profile page
         </Link>
@@ -29,5 +26,5 @@ const Home: NextPage = () => {
 export default Home;
 
 export const metadata: Metadata = {
-  title: "iCook",
+  title: "iCook | Home",
 };

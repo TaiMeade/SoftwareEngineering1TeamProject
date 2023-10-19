@@ -1,7 +1,8 @@
 import { type Metadata, type NextPage } from "next";
 import { type Recipe } from "@prisma/client";
-import RecipeCard from "~/components/recipe/RecipeCard";
 import { prisma } from "~/server/db";
+
+import RecipeCard from "~/components/recipe/RecipeCard";
 
 type RecipeWithAuthor = Recipe & {
   author: { name: string | null };
@@ -9,6 +10,7 @@ type RecipeWithAuthor = Recipe & {
 
 const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
   const query = searchParams.q || "";
+  const page = searchParams.p || "";
 
   let searchResults: RecipeWithAuthor[] = [];
 
@@ -16,12 +18,8 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
     searchResults = await prisma.recipe.findMany({
       where: {
         OR: [
-          {
-            title: { contains: query },
-          },
-          {
-            description: { contains: query },
-          },
+          { title: { contains: query } },
+          { description: { contains: query } },
         ],
       },
       include: { author: { select: { name: true } } },
@@ -41,12 +39,16 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
             {query}
           </code>
         )}
+
+        <h2 className="ml-1 text-xl font-semibold">
+          {page.length > 0 ? `Page ${page}` : ""}
+        </h2>
       </div>
 
       {searchResults.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {searchResults.map((recipe) => (
-            <RecipeCard recipe={recipe} key={recipe.id} />
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       ) : (

@@ -2,11 +2,14 @@ import { type Metadata, type NextPage } from "next";
 import RecipeCard from "~/components/recipe/RecipeCard";
 import { prisma } from "~/server/db";
 
+const AMT_OF_RECIPES = 30;
+
 // * Browse Random / Trending Recipes Page
 const RecipesPage: NextPage = async () => {
   const recipes = await prisma.recipe.findMany({
-    take: 10,
+    take: AMT_OF_RECIPES,
     include: { author: { select: { name: true } } },
+    orderBy: { comments: { _count: "desc" } },
   });
 
   return (

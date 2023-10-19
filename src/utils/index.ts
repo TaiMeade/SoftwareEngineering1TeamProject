@@ -1,6 +1,5 @@
 export const NAV_ITEMS: NavItemProps[] = [
   // Example Navbar Items
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Recipes", href: "/recipes" },
   { label: "Profile", href: "/profile" },

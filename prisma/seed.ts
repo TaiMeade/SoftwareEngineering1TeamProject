@@ -8,7 +8,7 @@ interface Ingredient {
 }
 
 const prisma = new PrismaClient();
-const NUM_RECIPES_TO_CREATE = 25;
+const NUM_RECIPES_TO_CREATE = 50;
 
 /**
  * Function to get the first admin user in the database to use as the author of the recipes.
@@ -34,7 +34,8 @@ type ITag = keyof typeof Tag;
 const generateRandomTags = (): string[] => {
   const tags: ITag[] = [];
   // * Random Number between 0 and 4 - number of tags
-  const randNumTags = Math.floor(Math.random() * 4);
+  const MAX_TAGS = 2;
+  const randNumTags = Math.floor(Math.random() * MAX_TAGS + 1) + 1;
   const keys = Object.keys(Tag);
 
   for (let i = 0; i < randNumTags; i++) {
