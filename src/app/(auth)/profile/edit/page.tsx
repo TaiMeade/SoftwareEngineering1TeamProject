@@ -19,7 +19,6 @@ const EditProfilePage: NextPage = async () => {
         bio={session.user.bio}
         userImage={session.user.image}
         username={session.user.username}
-        password={"password"}
       />
     </AuthLayout>
   );
