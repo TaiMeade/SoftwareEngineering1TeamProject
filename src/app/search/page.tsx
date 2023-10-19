@@ -15,8 +15,14 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
   if (query.length > 0) {
     searchResults = await prisma.recipe.findMany({
       where: {
-        title: { contains: query },
-        OR: [{ description: { contains: query } }],
+        OR: [
+          {
+            title: { contains: query },
+          },
+          {
+            description: { contains: query },
+          },
+        ],
       },
       include: { author: { select: { name: true } } },
     });

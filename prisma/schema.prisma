@@ -39,6 +39,9 @@ enum Tag {
   ITALIAN
   MEXICAN
   INDIAN
+  JAPANESE
+  CHINESE
+  KOREAN
 }
 
 model Recipe {
