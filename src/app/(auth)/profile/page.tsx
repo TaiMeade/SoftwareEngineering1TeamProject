@@ -30,6 +30,7 @@ const UserProfilePage: NextPage = async () => {
           Welcome, {" " + (session.user.username ?? session.user.name ?? "User")}.
         </h2>
       </div>
+      <h2>{session.user.bio ?? " "}</h2>
       <Link href="/">Go Home</Link>
       <Link href="/profile/edit">Edit Profile</Link>
       {/* Link to creating a new recipe "/createRecipe" */}
