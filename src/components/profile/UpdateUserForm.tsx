@@ -25,7 +25,9 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm<
+    z.infer<typeof updateUserSchema>
+  >({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       bio: bio || "",
@@ -35,13 +37,9 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
   });
 
   const onFormSubmit = async (data: z.infer<typeof updateUserSchema>) => {
-    // TODO: Update user
-
     const res = await fetch("/api/user", {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 

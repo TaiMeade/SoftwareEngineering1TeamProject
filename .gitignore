@@ -7,7 +7,6 @@
 
 # misc
 .DS_Store
-/.vscode/settings.json
 /*.code-workspace
 
 # local env files

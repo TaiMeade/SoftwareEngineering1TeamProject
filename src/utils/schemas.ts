@@ -85,3 +85,15 @@ export const updateUserSchema = z.object({
     })
     .optional(),
 });
+
+/**
+ * Create recipe Schema
+ */
+export const createRecipeSchema = z.object({
+  title: z.string().min(3).max(50),
+  description: z.string().min(3).max(200),
+  tags: tagSchema,
+  cost: z.enum(["$", "$$", "$$$"]),
+  // ingredients: ingredientsSchema,
+  // directions: directionsSchema,
+});

@@ -24,3 +24,13 @@ export const omit: Omit = (obj, ...keys) => {
   }
   return ret;
 };
+
+/**
+ * Function to prettify a tag by capitalizing the first letter and lowercasing the rest.
+ * @param tag {string} - the tag to be prettified
+ * @returns {string} - a prettified version of the tag
+ */
+export const prettifyTag = (tag: string) => {
+  const firstLetter = tag[0] || "";
+  return firstLetter + tag.slice(1).toLowerCase();
+};
