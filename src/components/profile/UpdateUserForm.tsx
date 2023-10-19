@@ -13,13 +13,11 @@ interface UserFormProps {
   bio: string | null;
   userImage: string | null | undefined;
   username: string | null;
-  password: string | null;
 }
 
 const UpdateUserForm: React.FC<UserFormProps> = ({
   bio,
   userImage,
-  password,
   username,
 }) => {
   const [success, setSuccess] = useState(false);
@@ -32,7 +30,6 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
     defaultValues: {
       bio: bio || "",
       username: username || "",
-      password: password || "",
     },
   });
 
@@ -114,7 +111,7 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
       </div>
 
       {/* Password */}
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex flex-col gap-4">
         <label htmlFor="password" className="text-2xl font-bold">
           Change Password
         </label>
@@ -129,7 +126,7 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
             {formState.errors.password.message}
           </p>
         )}
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-4">
         <button type="submit" className="icook-button">
