@@ -19,15 +19,21 @@ const Navbar = async () => {
         </Link>
       </h1>
 
-      <ul className="flex flex-row items-center gap-4">
-        <li className="hidden md:block">
+      <div className="flex-1">
+        <div className="hidden md:block">
           <SearchBar />
-        </li>
+        </div>
+      </div>
+
+      <ul className="flex flex-row items-center gap-4">
         {NAV_ITEMS.map((item) => (
           <li key={item.label} className="hover:text-gray-700 hover:underline">
             <Link href={item.href}>{item.label}</Link>
           </li>
         ))}
+        <li className="block hover:text-gray-700 hover:underline md:hidden">
+          <Link href="/search">Search</Link>
+        </li>
       </ul>
 
       <div className="flex flex-col items-center justify-between gap-4">
