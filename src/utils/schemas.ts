@@ -99,3 +99,11 @@ export const createRecipeSchema = z.object({
   ingredients: z.array(z.string()).optional().default([]),
   directions: z.array(z.string()).optional().default([]),
 });
+
+
+/**
+ * Create comment Schema
+ */
+export const createCommentSchema = z.object({
+  text: z.string().min(3).max(150),
+});
