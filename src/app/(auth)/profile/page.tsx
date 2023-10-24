@@ -22,7 +22,7 @@ const UserProfilePage: NextPage = async () => {
     where: { authorId: session.user.id },
     take: AMT_OF_RECIPES,
     include: { author: { select: { name: true } } },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: "desc" },
   });
 
   return (
