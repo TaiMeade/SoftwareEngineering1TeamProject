@@ -18,6 +18,9 @@ const ProfileSideBar: React.FC = () => {
       <Link href="/profile/settings" className="link">
         Settings
       </Link>
+      <Link href="/profile/changePassword" className="link">
+        Change Password
+      </Link>
       <Link href="/logout" className="link">
         Logout
       </Link>
