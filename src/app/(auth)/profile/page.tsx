@@ -8,7 +8,7 @@ import Image from "next/image";
 import AuthLayout from "~/components/auth/AuthLayout";
 import RecipeCard from "~/components/recipe/RecipeCard";
 
-const AMT_OF_RECIPES = 5;
+const AMT_OF_RECIPES = 10;
 
 const UserProfilePage: NextPage = async () => {
   const session = await getAuth();
@@ -22,7 +22,7 @@ const UserProfilePage: NextPage = async () => {
     where: { authorId: session.user.id },
     take: AMT_OF_RECIPES,
     include: { author: { select: { name: true } } },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
   });
 
   return (
@@ -47,10 +47,6 @@ const UserProfilePage: NextPage = async () => {
 
       <h1 className="text-2xl font-bold">Previously Created Recipes </h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {recipes?.map((recipe) => (
-          <RecipeCard recipe={recipe} key={recipe.id} />
-        ))}
-
         <RecipeCard
           recipe={{
             id: "create",
@@ -66,6 +62,10 @@ const UserProfilePage: NextPage = async () => {
             tags: [],
           }}
         />
+
+        {recipes?.map((recipe) => (
+          <RecipeCard recipe={recipe} key={recipe.id} />
+        ))}
       </div>
       <div className="w-full pb-8" />
     </AuthLayout>

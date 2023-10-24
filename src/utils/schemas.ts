@@ -92,8 +92,10 @@ export const updateUserSchema = z.object({
 export const createRecipeSchema = z.object({
   title: z.string().min(3).max(50),
   description: z.string().min(3).max(200),
-  tags: tagSchema,
-  cost: z.enum(["$", "$$", "$$$"]),
+  tags: tagSchema.optional().default([]),
+  cost: z.enum(["$", "$$", "$$$"]).default("$"),
   // ingredients: ingredientsSchema,
   // directions: directionsSchema,
+  ingredients: z.array(z.string()).optional().default([]),
+  directions: z.array(z.string()).optional().default([]),
 });

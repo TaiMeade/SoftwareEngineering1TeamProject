@@ -12,6 +12,15 @@ import { createRecipeSchema } from "~/utils/schemas";
 import AddDirections from "./AddDirections";
 import AddIngredients from "./AddIngredients";
 
+// const defaultValues: z.infer<typeof createRecipeSchema> = {
+//   title: "Recipe Title",
+//   description: "Recipe Description",
+//   tags: ["QUICK", "SNACK"],
+//   cost: "$",
+//   ingredients: ["1st", "2nd", "3rd"],
+//   directions: ["1st", "2nd", "3rd"],
+// };
+
 const CreateRecipeForm: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<Error>();
@@ -23,7 +32,12 @@ const CreateRecipeForm: React.FC = () => {
     z.infer<typeof createRecipeSchema>
   >({
     resolver: zodResolver(createRecipeSchema),
+    // defaultValues,
   });
+
+  useEffect(() => {
+    console.log(formState.errors);
+  }, [formState.errors]);
 
   const onFormSubmit = async (data: z.infer<typeof createRecipeSchema>) => {
     const res = await fetch("/api/recipe", {
@@ -31,8 +45,10 @@ const CreateRecipeForm: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...data,
-        directions: dirs,
-        ingredients: ingdnts,
+        // directions: dirs ?? [],
+        // ingredients: ingdnts ?? [],
+        directions: [] as string[],
+        ingredients: [] as string[],
       }),
     });
 
@@ -125,7 +141,7 @@ const CreateRecipeForm: React.FC = () => {
           ))}
         </ol>
 
-        <AddIngredients ingredients={ingdnts} setIngredients={setIngdnts} />
+        {/* <AddIngredients ingredients={ingdnts} setIngredients={setIngdnts} /> */}
       </div>
 
       <div>
@@ -152,7 +168,7 @@ const CreateRecipeForm: React.FC = () => {
           ))}
         </ol>
 
-        <AddDirections directions={dirs} setDirections={setDirs} />
+        {/* <AddDirections directions={dirs} setDirections={setDirs} /> */}
       </div>
 
       {/* This section is for selecting tags...ugly at the moment */}
@@ -193,9 +209,9 @@ const CreateRecipeForm: React.FC = () => {
           {...register("cost")}
           className="ring-outset rounded ring-1 ring-black"
         >
-          <option value="low">$</option>
-          <option value="medium">$$</option>
-          <option value="high">$$$</option>
+          <option value="$">$</option>
+          <option value="$$">$$</option>
+          <option value="$$$">$$$</option>
         </select>
       </div>
 
