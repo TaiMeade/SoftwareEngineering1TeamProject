@@ -16,9 +16,14 @@ const Comment: React.FC<CommentProps> = () => {
   };
 
   return (
-    <div>
-      <h1>Comment</h1>
-      <p>{comment.text}</p>
+    <div className="flex flex-col gap-2 rounded-lg bg-gray-100 p-4">
+      <div className="flex flex-row items-center justify-between">
+        <p className="text-lg font-semibold">{comment.authorId}</p>
+        <p className="text-sm text-gray-600">
+          {new Date(comment.createdAt).toLocaleDateString()}
+        </p>
+      </div>
+      <p className="text-lg">{comment.text}</p>
     </div>
   );
 };

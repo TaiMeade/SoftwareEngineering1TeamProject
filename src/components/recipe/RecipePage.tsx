@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { type Comment, type Recipe } from "@prisma/client";
+import { type Recipe } from "@prisma/client";
+
 import Link from "next/link";
+import Comment from "../comment/Comment";
+
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
 
 interface RecipePageProps {
@@ -87,18 +90,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ recipe }) => {
         <div className="flex flex-col gap-4">
           {recipe.comments.length > 0 ? (
             recipe.comments.map((comment: Comment) => (
-              <div
-                key={comment.id}
-                className="flex flex-col gap-2 rounded-lg bg-gray-100 p-4"
-              >
-                <div className="flex flex-row items-center justify-between">
-                  <p className="text-lg font-semibold">{comment.authorId}</p>
-                  <p className="text-sm text-gray-600">
-                    {new Date(comment.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                <p className="text-lg">{comment.text}</p>
-              </div>
+              <Comment key={comment.id} comment={comment} />
             ))
           ) : (
             <p>No comments yet.</p>
