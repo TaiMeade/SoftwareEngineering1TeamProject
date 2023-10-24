@@ -97,3 +97,11 @@ export const createRecipeSchema = z.object({
   // ingredients: ingredientsSchema,
   // directions: directionsSchema,
 });
+
+
+/**
+ * Create comment Schema
+ */
+export const createCommentSchema = z.object({
+  text: z.string().min(3).max(150),
+});
