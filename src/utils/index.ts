@@ -9,6 +9,7 @@ export const SIDEBAR_ITEMS: NavItemProps[] = [
   // Example Navbar Items
   { label: "Profile", href: "/profile/" },
   { label: "Edit Profile", href: "/profile/edit" },
+  { label: "Create Recipe", href: "/profile/create" },
   { label: "Saved Recipes", href: "/saved" },
   { label: "Settings", href: "/settings" },
 ];

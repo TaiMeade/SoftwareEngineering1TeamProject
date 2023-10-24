@@ -3,7 +3,9 @@ import { type Metadata } from "next";
 
 import { cn } from "~/utils/tw";
 import { Poppins, Noto_Sans } from "next/font/google";
+import { getAuth } from "~/server/session";
 
+import Providers from "~/components/Providers";
 import Navbar from "~/components/Navbar";
 import { Toaster } from "sonner";
 
@@ -21,7 +23,9 @@ const noto = Noto_Sans({
   subsets: ["latin"],
 });
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const session = await getAuth();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -34,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <Navbar />
         <main className="page">
-          {children}
+          <Providers session={session}>{children}</Providers>
           <Toaster />
         </main>
         {/* Footer */}
