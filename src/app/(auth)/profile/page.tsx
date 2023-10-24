@@ -1,10 +1,14 @@
 import { type Metadata, type NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import AuthLayout from "~/components/auth/AuthLayout";
-import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
+import { prisma } from "~/server/db";
+
+import Image from "next/image";
+
+import AuthLayout from "~/components/auth/AuthLayout";
+import RecipeCard from "~/components/recipe/RecipeCard";
+
+const AMT_OF_RECIPES = 5;
 
 const UserProfilePage: NextPage = async () => {
   const session = await getAuth();
@@ -16,7 +20,9 @@ const UserProfilePage: NextPage = async () => {
 
   const recipes = await prisma.recipe.findMany({
     where: { authorId: session.user.id },
-    take: 25,
+    take: AMT_OF_RECIPES,
+    include: { author: { select: { name: true } } },
+    orderBy: { createdAt: "desc" },
   });
 
   return (
@@ -38,26 +44,30 @@ const UserProfilePage: NextPage = async () => {
         </h2>
       </div>
       <h2>{session.user.bio ?? " "}</h2>
-      <Link href="/">Go Home</Link>
-      <Link href="/profile/edit">Edit Profile</Link>
-      {/* Link to creating a new recipe "/createRecipe" */}
 
-      {/* {recipes.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {recipes.map((recipe) => (
-            <RecipeCard recipe={recipe} key={recipe.id} />
-          ))}
-        </div>
-      ) : (
-        <p>No recipes found.</p>
-      )} */}
+      <h1 className="text-2xl font-bold">Previously Created Recipes </h1>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {recipes?.map((recipe) => (
+          <RecipeCard recipe={recipe} key={recipe.id} />
+        ))}
 
-      <h1 className="text-2xl font-bold">Create a New Recipe</h1>
-      <Link href="/profile/create">
-        <button className="h-64 w-64 rounded bg-gray-400 text-3xl font-bold text-gray-300 text-opacity-60 hover:bg-gray-500">
-          +
-        </button>
-      </Link>
+        <RecipeCard
+          recipe={{
+            id: "create",
+            author: { name: session?.user?.name ?? "User" },
+            authorId: session?.user?.id ?? "",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            title: "Create a new recipe!",
+            description: "Create a new recipe!",
+            directions: [],
+            image: "/placeholder.png",
+            ingredients: [],
+            tags: [],
+          }}
+        />
+      </div>
+      <div className="w-full pb-8" />
     </AuthLayout>
   );
 };

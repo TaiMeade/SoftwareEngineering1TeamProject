@@ -51,7 +51,7 @@
 
 @layer components {
   .page {
-    @apply container relative min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
+    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
   }
   .link {
     @apply text-icook-text/70 transition-all duration-75 ease-in-out hover:text-icook-text hover:underline;
