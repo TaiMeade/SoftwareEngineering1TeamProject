@@ -11,6 +11,7 @@
   --icook-text: #333;
   --icook-background: #f5f5f5;
   --navbar-height: 4rem;
+  --sidebar-width: 16rem;
 }
 
 @layer base {

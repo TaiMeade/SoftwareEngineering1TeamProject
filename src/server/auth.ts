@@ -15,12 +15,13 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user = { ...session.user, ...user };
-      }
-      return session;
-    },
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id,
+      },
+    }),
   },
   providers: [
     GoogleProvider({

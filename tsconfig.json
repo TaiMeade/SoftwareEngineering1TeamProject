@@ -28,15 +28,13 @@
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
-    "**/*.cjs",
+    "**/*.ts",
     "**/*.tsx",
-    "src/**/*.tsx",
-    "src/**/*.ts",
-    "src/**/*.mjs",
+    "**/*.cjs",
+    "**/*.mjs",
     ".next/types/**/*.ts",
     "tailwind.config.ts",
-    "next.config.mjs",
-    "prisma/seed.ts"
+    "next.config.mjs"
   ],
   "exclude": ["node_modules", ".next"]
 }

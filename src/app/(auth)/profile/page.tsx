@@ -27,7 +27,8 @@ const UserProfilePage: NextPage = async () => {
           />
         )}
         <h2 className="text-3xl font-medium">
-          Welcome, {" " + (session.user.username ?? session.user.name ?? "User")}.
+          Welcome,{" "}
+          {" " + (session.user.username ?? session.user.name ?? "User")}.
         </h2>
       </div>
       <h2>{session.user.bio ?? " "}</h2>

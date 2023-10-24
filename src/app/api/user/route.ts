@@ -25,11 +25,17 @@ export async function PUT(req: Request) {
   const data = parsed.data;
 
   // TODO Only fields that are not undefined will be updated
+  try {
+    const user = await prisma.user.update({
+      where: { id: session.user.id },
+      data,
+    });
 
-  const user = await prisma.user.update({
-    where: { id: session.user.id },
-    data,
-  });
-
-  return NextResponse.json(user, { status: 200, statusText: "OK" });
+    return NextResponse.json(user, { status: 200, statusText: "OK" });
+  } catch (error) {
+    return NextResponse.json(error, {
+      status: 500,
+      statusText: "Internal Server Error",
+    });
+  }
 }

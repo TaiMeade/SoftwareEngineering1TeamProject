@@ -5,6 +5,14 @@ export const NAV_ITEMS: NavItemProps[] = [
   { label: "Profile", href: "/profile" },
 ];
 
+export const SIDEBAR_ITEMS: NavItemProps[] = [
+  // Example Navbar Items
+  { label: "Profile", href: "/profile/" },
+  { label: "Edit Profile", href: "/profile/edit" },
+  { label: "Saved Recipes", href: "/saved" },
+  { label: "Settings", href: "/settings" },
+];
+
 interface Omit {
   <T extends object, K extends [...(keyof T)[]]>(obj: T, ...keys: K): {
     [K2 in Exclude<keyof T, K[number]>]: T[K2];
