@@ -7,14 +7,26 @@ import { type z } from "zod";
 import { toast } from "sonner";
 
 import { updateUserSchema } from "~/utils/schemas";
+import { getAuth } from "~/server/session";
 
 interface ChangePasswordProps {
   password: string | null;
 }
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
+const ChangePassword: React.FC<ChangePasswordProps> = async ({ password }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<Error>();
+
+  const session = await getAuth();
+
+  const password = await prisma.user.findUnique({
+    where: {
+      id: session?.user.id ?? "",
+    },
+    select: {
+      password: true,
+    },
+  });
 
   const { register, handleSubmit, formState } = useForm<
     z.infer<typeof updateUserSchema>
@@ -31,6 +43,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
+    /* Used to access  */
     const passwd = (document.getElementById("password") as HTMLInputElement)
       .value;
     const verifyPasswd = (

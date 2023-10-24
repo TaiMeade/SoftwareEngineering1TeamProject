@@ -52,7 +52,7 @@ const NewComment: React.FC = () => {
       {/* This section is for inserting the title */}
       <div>
         <label htmlFor="title" className="mb-2 text-2xl font-bold">
-          Title of Recipe
+          Comment
         </label>
         <input
           id="text"
