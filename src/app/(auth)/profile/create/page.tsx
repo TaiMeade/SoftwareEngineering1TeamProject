@@ -1,13 +1,14 @@
 import { type Metadata, type NextPage } from "next";
 import AuthLayout from "~/components/auth/AuthLayout";
-import CreateRecipeForm from "~/components/recipe/CreateRecipeForm";
+import NewCreateRecipeForm from "./NewCreateRecipeForm";
+// import CreateRecipeForm from "~/components/recipe/CreateRecipeForm";
 
 const CreateRecipePage: NextPage = () => {
   return (
     <AuthLayout>
       <h1 className="text-4xl font-bold">Create your recipe!</h1>
-
-      <CreateRecipeForm />
+      {/* <CreateRecipeForm /> */}
+      <NewCreateRecipeForm />
     </AuthLayout>
   );
 };

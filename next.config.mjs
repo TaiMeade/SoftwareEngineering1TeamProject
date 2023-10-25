@@ -19,6 +19,8 @@ const config = {
   swcMinify: true,
   trailingSlash: true,
   cleanDistDir: true,
+  // * Experimental
+  experimental: { serverActions: true },
 };
 
 export default config;

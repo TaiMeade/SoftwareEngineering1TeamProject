@@ -100,7 +100,6 @@ export const createRecipeSchema = z.object({
   directions: z.array(z.string()).optional().default([]),
 });
 
-
 /**
  * Create comment Schema
  */

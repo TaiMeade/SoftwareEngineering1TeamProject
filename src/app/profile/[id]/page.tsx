@@ -9,6 +9,8 @@ interface RecipesPageProps {
   };
 }
 
+const RECIPES_AMT = 25;
+
 // * Browse Random / Trending Recipes Page
 const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
@@ -17,9 +19,9 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     return <UserNotFound />; // notFound();
   }
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-    include: { recipes: { take: 5 } },
+  const user = await prisma.user.findFirst({
+    where: { id, OR: [{ username: id }] },
+    include: { recipes: { take: RECIPES_AMT } },
   });
 
   if (!user) {
