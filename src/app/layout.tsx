@@ -28,7 +28,28 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff" />
+      </head>
       <body
         className={cn(
           "min-h-screen font-sans antialiased",
@@ -54,5 +75,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 export const metadata: Metadata = {
   title: "iCook",
   description: "iCook Description",
-  // image: "/assets/og-image.png",
+  robots: "follow, index",
+  viewport: "width=device-width, initial-scale=1",
 };

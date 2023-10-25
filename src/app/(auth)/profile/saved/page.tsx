@@ -1,6 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import AuthLayout from "~/components/auth/AuthLayout";
+import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 
 const UserSavedRecipesPage: NextPage = async () => {
@@ -11,10 +11,16 @@ const UserSavedRecipesPage: NextPage = async () => {
     return redirect("/login");
   }
 
+  const savedRecipes = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { savedRecipes: true },
+  });
+
   return (
-    <AuthLayout>
+    <>
       <h1 className="text-4xl font-bold">User Saved Recipes Page</h1>
-    </AuthLayout>
+      <pre>{JSON.stringify(savedRecipes, null, 2)}</pre>
+    </>
   );
 };
 

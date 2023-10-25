@@ -1,11 +1,15 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
+
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 
-import AuthLayout from "~/components/auth/AuthLayout";
-import UpdateUserForm from "~/components/profile/UpdateUserForm";
-import NotFound from "~/components/recipe/NotFound";
+const NotFound = dynamic(() => import("~/components/recipe/NotFound"));
+
+const UpdateUserForm = dynamic(
+  () => import("~/components/profile/UpdateUserForm"),
+);
 
 const EditProfilePage: NextPage = async () => {
   const session = await getAuth();
@@ -23,14 +27,14 @@ const EditProfilePage: NextPage = async () => {
   if (!user) return <NotFound />;
 
   return (
-    <AuthLayout>
+    <>
       <h1 className="text-4xl font-bold">Edit Profile Page</h1>
       <UpdateUserForm
         bio={user.bio}
         userImage={user.image}
         username={user.username}
       />
-    </AuthLayout>
+    </>
   );
 };
 
