@@ -16,17 +16,23 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
 
   if (!id || id.length < 1) {
+    console.log("No ID");
     return <UserNotFound />; // notFound();
   }
 
-  const user = await prisma.user.findFirst({
-    where: { id, OR: [{ username: id }] },
+  let user = await prisma.user.findFirst({
+    where: { id },
     include: { recipes: { take: RECIPES_AMT } },
   });
 
   if (!user) {
-    return <UserNotFound />; // notFound();
+    user = await prisma.user.findFirst({
+      where: { username: id },
+      include: { recipes: { take: RECIPES_AMT } },
+    });
   }
+
+  if (!user) return <UserNotFound />; // notFound();
 
   return (
     <div className="flex flex-col gap-12">

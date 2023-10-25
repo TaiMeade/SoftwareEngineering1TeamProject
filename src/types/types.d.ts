@@ -18,13 +18,13 @@ interface PageProps {
   };
 }
 
-interface Ingredient {
-  name: string;
-  quantity: number;
-  unit: string;
-}
-
 // (keyof typeof Tag)[]
 type Tag = string[];
 
 type Directions = string[];
+
+interface Ingredient {
+  name: string;
+  quantity: string;
+  unit: string;
+}

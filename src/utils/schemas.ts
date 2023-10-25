@@ -45,7 +45,7 @@ export const parseDirections = (_directions: JsonValue): string[] => {
 const ingredientsSchema = z.array(
   z.object({
     name: z.string(),
-    quantity: z.number(),
+    quantity: z.string(),
     unit: z.string(),
   }),
 );
@@ -94,10 +94,9 @@ export const createRecipeSchema = z.object({
   description: z.string().min(3).max(200),
   tags: tagSchema.optional().default([]),
   cost: z.enum(["$", "$$", "$$$"]).default("$"),
-  // ingredients: ingredientsSchema,
-  // directions: directionsSchema,
-  ingredients: z.array(z.string()).optional().default([]),
-  directions: z.array(z.string()).optional().default([]),
+  ingredients: ingredientsSchema.default([]),
+  directions: directionsSchema.default([]),
+  // ingredients: z.array(z.string()).optional().default([]),
 });
 
 /**

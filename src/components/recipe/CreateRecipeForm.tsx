@@ -8,71 +8,61 @@ import { type z } from "zod";
 import { toast } from "sonner";
 import { prettifyTag } from "~/utils";
 import { createRecipeSchema } from "~/utils/schemas";
+import { useRouter } from "next/navigation";
 
-import AddDirections from "./AddDirections";
-import AddIngredients from "./AddIngredients";
+import NewIngredient from "./NewIngredient";
+import NewDirection from "./NewDirection";
 
-// const defaultValues: z.infer<typeof createRecipeSchema> = {
-//   title: "Recipe Title",
-//   description: "Recipe Description",
-//   tags: ["QUICK", "SNACK"],
-//   cost: "$",
-//   ingredients: ["1st", "2nd", "3rd"],
-//   directions: ["1st", "2nd", "3rd"],
-// };
+type FormData = z.infer<typeof createRecipeSchema>;
 
 const CreateRecipeForm: React.FC = () => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<Error>();
+  const router = useRouter();
 
   const [dirs, setDirs] = useState<string[]>([]);
-  const [ingdnts, setIngdnts] = useState<string[]>([]);
+  const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
 
   const { register, handleSubmit, formState } = useForm<
     z.infer<typeof createRecipeSchema>
   >({
     resolver: zodResolver(createRecipeSchema),
-    // defaultValues,
   });
 
   useEffect(() => {
     console.log(formState.errors);
   }, [formState.errors]);
 
-  const onFormSubmit = async (data: z.infer<typeof createRecipeSchema>) => {
+  async function onSubmit(data: FormData) {
+    // console.log(formState.isSubmitting);
+    // console.log(data);
+
+    console.log(ingdnts);
+
     const res = await fetch("/api/recipe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...data,
-        // directions: dirs ?? [],
-        // ingredients: ingdnts ?? [],
-        directions: [] as string[],
-        ingredients: [] as string[],
+        directions: dirs ?? [],
+        ingredients: ingdnts ?? [],
       }),
     });
 
     if (!res.ok) {
       console.log("Error creating recipe");
-      setError(new Error("Error creating recipe"));
+      toast.error("Error creating recipe: " + res.statusText);
       return;
-    } else {
-      setSuccess(true);
-    }
+    } else toast.success("Successfully creating recipe!");
 
-    console.log(data);
-  };
-
-  useEffect(() => {
-    if (success) toast.success("Successfully creating recipe!");
-
-    if (error) toast.error(error.message);
-  }, [success, error]);
+    const res_data = (await res.json()) as { id: string };
+    router.push(`/recipes/${res_data.id}`);
+  }
 
   return (
     <form
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSubmit={handleSubmit(onFormSubmit)}
+      onSubmit={handleSubmit(onSubmit)}
+      action=""
+      method="POST"
       className="flex w-full max-w-3xl flex-col items-start gap-2 pb-24 [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:gap-2 "
     >
       {/* This section is for inserting the title */}
@@ -117,49 +107,24 @@ const CreateRecipeForm: React.FC = () => {
         <label htmlFor="ingredients" className="mb-2 mt-4 font-bold">
           Ingredients
         </label>
-        {/* <textarea
-          id="ingredients"
-          placeholder="Ingredients"
-          // {...register("ingredients")}
-          className="form-textarea block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        /> */}
-        {/* <ol>
-              <li>1st</li>
-              <li>2nd</li>
-              <li>3rd</li>
-            </ol> */}
-        {/* {formState?.errors.ingredients && (
-          <p className="text-sm text-red-500">
-            {formState.errors.ingredients.message}
-          </p>
-        )} */}
         <ol className="list-decimal">
-          {ingdnts.map((ing) => (
-            <li key={ing} className="list-item list-inside">
-              {ing}
+          {ingdnts.map((ing, idx) => (
+            <li
+              key={ing.name + ing.quantity + ing.unit + idx.toString()}
+              className="list-item list-inside"
+            >
+              {ing.name} {ing.quantity} {ing.unit}
             </li>
           ))}
         </ol>
 
-        {/* <AddIngredients ingredients={ingdnts} setIngredients={setIngdnts} /> */}
+        <NewIngredient setIngredients={setIngdnts} />
       </div>
 
       <div>
         <label htmlFor="directions" className="mb-2 mt-4 font-bold">
           Directions
         </label>
-        {/* 
-        <textarea
-          id="directions"
-          // {...register("directions")}
-          placeholder="Directions"
-          className="form-textarea block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        /> */}
-        {/* {formState?.errors.directions && (
-          <p className="text-sm text-red-500">
-            {formState.errors.directions.message}
-          </p>
-        )} */}
         <ol className="list-decimal">
           {dirs.map((dir) => (
             <li key={dir} className="list-item list-inside">
@@ -168,7 +133,7 @@ const CreateRecipeForm: React.FC = () => {
           ))}
         </ol>
 
-        {/* <AddDirections directions={dirs} setDirections={setDirs} /> */}
+        <NewDirection setDirections={setDirs} />
       </div>
 
       {/* This section is for selecting tags...ugly at the moment */}

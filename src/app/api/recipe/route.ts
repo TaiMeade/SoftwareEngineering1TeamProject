@@ -29,6 +29,7 @@ export async function POST(req: Request) {
   const data = parsed.data;
 
   try {
+    console.log("data.ingredients ", data.ingredients);
     const recipe = await prisma.recipe.create({
       data: {
         title: data.title,
@@ -39,12 +40,8 @@ export async function POST(req: Request) {
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: data.tags,
-        ingredients: data.ingredients.map((ing) => ({
-          name: ing,
-          quantity: "",
-          unit: "",
-        })),
-        directions: data.directions,
+        ingredients: data.ingredients || [],
+        directions: data.directions || [],
       },
     });
 
