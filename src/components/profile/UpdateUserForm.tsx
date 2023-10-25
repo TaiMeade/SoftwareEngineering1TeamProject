@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
@@ -15,21 +14,18 @@ interface UserFormProps {
   username: string | null;
 }
 
+type FormData = z.infer<typeof updateUserSchema>;
+
 const UpdateUserForm: React.FC<UserFormProps> = ({
   bio,
   userImage,
   username,
 }) => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<Error>();
-
-  const { register, handleSubmit, formState } = useForm<
-    z.infer<typeof updateUserSchema>
-  >({
+  const { register, handleSubmit, formState } = useForm<FormData>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      bio: bio || "",
-      username: username || "",
+      bio: bio ?? "",
+      username: username ?? "",
     },
   });
 
@@ -40,26 +36,9 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) {
-      console.log("Error updating user");
-      setError(new Error("Error updating user"));
-      return;
-    } else {
-      setSuccess(true);
-    }
-
-    console.log(data);
+    if (!res.ok) toast.error(`Error updating user - ${res.statusText}`);
+    else toast.success("Successfully updated user!");
   };
-
-  useEffect(() => {
-    if (success) {
-      toast.success("Successfully updated user!");
-    }
-
-    if (error) {
-      toast.error(error.message);
-    }
-  }, [success, error]);
 
   // * Change Bio, Update User Image, Modify Nickname, Change Password
   return (
@@ -69,24 +48,27 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
       className="flex w-full max-w-3xl flex-col items-start gap-12 [&>div]:w-full"
     >
       {/* User Image */}
-      <div className="flex flex-col gap-4">
-        <label htmlFor="user-image" className="text-2xl font-bold">
-          Update User Image
+      <div className="form-control flex flex-col gap-4">
+        <label htmlFor="user-image" className="label">
+          <span className="label-text text-2xl font-bold">
+            Update User Image
+          </span>
         </label>
 
         <ModifyUserImage userImage={userImage} />
       </div>
 
       {/* Username */}
-      <div className="flex flex-col gap-4">
-        <label htmlFor="username" className="text-2xl font-bold">
-          Modify Username
+      <div className="form-control flex flex-col gap-4">
+        <label htmlFor="username" className="label">
+          <span className="label-text text-2xl font-bold">Username</span>
         </label>
         <input
           id="username"
           type="text"
           {...register("username")}
-          className="icook-form-input"
+          placeholder="Username"
+          className="input input-bordered w-full"
         />
         {formState.errors?.username && (
           <p className="text-sm text-red-500">
@@ -96,37 +78,20 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
       </div>
 
       {/* Biography */}
-      <div className="flex flex-col gap-4">
-        <label htmlFor="bio" className="text-2xl font-bold">
-          Change Bio
+      <div className="form-control flex flex-col gap-4">
+        <label htmlFor="bio" className="label">
+          <span className="label-text text-2xl font-bold">Update Bio</span>
         </label>
         <textarea
           id="bio"
           {...register("bio")}
-          className="icook-form-textarea"
+          placeholder="Bio"
+          className="textarea textarea-bordered textarea-lg"
         />
         {formState.errors?.bio && (
           <p className="text-sm text-red-500">{formState.errors.bio.message}</p>
         )}
       </div>
-
-      {/* Password */}
-      {/* <div className="flex flex-col gap-4">
-        <label htmlFor="password" className="text-2xl font-bold">
-          Change Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          {...register("password")}
-          className="icook-form-input"
-        />
-        {formState.errors?.password && (
-          <p className="text-sm text-red-500">
-            {formState.errors.password.message}
-          </p>
-        )}
-      </div> */}
 
       <div className="flex flex-col gap-4">
         <button type="submit" className="icook-button">

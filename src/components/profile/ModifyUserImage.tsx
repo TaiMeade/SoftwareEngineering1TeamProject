@@ -33,7 +33,7 @@ const ModifyUserImage: React.FC<ModifyUserImageProps> = ({ userImage }) => {
           /**
            * @see https://docs.uploadthing.com/api-reference/react#uploaddropzone
            */
-          endpoint="imageUploader"
+          endpoint="userUpdateImg"
           onClientUploadComplete={(res) => {
             console.log(res?.map((r) => r.url));
             alert("Upload Completed");

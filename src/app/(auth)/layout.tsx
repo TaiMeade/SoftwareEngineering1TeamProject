@@ -10,7 +10,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     return redirect("/login");
   }
 
-  return <>{children}</>;
+  return <div className="-mt-8">{children}</div>;
 }
 
 export const metadata: Metadata = {

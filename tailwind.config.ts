@@ -2,6 +2,7 @@ import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 import scrollbar from "tailwind-scrollbar";
+import daisyui, { type Config as DaisyConfig } from "daisyui";
 
 export default {
   darkMode: "class",
@@ -16,13 +17,34 @@ export default {
       },
       colors: {
         "icook-nav": "rgb(245, 245, 245)",
-        "icook-primary": "#FF5722",
-        "icook-secondary": "#2196F3",
-        "icook-accent": "#4CAF50",
+        "icook-primary": "#2196f3",
+        "icook-secondary": "#2196f3",
+        "icook-accent": "#ce0899",
+        "icook-neutral": "#151b23",
+        "icook-base-100": "#e8ecf2",
         "icook-text": "#333",
-        "icook-background": "#F5F5F5",
+        "icook-bg": "#F5F5F5",
       },
     },
   },
-  plugins: [forms({ strategy: "class" }), scrollbar],
+  plugins: [forms({ strategy: "class" }), scrollbar, daisyui],
+  daisyui: {
+    // themes: ["light", "business", "dark"],
+    // themes: ["light"],
+    themes: [
+      {
+        icook: {
+          primary: "#2196f3",
+          secondary: "#4fff72",
+          accent: "#ce0899",
+          neutral: "#151b23",
+          "base-100": "#e8ecf2",
+          info: "#3b97e3",
+          success: "#116f40",
+          warning: "#9a7c0e",
+          error: "#f6657f",
+        },
+      },
+    ],
+  } satisfies DaisyConfig,
 } satisfies Config;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ingredientSchema } from "~/utils/schemas";
 
 interface NewIngredientProps {
   setIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>;
@@ -13,16 +14,20 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
     unit: "",
   });
 
+  const [err, setErr] = useState<string | null>(null);
+
   const addIngredient = () => {
-    if (newIng.name === "" || newIng.quantity === "" || newIng.unit === "")
+    const parsed = ingredientSchema.safeParse(newIng);
+    if (!parsed.success) {
+      setErr(parsed.error.issues.map((i) => i.message).join(", "));
       return;
-    setIngredients((prev) => [...prev, newIng]);
+    }
+    setIngredients((prev) => [...prev, parsed.data]);
   };
 
   return (
     <div className="flex flex-col items-start justify-center gap-2">
-      <h1>New Ingredient</h1>
-      <div className="flex flex-row items-center justify-start gap-2">
+      <div className="flex flex-col items-center justify-start gap-2 md:flex-row">
         <input
           id="name"
           onChange={(e) => {
@@ -30,7 +35,8 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Name"
-          className="icook-form-input"
+          // className="icook-form-input"
+          className="input input-bordered w-full"
         />
         <input
           id="quantity"
@@ -39,7 +45,8 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Quantity"
-          className="icook-form-input"
+          // className="icook-form-input"
+          className="input input-bordered w-full"
         />
 
         <input
@@ -49,9 +56,12 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Unit"
-          className="icook-form-input"
+          // className="icook-form-input"
+          className="input input-bordered w-full"
         />
       </div>
+
+      {err && <p className="text-red-500">{err}</p>}
 
       <button type="button" onClick={addIngredient} className="icook-button">
         Add Ingredient

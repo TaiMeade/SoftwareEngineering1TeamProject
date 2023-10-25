@@ -11,6 +11,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 
 import { motion, useAnimationControls, type Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "~/utils/hooks/useMediaQuery";
 
 const sidebarVariants: Variants = {
   open: { y: 0, transition: { duration: 0.2 } },
@@ -20,12 +21,23 @@ const sidebarVariants: Variants = {
 const AuthSidebar: React.FC = () => {
   const { data: session } = useSession();
 
-  const [isOpen, setIsOpen] = useState(false);
   const controls = useAnimationControls();
+  const [isOpen, setIsOpen] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
-
   const [height, setHeight] = useState(0);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    if (isMobile) {
+      void controls.start("closed");
+      setIsOpen(false);
+    } else {
+      void controls.start("open");
+      setIsOpen(true);
+    }
+  }, [controls, isMobile]);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -44,7 +56,7 @@ const AuthSidebar: React.FC = () => {
         },
       }}
       transition={{ duration: 0.2 }}
-      className="fixed bottom-0 left-0 z-10 flex w-full flex-col items-start justify-start bg-zinc-800 sm:bottom-auto sm:h-[calc(100vh-var(--navbar-height))] sm:w-64"
+      className="fixed bottom-0 left-0 z-10 flex w-full flex-col items-start justify-start bg-zinc-800 md:bottom-auto md:h-[calc(100vh-var(--navbar-height))] md:w-64"
     >
       {/* // * Sidebar Content Below */}
 
@@ -57,15 +69,13 @@ const AuthSidebar: React.FC = () => {
 
           <button
             onClick={() => {
-              isOpen
-                ? void controls.start("open")
-                : void controls.start("closed");
-              setIsOpen(!isOpen);
+              setIsOpen((prev) => !prev);
+              void controls.start(isOpen ? "closed" : "open");
             }}
             style={{
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transform: isOpen ? "rotate(0deg)" : "rotate(180deg)",
             }}
-            className="flex items-center justify-center transition-all duration-150 ease-in-out focus:outline-none sm:hidden"
+            className="flex items-center justify-center transition-all duration-150 ease-in-out focus:outline-none md:hidden"
           >
             <AiFillCaretDown className="text-lg text-white" />
           </button>

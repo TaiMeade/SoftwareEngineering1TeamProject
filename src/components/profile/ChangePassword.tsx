@@ -7,7 +7,6 @@ import { type z } from "zod";
 import { toast } from "sonner";
 
 import { updateUserSchema } from "~/utils/schemas";
-import { getAuth } from "~/server/session";
 
 interface ChangePasswordProps {
   password: string | null;

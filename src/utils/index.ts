@@ -41,6 +41,8 @@ export const omit: Omit = (obj, ...keys) => {
  * @returns {string} - a prettified version of the tag
  */
 export const prettifyTag = (tag: string) => {
+  if (!tag) return "";
+  if (tag.length === 1) return tag.toUpperCase();
   const firstLetter = tag[0] || "";
-  return firstLetter + tag.slice(1).toLowerCase();
+  return firstLetter + tag.slice(1)?.toLowerCase() || "";
 };

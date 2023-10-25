@@ -1,41 +1,35 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { type Recipe, Tag } from "@prisma/client";
+import { type z } from "zod";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Tag } from "@prisma/client";
-import { type z } from "zod";
+import { createRecipeSchema } from "~/utils/schemas";
 
 import { toast } from "sonner";
 import { prettifyTag } from "~/utils";
-import { createRecipeSchema } from "~/utils/schemas";
-import { useRouter } from "next/navigation";
 
 import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
+import { FaSpinner } from "react-icons/fa";
+import { UploadDropzone } from "~/utils/ut";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
 const CreateRecipeForm: React.FC = () => {
   const router = useRouter();
 
-  const [dirs, setDirs] = useState<string[]>([]);
-  const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
-
-  const { register, handleSubmit, formState } = useForm<
-    z.infer<typeof createRecipeSchema>
-  >({
+  const { register, handleSubmit, formState } = useForm<FormData>({
     resolver: zodResolver(createRecipeSchema),
   });
 
-  useEffect(() => {
-    console.log(formState.errors);
-  }, [formState.errors]);
+  const [dirs, setDirs] = useState<string[]>([]);
+  const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
 
   async function onSubmit(data: FormData) {
-    // console.log(formState.isSubmitting);
-    // console.log(data);
-
-    console.log(ingdnts);
+    console.log("Submitting", data);
 
     const res = await fetch("/api/recipe", {
       method: "POST",
@@ -51,9 +45,12 @@ const CreateRecipeForm: React.FC = () => {
       console.log("Error creating recipe");
       toast.error("Error creating recipe: " + res.statusText);
       return;
-    } else toast.success("Successfully creating recipe!");
+    }
+    const res_data = (await res.json()) as Recipe;
 
-    const res_data = (await res.json()) as { id: string };
+    toast.success(`Successfully creating recipe ${res_data.title}!`);
+
+    await new Promise((r) => setTimeout(r, 340));
     router.push(`/recipes/${res_data.id}`);
   }
 
@@ -61,21 +58,18 @@ const CreateRecipeForm: React.FC = () => {
     <form
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit(onSubmit)}
-      action=""
-      method="POST"
       className="flex w-full max-w-3xl flex-col items-start gap-2 pb-24 [&>div]:flex [&>div]:w-full [&>div]:flex-col [&>div]:gap-2 "
     >
-      {/* This section is for inserting the title */}
-      <div>
-        <label htmlFor="title" className="mb-2 text-2xl font-bold">
-          Title of Recipe
+      <div className="form-control">
+        <label htmlFor="title" className="label mb-2 text-2xl">
+          <span className="label-text text-lg font-bold">Title</span>
         </label>
         <input
           id="title"
           {...register("title")}
           type="text"
           placeholder="Title"
-          className="form-textarea block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="input input-bordered w-full"
         />
         {formState.errors?.title && (
           <p className="text-sm text-red-500">
@@ -84,16 +78,15 @@ const CreateRecipeForm: React.FC = () => {
         )}
       </div>
 
-      {/* This section is for describing the food to be made */}
-      <div>
-        <label htmlFor="description" className="mb-2 mt-4 font-bold">
-          Description
+      <div className="form-control">
+        <label htmlFor="description" className="label mb-2 mt-4">
+          <span className="label-text text-lg font-bold">Description</span>
         </label>
         <textarea
           id="description"
           placeholder="Description"
           {...register("description")}
-          className="form-textarea block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="textarea textarea-bordered textarea-lg"
         />
         {formState?.errors.description && (
           <p className="text-sm text-red-500">
@@ -102,10 +95,9 @@ const CreateRecipeForm: React.FC = () => {
         )}
       </div>
 
-      {/* This section is for insering ingredients...find a way to make it a bulleted list? */}
-      <div>
-        <label htmlFor="ingredients" className="mb-2 mt-4 font-bold">
-          Ingredients
+      <div className="form-control">
+        <label htmlFor="ingredients" className="label mb-2 mt-4">
+          <span className="label-text text-lg font-bold">Ingredients</span>
         </label>
         <ol className="list-decimal">
           {ingdnts.map((ing, idx) => (
@@ -121,9 +113,9 @@ const CreateRecipeForm: React.FC = () => {
         <NewIngredient setIngredients={setIngdnts} />
       </div>
 
-      <div>
-        <label htmlFor="directions" className="mb-2 mt-4 font-bold">
-          Directions
+      <div className="form-control">
+        <label htmlFor="directions" className="label mb-2 mt-4">
+          <span className="label-text text-lg font-bold">Directions</span>
         </label>
         <ol className="list-decimal">
           {dirs.map((dir) => (
@@ -137,17 +129,14 @@ const CreateRecipeForm: React.FC = () => {
       </div>
 
       {/* This section is for selecting tags...ugly at the moment */}
-      <div>
-        <label htmlFor="tags" className="mb-1 mt-4 font-bold">
-          Tags
+      <div className="form-control">
+        <label htmlFor="tags" className="label mb-1 mt-4 font-bold">
+          <span className="label-text text-lg font-bold">Tags</span>
         </label>
-        <div className="mb-2 text-xs">
-          Please hold down CTRL to select more than one.
-        </div>
 
         <select
           id="tags"
-          multiple
+          multiple={true}
           {...register("tags")}
           className="ring-outset form-multiselect mx-0 flex h-64 w-52 flex-row flex-wrap items-start justify-start gap-1 overflow-y-scroll p-0 ring-1 ring-black"
         >
@@ -157,6 +146,13 @@ const CreateRecipeForm: React.FC = () => {
             </option>
           ))}
         </select>
+
+        <label htmlFor="tags" className="label-text-alt text-xs">
+          <span className="label-text-alt text-xs">
+            Please hold down CTRL to select more than one.
+          </span>
+        </label>
+
         {formState?.errors.tags && (
           <p className="text-sm text-red-500">
             {formState.errors.tags.message}
@@ -165,14 +161,39 @@ const CreateRecipeForm: React.FC = () => {
       </div>
 
       {/* This section is for selecting the rough cost estimate */}
-      <div>
-        <label htmlFor="cost" className="mb-1 mt-4 font-bold">
-          Cost
+      <div className="form-control">
+        <label htmlFor="image" className="label mb-1 mt-4 ">
+          <span className="label-text text-lg font-bold">Upload an Image</span>
+          <span className="label-text-alt">
+            Upload an image for your recipe. (Optional)
+          </span>
+        </label>
+        <UploadDropzone
+          /**
+           * @see https://docs.uploadthing.com/api-reference/react#uploaddropzone
+           */
+          endpoint="uploadRecipeImg"
+          onClientUploadComplete={(res) => {
+            console.log(res?.map((r) => r.url));
+            alert("Upload Completed");
+          }}
+          onUploadBegin={() => {
+            console.log("upload begin");
+          }}
+          config={{ mode: "manual" }}
+        />
+      </div>
+
+      {/* This section is for selecting the rough cost estimate */}
+      <div className="form-control">
+        <label htmlFor="cost" className="label mb-1 mt-4 ">
+          <span className="label-text text-lg font-bold">Cost</span>
+          <span className="label-text-alt">How expensive is this recipe?</span>
         </label>
         <select
           id="cost"
           {...register("cost")}
-          className="ring-outset rounded ring-1 ring-black"
+          className="select select-bordered rounded bg-transparent ring-1 ring-black"
         >
           <option value="$">$</option>
           <option value="$$">$$</option>
@@ -180,9 +201,17 @@ const CreateRecipeForm: React.FC = () => {
         </select>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <button type="submit" className="icook-button">
-          Create Recipe
+      <div className="form-control mt-2 flex flex-col gap-4">
+        <button
+          type="submit"
+          disabled={formState.isSubmitting || formState.isSubmitted}
+          className="icook-button transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
+        >
+          {!formState.isSubmitting ? (
+            "Create Recipe"
+          ) : (
+            <FaSpinner className="m-1 animate-spin text-lg text-white" />
+          )}
         </button>
       </div>
     </form>

@@ -39,7 +39,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <Navbar />
         <main className="page">
           <Providers session={session}>{children}</Providers>
-          <Toaster />
+          <Toaster
+            richColors={true}
+            closeButton={true}
+            toastOptions={{ duration: 5000 }}
+          />
         </main>
         {/* Footer */}
       </body>

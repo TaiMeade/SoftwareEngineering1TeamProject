@@ -23,7 +23,9 @@ export const parseTags = (_tags: JsonValue): string[] => {
   return [data];
 };
 
-const directionsSchema = z.array(z.string());
+export const directionSchema = z.string().min(1, "Direction Cannot Be Empty");
+
+export const directionsSchema = z.array(directionSchema);
 
 /**
  * Function to parse directions
@@ -42,13 +44,13 @@ export const parseDirections = (_directions: JsonValue): string[] => {
   return [data];
 };
 
-const ingredientsSchema = z.array(
-  z.object({
-    name: z.string(),
-    quantity: z.string(),
-    unit: z.string(),
-  }),
-);
+export const ingredientSchema = z.object({
+  name: z.string().min(1, "Ingredient name cannot be empty"),
+  quantity: z.string(),
+  unit: z.string(),
+});
+
+export const ingredientsSchema = z.array(ingredientSchema);
 
 /**
  * Function to parse ingredients
@@ -90,13 +92,12 @@ export const updateUserSchema = z.object({
  * Create recipe Schema
  */
 export const createRecipeSchema = z.object({
-  title: z.string().min(3).max(50),
-  description: z.string().min(3).max(200),
+  title: z.string().min(3, "Title Cannot Be Empty").max(50),
+  description: z.string().min(3, "Description Cannot Be Empty").max(300),
   tags: tagSchema.optional().default([]),
   cost: z.enum(["$", "$$", "$$$"]).default("$"),
   ingredients: ingredientsSchema.default([]),
   directions: directionsSchema.default([]),
-  // ingredients: z.array(z.string()).optional().default([]),
 });
 
 /**

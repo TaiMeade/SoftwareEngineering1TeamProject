@@ -8,7 +8,7 @@ const AuthLayout: React.FC<ProfileLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-row items-start gap-12">
       <AuthSidebar />
-      <div className="flex flex-col gap-12 pt-4 sm:ml-[var(--sidebar-width)]">
+      <div className="flex flex-col gap-12 pt-4 md:ml-[var(--sidebar-width)]">
         {children}
       </div>
     </div>

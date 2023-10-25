@@ -5,11 +5,13 @@
 :root {
   /* Colors Used in Tailwind Config */
   --icook-nav: rgb(245, 245, 245);
-  --icook-primary: #ff5722;
+  --icook-primary: #2196f3;
   --icook-secondary: #2196f3;
-  --icook-accent: #4caf50;
+  --icook-accent: #ce0899;
+  --icook-neutral: #151b23;
   --icook-text: #333;
-  --icook-background: #f5f5f5;
+  --icook-bg: #f5f5f5;
+
   --navbar-height: 4rem;
   --sidebar-width: 16rem;
 }
@@ -21,7 +23,7 @@
     box-sizing: border-box;
   }
   body {
-    @apply min-h-screen bg-icook-background font-normal text-icook-text antialiased;
+    @apply min-h-screen bg-icook-bg font-normal text-icook-text antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
@@ -51,14 +53,20 @@
 
 @layer components {
   .page {
-    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth bg-icook-background p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
+    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth bg-icook-bg p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
+  }
+  .page > div {
+    @apply py-8;
   }
   .link {
     @apply text-icook-text/70 transition-all duration-75 ease-in-out hover:text-icook-text hover:underline;
   }
 
-  .icook-button {
+  /* .icook-button {
     @apply inline-flex items-center justify-center rounded-md border border-transparent bg-icook-text px-4 py-2 text-base font-medium text-white shadow-sm transition-all duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-icook-primary focus:ring-offset-2 hover:bg-icook-secondary;
+  } */
+  .icook-button {
+    @apply btn btn-primary;
   }
 
   .icook-form-input {

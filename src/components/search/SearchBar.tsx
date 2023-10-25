@@ -35,7 +35,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch }) => {
         placeholder="Search for a recipe..."
         defaultValue={initialSearch}
         onChange={(e) => setSearch(e.target.value)}
-        className="form-input hidden rounded-md rounded-r-none placeholder:text-sm md:block"
+        // className="form-input hidden rounded-md rounded-r-none placeholder:text-sm md:block"
+        className="input input-bordered hidden w-full rounded-md rounded-r-none placeholder:text-sm md:block"
       />
       <button
         onClick={() => router.push(`/search?q=${search}`)}

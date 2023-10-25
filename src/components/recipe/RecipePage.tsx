@@ -19,7 +19,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ recipe }) => {
   const ingredients = parseIngredients(recipe.ingredients);
 
   return (
-    <div className="prose lg:prose-xl mx-auto w-full rounded-lg bg-white p-8 shadow-md">
+    <div className="lg:prose-xl prose mx-auto w-full rounded-lg bg-white p-8 shadow-md">
       {recipe.image && (
         <div className="mb-8">
           <img
