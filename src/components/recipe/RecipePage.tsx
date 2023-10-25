@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import { type Recipe } from "@prisma/client";
 
 import Link from "next/link";
 import Comment from "../comment/Comment";
 
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
+import Image from "next/image";
 
 interface RecipePageProps {
   recipe: Recipe & {
@@ -22,10 +22,13 @@ const RecipePage: React.FC<RecipePageProps> = ({ recipe }) => {
     <div className="lg:prose-xl prose mx-auto w-full rounded-lg bg-white p-8 shadow-md">
       {recipe.image && (
         <div className="mb-8">
-          <img
+          <Image
             src={recipe.image}
             alt={recipe.title}
-            className="h-64 w-full rounded-lg object-cover"
+            width={1000}
+            height={288}
+            sizes="80vw"
+            className="h-72 w-full rounded-lg object-contain"
           />
         </div>
       )}
