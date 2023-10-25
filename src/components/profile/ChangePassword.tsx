@@ -17,7 +17,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<Error>();
 
-  {/*const session = await getAuth();
+  {
+    /*const session = await getAuth();
 
   const password = await prisma.user.findUnique({
     where: {
@@ -26,7 +27,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
     select: {
       password: true,
     },
-  });*/}
+  });*/
+  }
 
   const { register, handleSubmit, formState } = useForm<
     z.infer<typeof updateUserSchema>
