@@ -14,7 +14,8 @@ import { prettifyTag } from "~/utils";
 import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
 import { FaSpinner } from "react-icons/fa";
-import { UploadDropzone } from "~/utils/ut";
+import { useUploadThing } from "~/utils/ut";
+import { type UploadFileResponse } from "uploadthing/client";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
@@ -25,11 +26,29 @@ const CreateRecipeForm: React.FC = () => {
     resolver: zodResolver(createRecipeSchema),
   });
 
+  const { startUpload } = useUploadThing("uploadRecipeImg", {
+    onUploadBegin: () => {
+      console.log("upload begin");
+    },
+    onClientUploadComplete: (res) => {
+      console.log(res?.map((r) => r.url));
+    },
+  });
+
+  const [file, setFile] = useState<File | null>(null);
+
   const [dirs, setDirs] = useState<string[]>([]);
   const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
 
   async function onSubmit(data: FormData) {
     console.log("Submitting", data);
+
+    let fileUrls: UploadFileResponse[] | undefined;
+
+    if (file) {
+      fileUrls = await startUpload([file]);
+      console.log("fileUrls", fileUrls);
+    }
 
     const res = await fetch("/api/recipe", {
       method: "POST",
@@ -38,6 +57,7 @@ const CreateRecipeForm: React.FC = () => {
         ...data,
         directions: dirs ?? [],
         ingredients: ingdnts ?? [],
+        image: fileUrls?.[0]?.url ?? null,
       }),
     });
 
@@ -164,23 +184,18 @@ const CreateRecipeForm: React.FC = () => {
       <div className="form-control">
         <label htmlFor="image" className="label mb-1 mt-4 ">
           <span className="label-text text-lg font-bold">Upload an Image</span>
-          <span className="label-text-alt">
-            Upload an image for your recipe. (Optional)
-          </span>
+          <span className="label-text-alt">(Optional)</span>
         </label>
-        <UploadDropzone
-          /**
-           * @see https://docs.uploadthing.com/api-reference/react#uploaddropzone
-           */
-          endpoint="uploadRecipeImg"
-          onClientUploadComplete={(res) => {
-            console.log(res?.map((r) => r.url));
-            alert("Upload Completed");
+
+        <input
+          id="image"
+          type="file"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setFile(e.target.files[0]);
+            }
           }}
-          onUploadBegin={() => {
-            console.log("upload begin");
-          }}
-          config={{ mode: "manual" }}
+          className="file-input file-input-bordered w-full"
         />
       </div>
 
@@ -204,7 +219,7 @@ const CreateRecipeForm: React.FC = () => {
       <div className="form-control mt-2 flex flex-col gap-4">
         <button
           type="submit"
-          disabled={formState.isSubmitting || formState.isSubmitted}
+          // disabled={formState.isSubmitting || formState.isSubmitted}
           className="icook-button transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
         >
           {!formState.isSubmitting ? (

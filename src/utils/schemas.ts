@@ -98,6 +98,7 @@ export const createRecipeSchema = z.object({
   cost: z.enum(["$", "$$", "$$$"]).default("$"),
   ingredients: ingredientsSchema.default([]),
   directions: directionsSchema.default([]),
+  image: z.string().optional().nullable().default("/placeholder.png"),
 });
 
 /**

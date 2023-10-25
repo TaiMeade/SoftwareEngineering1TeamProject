@@ -29,14 +29,13 @@ export async function POST(req: Request) {
   const data = parsed.data;
 
   try {
-    console.log("data.ingredients ", data.ingredients);
+    // console.log("data.ingredients ", data.ingredients);
     const recipe = await prisma.recipe.create({
       data: {
         title: data.title,
         description: data.description,
         authorId: session.user.id,
-        // image: data.image,
-        image: "/placeholder.png",
+        image: data.image,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: data.tags,
