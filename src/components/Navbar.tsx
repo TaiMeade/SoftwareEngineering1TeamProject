@@ -31,9 +31,6 @@ const Navbar = async () => {
             <Link href={item.href}>{item.label}</Link>
           </li>
         ))}
-        <li className="block hover:text-gray-700 hover:underline md:hidden">
-          <Link href="/search">Search</Link>
-        </li>
       </ul>
 
       <div className="flex flex-col items-center justify-between gap-4">
