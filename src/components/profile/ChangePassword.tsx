@@ -44,7 +44,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
       body: JSON.stringify(data),
     });
 
-    /* Used to access  */
+    /* Used to access the input values */
     const passwd = (document.getElementById("password") as HTMLInputElement)
       .value;
     const verifyPasswd = (
@@ -54,15 +54,16 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
     if (!res.ok) {
       console.log("Error updating user");
       setError(new Error("Error updating user"));
+      setSuccess(false);
       return;
     } else if (!(passwd == verifyPasswd)) {
       console.log("Passwords don't match");
       setError(new Error("Passwords do not match"));
+      setSuccess(false);
       return;
     } else {
       console.log("Success");
       setSuccess(true);
-      toast.success("Successfully updated password!"); // Not sure why this seems to be necessary...line 57 doesn't seem to be getting reached ever for some reason now.
     }
 
     console.log(data);
@@ -71,9 +72,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
   useEffect(() => {
     if (success) {
       toast.success("Successfully updated password!");
-    }
-
-    if (error) {
+    } else if (error) {
       toast.error(error.message);
     }
   }, [success, error]);
@@ -92,7 +91,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
         </label>
         <input
           id="password"
-          type="password"
+          // type="password"
           {...register("password")}
           className="icook-form-input"
         />
@@ -101,7 +100,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
         </label>
         <input
           id="verify-password"
-          type="password"
+          // type="password"
           className="icook-form-input"
         />
 
