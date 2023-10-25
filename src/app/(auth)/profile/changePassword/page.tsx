@@ -1,8 +1,13 @@
 import { type Metadata, type NextPage } from "next";
 import { redirect } from "next/navigation";
-import AuthLayout from "~/components/auth/AuthLayout";
-import ChangePassword from "~/components/profile/ChangePassword";
+import dynamic from "next/dynamic";
+
 import { getAuth } from "~/server/session";
+import { prisma } from "~/server/db";
+
+const ChangePassword = dynamic(
+  () => import("~/components/profile/ChangePassword"),
+);
 
 const ChangePasswordPage: NextPage = async () => {
   const session = await getAuth();
@@ -12,11 +17,21 @@ const ChangePasswordPage: NextPage = async () => {
     return redirect("/login");
   }
 
+  let pass = "Change Password";
+
+  const dbPass = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { password: true },
+  });
+
+  if (dbPass?.password) pass = dbPass.password;
+
   return (
-    <AuthLayout>
+    <>
       <h1 className="text-4xl font-bold">Change Password</h1>
-      <ChangePassword password={"changeME"} />
-    </AuthLayout>
+
+      <ChangePassword password={pass} />
+    </>
   );
 };
 

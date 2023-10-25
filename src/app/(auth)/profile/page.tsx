@@ -5,7 +5,6 @@ import { prisma } from "~/server/db";
 
 import Image from "next/image";
 
-import AuthLayout from "~/components/auth/AuthLayout";
 import RecipeCard from "~/components/recipe/RecipeCard";
 
 const AMT_OF_RECIPES = 10;
@@ -26,7 +25,7 @@ const UserProfilePage: NextPage = async () => {
   });
 
   return (
-    <AuthLayout>
+    <>
       <h1 className="text-4xl font-bold">User Profile Page</h1>
       <div className="flex flex-row items-center gap-4">
         {session.user.image && (
@@ -68,7 +67,7 @@ const UserProfilePage: NextPage = async () => {
         ))}
       </div>
       <div className="w-full pb-8" />
-    </AuthLayout>
+    </>
   );
 };
 

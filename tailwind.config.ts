@@ -29,8 +29,7 @@ export default {
   },
   plugins: [forms({ strategy: "class" }), scrollbar, daisyui],
   daisyui: {
-    // themes: ["light", "business", "dark"],
-    // themes: ["light"],
+    // themes: ["light", "business"],
     themes: [
       {
         icook: {
@@ -46,5 +45,6 @@ export default {
         },
       },
     ],
+    logs: false,
   } satisfies DaisyConfig,
 } satisfies Config;
