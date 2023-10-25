@@ -91,7 +91,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
         </label>
         <input
           id="password"
-          // type="password"
+          type="password"
           {...register("password")}
           className="icook-form-input"
         />
@@ -100,7 +100,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
         </label>
         <input
           id="verify-password"
-          // type="password"
+          type="password"
           className="icook-form-input"
         />
 
