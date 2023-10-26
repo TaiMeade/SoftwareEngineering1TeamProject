@@ -15,8 +15,6 @@ const UserPostedRecipesPage: NextPage<PageProps> = async ({ searchParams }) => {
 
   if (!p || p < 0) p = 0;
 
-  console.log("p?", p);
-
   const session = await getAuth();
   // * If the user is not logged in, redirect them to the login page.
   if (!session?.user?.id) {
