@@ -10,6 +10,7 @@ export const SIDEBAR_ITEMS: NavItemProps[] = [
   { label: "Profile", href: "/profile/" },
   { label: "Edit Profile", href: "/profile/edit" },
   { label: "Create Recipe", href: "/profile/create" },
+  { label: "My Recipes", href: "/profile/posted" },
   { label: "Saved Recipes", href: "/profile/saved" },
   { label: "Settings", href: "/profile/settings" },
   { label: "Change Password", href: "/profile/changePassword" },
