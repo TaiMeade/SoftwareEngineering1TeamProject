@@ -1,5 +1,4 @@
 import { type Metadata, type NextPage } from "next";
-import Link from "next/link";
 
 const AboutPage: NextPage = () => {
   return (
@@ -13,8 +12,11 @@ const AboutPage: NextPage = () => {
         with a singular place in which they can organize, share, and find new
         recipes. We hope to provide these services at a minimal cost, while also
         providing a beautiful, easy-to-navigate application. Our development
-        team is known as <em>"The Impastas"</em>, and we are based in Radford,
-        Virginia.
+        team is known as{" "}
+        <em>
+          {'"'}The Impastas{'"'}
+        </em>
+        , and we are based in Radford, Virginia.
       </p>
 
       <h2 className="text-2xl font-bold">Meet the Impastas:</h2>
