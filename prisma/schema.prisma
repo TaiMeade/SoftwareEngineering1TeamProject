@@ -23,6 +23,7 @@ enum Tag {
   DINNER
   DESSERT
   DRINK
+  SIDE
   OTHER
   // * Levels
   QUICK
