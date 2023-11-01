@@ -28,6 +28,9 @@ export const SIDEBAR_ITEMS: NavItemProps[] = [
   { label: "Logout", href: "/logout" },
 ];
 
+// * Function to sleep for a given amount of time
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 interface Omit {
   <T extends object, K extends [...(keyof T)[]]>(obj: T, ...keys: K): {
     [K2 in Exclude<keyof T, K[number]>]: T[K2];
