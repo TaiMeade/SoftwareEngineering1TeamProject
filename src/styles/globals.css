@@ -53,7 +53,8 @@
 
 @layer components {
   .page {
-    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth bg-icook-bg p-4 pt-[calc(var(--navbar-height))] text-icook-text antialiased;
+    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth p-4 pt-[calc(var(--navbar-height))]  antialiased;
+    /* bg-icook-bg text-icook-text */
   }
   .page > div {
     @apply py-8;
@@ -62,18 +63,8 @@
     @apply text-icook-text/70 transition-all duration-75 ease-in-out hover:text-icook-text hover:underline;
   }
 
-  /* .icook-button {
-    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-icook-text px-4 py-2 text-base font-medium text-white shadow-sm transition-all duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-icook-primary focus:ring-offset-2 hover:bg-icook-secondary;
-  } */
   .icook-button {
     @apply btn btn-primary;
-  }
-
-  .icook-form-input {
-    @apply form-input block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-150 ease-in-out focus:border-icook-primary focus:outline-none focus:ring-icook-primary;
-  }
-  .icook-form-textarea {
-    @apply form-textarea block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-150 ease-in-out focus:border-icook-primary focus:outline-none focus:ring-icook-primary;
   }
 }
 

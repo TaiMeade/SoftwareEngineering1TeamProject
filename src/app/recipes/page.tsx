@@ -18,8 +18,8 @@ const RecipesPage: NextPage = async () => {
 
       {recipes.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {recipes.map((recipe) => (
-            <RecipeCard recipe={recipe} key={recipe.id} />
+          {recipes.map((recipe, idx) => (
+            <RecipeCard key={recipe.id} recipe={recipe} idx={idx} />
           ))}
         </div>
       ) : (

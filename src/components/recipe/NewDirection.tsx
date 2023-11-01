@@ -30,7 +30,6 @@ const NewDirection: React.FC<NewDirectionProps> = ({ setDirections }) => {
             }}
             type="text"
             placeholder="Direction"
-            // className="icook-form-input"
             className="input input-bordered w-full"
           />
         </div>

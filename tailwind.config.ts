@@ -2,6 +2,7 @@ import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 import scrollbar from "tailwind-scrollbar";
+import typography from "@tailwindcss/typography";
 import daisyui, { type Config as DaisyConfig } from "daisyui";
 
 export default {
@@ -27,24 +28,9 @@ export default {
       },
     },
   },
-  plugins: [forms({ strategy: "class" }), scrollbar, daisyui],
   daisyui: {
-    // themes: ["light", "business"],
-    themes: [
-      {
-        icook: {
-          primary: "#2196f3",
-          secondary: "#4fff72",
-          accent: "#ce0899",
-          neutral: "#151b23",
-          "base-100": "#e8ecf2",
-          info: "#3b97e3",
-          success: "#116f40",
-          warning: "#9a7c0e",
-          error: "#f6657f",
-        },
-      },
-    ],
     logs: false,
+    themes: ["light"],
   } satisfies DaisyConfig,
+  plugins: [forms({ strategy: "class" }), scrollbar, typography, daisyui],
 } satisfies Config;

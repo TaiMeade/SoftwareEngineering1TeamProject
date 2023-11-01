@@ -55,6 +55,8 @@ model Recipe {
   directions  Json?
   tags        Json?
 
+  markdown String? @db.Text
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -65,6 +67,7 @@ model Recipe {
 
   // * Users that have saved this recipe
   savedBy User[] @relation("SavedRecipes")
+  likedBy User[] @relation("LikedRecipes")
 
   @@index([authorId])
 }
@@ -101,7 +104,6 @@ model User {
   // * Recipe App
   username String? @unique
   password String?
-  // role String @default("USER")
   role     Role    @default(USER)
 
   // * Personal Info
@@ -115,6 +117,7 @@ model User {
 
   // * Users Saved / Favorited Recipes
   savedRecipes Recipe[] @relation("SavedRecipes")
+  likedRecipes Recipe[] @relation("LikedRecipes")
 
   @@index([username])
   @@index([email])

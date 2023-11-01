@@ -28,3 +28,8 @@ interface Ingredient {
   quantity: string;
   unit: string;
 }
+
+interface NextErrorPage {
+  error: Error & { digest?: string };
+  reset: () => void;
+}

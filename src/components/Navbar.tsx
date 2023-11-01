@@ -1,8 +1,11 @@
 import Link from "next/link";
+
 import { getAuth } from "~/server/session";
 import { NAV_ITEMS } from "~/utils";
-import Avatar from "./auth/Avatar";
+
 import SignInButton from "./auth/SignInButton";
+import Avatar from "./auth/Avatar";
+
 import SearchBar from "./search/SearchBar";
 
 const Navbar = async () => {

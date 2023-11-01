@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,8 +6,9 @@ import { type z } from "zod";
 
 import { toast } from "sonner";
 
-import ModifyUserImage from "./ModifyUserImage";
 import { updateUserSchema } from "~/utils/schemas";
+import { useUploadThing } from "~/utils/ut";
+import { useEffect, useState } from "react";
 
 interface UserFormProps {
   bio: string | null;
@@ -29,7 +31,31 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
     },
   });
 
+  const { startUpload } = useUploadThing("userUpdateImg");
+
+  const [file, setFile] = useState<File | null>(null);
+  const [previewURL, setPreviewURL] = useState<string>();
+
+  useEffect(() => {
+    if (!file) {
+      setPreviewURL(undefined);
+      return;
+    }
+
+    const objectURL = URL.createObjectURL(file);
+    setPreviewURL(objectURL);
+
+    return () => URL.revokeObjectURL(objectURL);
+  }, [file]);
+
   const onFormSubmit = async (data: z.infer<typeof updateUserSchema>) => {
+    toast.message("Updating user...");
+
+    if (file) {
+      const fileUrls = await startUpload([file]);
+      data.image = fileUrls?.[0]?.url ?? undefined;
+    }
+
     const res = await fetch("/api/user", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -49,13 +75,29 @@ const UpdateUserForm: React.FC<UserFormProps> = ({
     >
       {/* User Image */}
       <div className="form-control flex flex-col gap-4">
-        <label htmlFor="user-image" className="label">
-          <span className="label-text text-2xl font-bold">
+        <img
+          src={userImage ?? previewURL ?? "/placeholder.png"}
+          alt="User Image"
+          className="h-36 w-36 rounded-lg object-cover"
+        />
+
+        <label htmlFor="user-image" className="label mb-1 mt-4 ">
+          <span className="label-text text-lg font-bold">
             Update User Image
           </span>
+          <span className="label-text-alt">(Optional)</span>
         </label>
 
-        <ModifyUserImage userImage={userImage} />
+        <input
+          id="user-image"
+          type="file"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setFile(e.target.files[0]);
+            }
+          }}
+          className="file-input file-input-bordered w-full"
+        />
       </div>
 
       {/* Username */}

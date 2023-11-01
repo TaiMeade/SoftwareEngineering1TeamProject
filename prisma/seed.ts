@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 
 interface Ingredient {
   name: string;
-  quantity: number;
+  quantity: string;
   unit: string;
 }
 
@@ -74,11 +74,13 @@ const createRandomRecipe = (authorId: string): Prisma.RecipeCreateInput => {
         for (let i = 0; i < 5; i++) {
           ingredients.push({
             name: faker.lorem.words(2),
-            quantity: faker.number.float({
-              min: 0.5,
-              max: 10,
-              precision: 0.1,
-            }),
+            quantity: faker.number
+              .float({
+                min: 0.5,
+                max: 10,
+                precision: 0.1,
+              })
+              .toString(),
             unit: faker.science.unit().name,
           });
         }

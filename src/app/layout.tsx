@@ -7,7 +7,6 @@ import { getAuth } from "~/server/session";
 
 import Providers from "~/components/Providers";
 import Navbar from "~/components/Navbar";
-import { Toaster } from "sonner";
 
 const poppins = Poppins({
   display: "swap",
@@ -27,7 +26,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const session = await getAuth();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         <link
           rel="apple-touch-icon"
@@ -50,6 +49,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
       </head>
+
       <body
         className={cn(
           "min-h-screen font-sans antialiased",
@@ -57,16 +57,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           poppins.variable,
         )}
       >
-        <Navbar />
-        <main className="page">
-          <Providers session={session}>{children}</Providers>
-          <Toaster
-            richColors={true}
-            closeButton={true}
-            toastOptions={{ duration: 5000 }}
-          />
-        </main>
-        {/* Footer */}
+        <Providers session={session}>
+          <Navbar />
+          <main className="page">{children}</main>
+          {/* <Footer /> */}
+        </Providers>
       </body>
     </html>
   );

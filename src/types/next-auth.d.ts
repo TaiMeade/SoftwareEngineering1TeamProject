@@ -14,8 +14,9 @@ declare module "next-auth" {
       username: string | null;
       role: "USER" | "ADMIN";
       bio: string | null;
-      favoriteFood: string | null;
-      favoriteTag: string | null;
+      role: "USER" | "ADMIN";
+      // favoriteFood: string | null;
+      // favoriteTag: string | null;
     } & DefaultSession["user"];
   }
 

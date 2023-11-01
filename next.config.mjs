@@ -11,7 +11,7 @@ const config = {
   reactStrictMode: true,
   i18n: { locales: ["en"], defaultLocale: "en" },
   images: {
-    domains: ["lh3.googleusercontent.com", "utfs.io"],
+    domains: ["lh3.googleusercontent.com", "utfs.io", "loremflickr.com"],
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
@@ -19,8 +19,6 @@ const config = {
   swcMinify: true,
   trailingSlash: true,
   cleanDistDir: true,
-  // * Experimental
-  experimental: { serverActions: true },
 };
 
 export default config;

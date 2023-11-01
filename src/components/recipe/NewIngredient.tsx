@@ -35,7 +35,6 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Name"
-          // className="icook-form-input"
           className="input input-bordered w-full"
         />
         <input
@@ -45,7 +44,6 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Quantity"
-          // className="icook-form-input"
           className="input input-bordered w-full"
         />
 
@@ -56,7 +54,6 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Unit"
-          // className="icook-form-input"
           className="input input-bordered w-full"
         />
       </div>

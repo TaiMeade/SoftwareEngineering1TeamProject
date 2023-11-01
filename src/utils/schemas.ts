@@ -66,7 +66,7 @@ export const parseIngredients = (_ingredients: JsonValue) => {
   if (Array.isArray(data)) {
     return data;
   }
-  return [data];
+  return [];
 };
 
 export const updateUserSchema = z.object({
@@ -86,6 +86,7 @@ export const updateUserSchema = z.object({
       message: "Password must be less than 20 characters",
     })
     .optional(),
+  image: z.string().optional(),
 });
 
 /**
@@ -98,12 +99,21 @@ export const createRecipeSchema = z.object({
   cost: z.enum(["$", "$$", "$$$"]).default("$"),
   ingredients: ingredientsSchema.default([]),
   directions: directionsSchema.default([]),
+  markdown: z.string().optional().nullable().default(""),
   image: z.string().optional().nullable().default("/placeholder.png"),
+});
+
+/**
+ * Delete recipe Schema
+ */
+export const deleteRecipeSchema = z.object({
+  id: z.string().min(1),
 });
 
 /**
  * Create comment Schema
  */
 export const createCommentSchema = z.object({
-  text: z.string().min(3).max(150),
+  text: z.string().min(3).max(200),
+  recipeId: z.string().min(1),
 });

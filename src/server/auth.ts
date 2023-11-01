@@ -15,13 +15,23 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async ({ session, user }) => {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+      });
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          role: dbUser?.role ?? "USER",
+          username: dbUser?.username ?? null,
+          name: dbUser?.name ?? null,
+          bio: dbUser?.bio ?? null,
+        },
+      };
+    },
   },
   providers: [
     GoogleProvider({

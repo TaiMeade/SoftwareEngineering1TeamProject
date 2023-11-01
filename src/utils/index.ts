@@ -1,12 +1,23 @@
+import moment from "moment";
+
 export const NAV_ITEMS: NavItemProps[] = [
-  // Example Navbar Items
   { label: "About", href: "/about" },
   { label: "Recipes", href: "/recipes" },
   { label: "Profile", href: "/profile" },
 ];
 
+export const FOOTER_ITEMS: NavItemProps[][] = [
+  [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+  ],
+  [
+    { label: "Recipes", href: "/recipes" },
+    { label: "Profile", href: "/profile" },
+  ],
+];
+
 export const SIDEBAR_ITEMS: NavItemProps[] = [
-  // Example Navbar Items
   { label: "Profile", href: "/profile/" },
   { label: "Edit Profile", href: "/profile/edit" },
   { label: "Create Recipe", href: "/profile/create" },
@@ -47,3 +58,5 @@ export const prettifyTag = (tag: string) => {
   const firstLetter = tag[0] || "";
   return firstLetter + tag.slice(1)?.toLowerCase() || "";
 };
+
+export const fmtDate = (date: Date) => moment(date).format("MMMM Do YYYY");
