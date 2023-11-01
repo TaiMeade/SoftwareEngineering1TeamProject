@@ -59,6 +59,7 @@ const UserProfilePage: NextPage = async () => {
             image: "/placeholder.png",
             ingredients: [],
             tags: [],
+            markdown: null,
           }}
         />
 

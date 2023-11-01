@@ -21,7 +21,20 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
 
   const recipe = await prisma.recipe.findUnique({
     where: { id },
-    include: { author: { select: { name: true } }, comments: true },
+    include: {
+      author: { select: { name: true } },
+      comments: {
+        include: {
+          author: {
+            select: {
+              name: true,
+              id: true,
+              username: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!recipe) {
