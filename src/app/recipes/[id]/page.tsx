@@ -22,6 +22,7 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const recipe = await prisma.recipe.findUnique({
     where: { id },
     include: {
+      likedBy: { select: { _count: true } },
       author: { select: { name: true } },
       comments: {
         include: {
@@ -45,7 +46,7 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     <div className="flex flex-col gap-12">
       <h1 className="text-4xl font-bold">Recipe Page</h1>
 
-      <RecipePage recipe={recipe} />
+      <RecipePage recipe={recipe} likes={recipe.likedBy.length} />
     </div>
   );
 };
