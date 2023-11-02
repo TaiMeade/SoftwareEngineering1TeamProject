@@ -1,15 +1,50 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { type ClientSafeProvider, signIn } from "next-auth/react";
+import { type IconType } from "react-icons";
 
-const SignInButton: React.FC = () => {
+import { BsGoogle } from "react-icons/bs";
+import { VscLoading } from "react-icons/vsc";
+
+interface SignInButtonProps {
+  provider?: ClientSafeProvider;
+}
+
+const SignInButton: React.FC<SignInButtonProps> = ({ provider }) => {
+  if (!provider) return <DefaultSignIn />;
+
+  let Icon: IconType = VscLoading;
+
+  switch (provider.name) {
+    case "Google":
+      Icon = BsGoogle;
+      break;
+    default:
+      break;
+  }
+
   return (
     <button
-      onClick={() => void signIn()}
-      className="rounded bg-zinc-400 px-4 py-2 font-bold text-black hover:bg-zinc-500"
+      onClick={() => void signIn(provider.id)}
+      className="btn btn-secondary flex flex-row items-center justify-center space-x-2"
     >
-      Sign In
+      <div>
+        <Icon className="h-6 w-6" />
+      </div>
+
+      <div className="h-full w-[0.05rem] bg-white" />
+
+      <p>Sign in with {provider.name}</p>
     </button>
   );
 };
 
 export default SignInButton;
+
+const DefaultSignIn: React.FC = () => (
+  <button
+    onClick={() => void signIn("google")}
+    className="btn btn-secondary flex flex-row items-center justify-center space-x-2"
+  >
+    <p>Sign in</p>
+  </button>
+);

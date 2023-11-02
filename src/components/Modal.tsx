@@ -31,6 +31,7 @@ const Modal: React.FC<ModalProps> = ({
       <button onClick={toggleModal} className={cn("btn", btnClass)}>
         {button ?? "Open Modal"}
       </button>
+
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <div className="flex w-full flex-row items-center justify-between ">

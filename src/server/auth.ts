@@ -54,7 +54,10 @@ export const authOptions: AuthOptions = {
       console.log(`Warn: ${code}`);
     },
   },
-  pages: { error: "/" },
+  /**
+   * @see https://next-auth.js.org/configuration/pages
+   */
+  pages: { error: "/", newUser: "/profile/edit", signIn: "/login" },
   theme: {
     brandColor: "var(--icook-primary)",
     buttonText: "var(--icook-text)",

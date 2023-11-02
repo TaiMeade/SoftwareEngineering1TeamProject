@@ -17,9 +17,9 @@ const RecipesPage: NextPage = async () => {
       <h1 className="text-4xl font-bold">Browse Recipes Page</h1>
 
       {recipes.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {recipes.map((recipe, idx) => (
-            <RecipeCard key={recipe.id} recipe={recipe} idx={idx} />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       ) : (

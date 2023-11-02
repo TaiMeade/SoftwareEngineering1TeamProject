@@ -7,6 +7,7 @@ import Image from "next/image";
 
 import RecipeCard from "~/components/recipe/RecipeCard";
 import Link from "next/link";
+import { cn } from "~/utils/tw";
 
 const AMT_OF_RECIPES = 10;
 
@@ -29,7 +30,11 @@ const UserPostedRecipesPage: NextPage<PageProps> = async ({ searchParams }) => {
     orderBy: { createdAt: "desc" },
   });
 
-  const highestPage = Math.floor(recipes.length / AMT_OF_RECIPES);
+  const numRecipes = await prisma.recipe.count({
+    where: { authorId: session.user.id },
+  });
+
+  const numPages = Math.ceil(numRecipes / AMT_OF_RECIPES);
 
   return (
     <>
@@ -52,29 +57,25 @@ const UserPostedRecipesPage: NextPage<PageProps> = async ({ searchParams }) => {
       <h2>{session.user.bio ?? " "}</h2>
 
       <h1 className="text-2xl font-bold">Previously Created Recipes </h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
         {recipes?.map((recipe) => (
           <RecipeCard recipe={recipe} key={recipe.id} />
         ))}
       </div>
 
-      <div className="flex flex-row items-center justify-center gap-2">
-        <Link
-          href={`/profile/posted/?p=${p - 1 < 0 ? 0 : p - 1}`}
-          style={{ display: p - 1 < 0 ? "none" : "flex" }}
-          className="btn btn-secondary"
-        >
-          Prev
-        </Link>
-        <Link
-          href={`/profile/posted/?p=${
-            p + 1 > highestPage ? highestPage : p + 1
-          }`}
-          style={{ display: p + 1 > highestPage ? "none" : "flex" }}
-          className="btn btn-primary"
-        >
-          Next
-        </Link>
+      <div className="join flex w-full justify-center">
+        {Array.from({ length: numPages }, (_, i) => (
+          <Link
+            href={`/profile/posted/?p=${i}`}
+            key={`/profile/posted/?p=${i}`}
+            className={cn(
+              "btn btn-neutral join-item",
+              i === p && "brightness-50",
+            )}
+          >
+            {i + 1}
+          </Link>
+        ))}
       </div>
 
       <div className="w-full pb-8" />

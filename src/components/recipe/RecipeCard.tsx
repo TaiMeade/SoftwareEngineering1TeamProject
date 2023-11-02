@@ -1,80 +1,74 @@
 import { type Recipe } from "@prisma/client";
-import Image from "next/image";
+
 import Link from "next/link";
+import Image from "next/image";
+
 import { fmtDate } from "~/utils";
 import { parseTags } from "~/utils/schemas";
 import { cn } from "~/utils/tw";
+
+import Tag from "./Tag";
 
 interface RecipeCardProps {
   recipe: Recipe & {
     author: { name: string | null };
   };
-  idx?: number;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, idx = 0 }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const tags = parseTags(recipe.tags);
   const createdAt = fmtDate(recipe.createdAt);
 
   return (
     <Link
       href={`/recipes/${recipe.id}`}
-      className="scale-100 transition-all duration-200 ease-in-out hover:scale-[1.01]"
+      className="card scale-100 rounded-lg shadow-lg transition-all duration-200 ease-in-out hover:scale-[1.01]"
     >
-      <div className="flex h-full flex-col items-start justify-start gap-2 rounded-lg bg-white p-4 shadow-md">
+      <figure>
         <div
           className={cn(
-            "mb-2 h-56 w-full animate-pulse rounded-lg bg-gray-300",
-            recipe.image && "animate-none",
+            // animate-pulse
+            "w-full border-b border-b-gray-200/80 bg-gray-300",
+            // recipe.image && "animate-none",
           )}
         >
-          {recipe.image && (
-            <Image
-              src={recipe.image}
-              width={512}
-              height={224}
-              loading={idx < 3 ? "eager" : "lazy"}
-              alt={recipe.title}
-              className="h-56 w-full rounded-lg object-cover"
-            />
-          )}
+          <Image
+            src={recipe.image ?? "/placeholder.png"}
+            width={512}
+            height={224}
+            alt={recipe.title}
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            className="aspect-video h-72 w-auto object-cover sm:h-80 md:h-56"
+          />
         </div>
+      </figure>
 
-        <h2 className="text-xl font-semibold first-letter:uppercase">
-          {recipe.title}
-        </h2>
+      <div className="card-body rounded-b-lg bg-slate-50 p-4">
+        <div className="flex flex-col">
+          <h2 className="card-title text-xl font-semibold first-letter:!uppercase">
+            {recipe.title}
+          </h2>
+
+          <p className="line-clamp-1 text-xs text-gray-600">
+            {recipe.author.name}
+          </p>
+        </div>
 
         <p className="line-clamp-3 min-h-[4rem] text-sm text-gray-600">
           {recipe.description || "No description provided."}
         </p>
+        <div className="flex flex-col items-start justify-start">
+          <p className="line-clamp-1 text-sm text-gray-600">{createdAt}</p>
+        </div>
 
-        <div className="flex w-full flex-1 items-end justify-between">
-          <div className="flex flex-col items-start justify-start">
-            <p className="line-clamp-1 text-sm text-gray-600">{createdAt}</p>
-
-            <p className="line-clamp-1 text-xs text-gray-600">
-              {recipe.author.name}
-            </p>
-          </div>
-
-          <div className="space-x-1">
-            {tags?.slice(0, 2)?.map((tag: string, index: number) => (
-              <span
-                key={index}
-                className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-600"
-              >
-                {tag}
-              </span>
+        <div className="card-actions min-h-[1.3rem]">
+          <div className="flex flex-row items-end justify-end space-x-1">
+            {tags?.map((tag) => (
+              <Tag key={tag} tag={tag} />
             ))}
-
-            {tags?.length > 2 && (
-              <span
-                data-filler=""
-                className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-600"
-              >
-                ...
-              </span>
-            )}
           </div>
         </div>
       </div>

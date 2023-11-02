@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch }) => {
       />
       <button
         onClick={() => router.push(`/search?q=${search}`)}
-        className="icook-button flex flex-row items-center justify-center gap-2 rounded-l-none"
+        className="btn btn-accent flex flex-row items-center justify-center gap-2 rounded-l-none"
       >
         <BsSearch className="text-sm" />
         <span>Search</span>

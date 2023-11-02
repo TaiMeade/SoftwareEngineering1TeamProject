@@ -36,7 +36,11 @@ const NewDirection: React.FC<NewDirectionProps> = ({ setDirections }) => {
 
         {err && <p className="text-red-500">{err}</p>}
 
-        <button type="button" onClick={addDirection} className="icook-button">
+        <button
+          type="button"
+          onClick={addDirection}
+          className="btn btn-primary"
+        >
           Add Direction
         </button>
       </div>

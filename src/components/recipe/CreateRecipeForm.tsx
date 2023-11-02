@@ -219,8 +219,8 @@ const CreateRecipeForm: React.FC = () => {
       <div className="form-control mt-2 flex flex-col gap-4">
         <button
           type="submit"
-          // disabled={formState.isSubmitting || formState.isSubmitted}
-          className="icook-button transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
+          disabled={formState.isSubmitting || formState.isSubmitted}
+          className="btn btn-primary transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
         >
           {!formState.isSubmitting ? (
             "Create Recipe"

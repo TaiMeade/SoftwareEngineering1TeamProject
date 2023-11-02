@@ -1,13 +1,14 @@
 "use client";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { type Session } from "next-auth";
 
 import { SIDEBAR_ITEMS } from "~/utils";
 
+import { useMediaQuery } from "~/utils/hooks/useMediaQuery";
+
 import Link from "next/link";
-import FakeAvatar from "../FakeAvatar";
-import { AiFillCaretDown } from "react-icons/ai";
+import Image from "next/image";
 
 import {
   m,
@@ -16,8 +17,8 @@ import {
   LazyMotion,
   domAnimation,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "~/utils/hooks/useMediaQuery";
+
+import { AiFillCaretDown, AiOutlineUser } from "react-icons/ai";
 
 const sidebarVariants: Variants = {
   open: { y: 0, transition: { duration: 0.2 } },
@@ -63,10 +64,9 @@ const AuthSidebar: React.FC = () => {
           },
         }}
         transition={{ duration: 0.2 }}
-        className="fixed bottom-0 left-0 z-[10] flex w-full flex-col items-start justify-start bg-zinc-800 md:bottom-auto md:h-[calc(100vh-var(--navbar-height))] md:w-64"
+        className="fixed bottom-0 left-0 z-[10] flex w-full flex-col items-start justify-start bg-icook-neutral md:bottom-auto md:h-[calc(100vh-var(--navbar-height))] md:w-64"
       >
         {/* // * Sidebar Content Below */}
-
         <div
           ref={contentRef}
           className="flex w-full flex-col items-center justify-start border-b border-gray-600 px-6 "
@@ -96,7 +96,7 @@ const AuthSidebar: React.FC = () => {
           animate={controls}
           variants={sidebarVariants}
           transition={{ duration: 0.2 }}
-          className="items-sttart flex h-full w-full flex-col justify-start bg-zinc-800"
+          className="items-sttart flex h-full w-full flex-col justify-start bg-icook-neutral"
         >
           <div className="w-full flex-1 border-b border-gray-600 pt-5">
             <SidebarUser session={session} />
@@ -140,7 +140,7 @@ const SidebarUser: React.FC<{ session: Session | null }> = ({ session }) => {
               className="h-10 w-10 flex-1 rounded-full object-cover"
             />
           ) : (
-            <FakeAvatar className="h-10 w-10 flex-1 rounded-full object-cover" />
+            <AiOutlineUser className="h-10 w-10 flex-1 rounded-full object-cover" />
           )}
 
           <div className="flex flex-col items-start justify-start">

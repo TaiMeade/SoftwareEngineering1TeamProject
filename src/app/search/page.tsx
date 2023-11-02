@@ -46,7 +46,7 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
       </div>
 
       {searchResults.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
           {searchResults.map((recipe) => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}

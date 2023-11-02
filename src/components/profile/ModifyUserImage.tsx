@@ -1,7 +1,9 @@
 "use client";
-import { UploadDropzone } from "~/utils/ut";
 import Image from "next/image";
-import FakeAvatar from "../FakeAvatar";
+
+import { UploadDropzone } from "~/utils/ut";
+
+import { AiOutlineUser } from "react-icons/ai";
 
 interface ModifyUserImageProps {
   userImage: string | null | undefined;
@@ -25,7 +27,7 @@ const ModifyUserImage: React.FC<ModifyUserImageProps> = ({ userImage }) => {
               className="h-44 w-44 object-cover"
             />
           ) : (
-            <FakeAvatar className="h-44 w-44 animate-pulse duration-1000" />
+            <AiOutlineUser className="h-44 w-44 animate-pulse duration-1000" />
           )}
         </div>
 

@@ -112,7 +112,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
         )}
       </div>
       <div className="flex flex-col gap-4">
-        <button type="submit" className="icook-button">
+        <button type="submit" className="btn btn-primary">
           Update Password
         </button>
       </div>

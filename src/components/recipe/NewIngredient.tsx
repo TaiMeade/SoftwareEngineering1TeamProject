@@ -60,7 +60,7 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
 
       {err && <p className="text-red-500">{err}</p>}
 
-      <button type="button" onClick={addIngredient} className="icook-button">
+      <button type="button" onClick={addIngredient} className="btn btn-primary">
         Add Ingredient
       </button>
     </div>

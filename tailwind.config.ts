@@ -19,9 +19,9 @@ export default {
       colors: {
         "icook-nav": "rgb(245, 245, 245)",
         "icook-primary": "#2196f3",
-        "icook-secondary": "#2196f3",
-        "icook-accent": "#ce0899",
-        "icook-neutral": "#151b23",
+        "icook-secondary": "#ff9800",
+        "icook-accent": "#ff5722",
+        "icook-neutral": "#27272a",
         "icook-base-100": "#e8ecf2",
         "icook-text": "#333",
         "icook-bg": "#F5F5F5",
@@ -30,7 +30,18 @@ export default {
   },
   daisyui: {
     logs: false,
-    themes: ["light"],
+    themes: [
+      {
+        icook: {
+          primary: "#2196f3",
+          secondary: "#ff9800",
+          accent: "#ff5722",
+          neutral: "#27272a",
+          "base-100": "#e8ecf2",
+        },
+      },
+      "light",
+    ],
   } satisfies DaisyConfig,
   plugins: [forms({ strategy: "class" }), scrollbar, typography, daisyui],
 } satisfies Config;

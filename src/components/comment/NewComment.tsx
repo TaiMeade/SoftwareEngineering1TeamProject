@@ -69,7 +69,7 @@ const NewComment: React.FC = () => {
       </div>
 
       <div className="flex flex-col gap-4">
-        <button type="submit" className="icook-button">
+        <button type="submit" className="btn btn-primary">
           Post Comment
         </button>
       </div>
