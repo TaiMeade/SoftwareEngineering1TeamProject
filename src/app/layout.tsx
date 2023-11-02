@@ -7,6 +7,7 @@ import { getAuth } from "~/server/session";
 
 import Providers from "~/components/Providers";
 import Navbar from "~/components/Navbar";
+import Script from "next/script";
 
 const poppins = Poppins({
   display: "swap",
@@ -48,6 +49,15 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
+
+        {/* Tailwind fix? */}
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            id="tailwindcss"
+            rel="stylesheet"
+            src="https://cdn.tailwindcss.com"
+          />
+        )}
       </head>
 
       <body
