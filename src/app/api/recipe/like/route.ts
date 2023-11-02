@@ -4,7 +4,7 @@ import { getAuth } from "~/server/session";
 import { updateLikedBySchema } from "~/utils/schemas";
 
 export async function POST(req: Request) {
-  console.log("Deleting recipe");
+  console.log("Liking recipe");
   const session = await getAuth();
 
   if (!session) {
@@ -43,18 +43,25 @@ export async function POST(req: Request) {
     }
 
     if (recipe.authorId !== session.user.id && session.user.role !== "ADMIN") {
-      console.error("Unauthorized request to delete recipe");
+      console.error("Unauthorized request to like recipe");
       return NextResponse.json(null, {
         status: 401,
         statusText: "Unauthorized",
       });
     }
 
-    console.log("Updated recipe", recipe);
+    await prisma.recipe.update({
+        where: { id: data.id },
+        data: {
+            likedBy: session.user,
+        }
+      });
+
+    console.log("Liked recipe", recipe);
 
     return NextResponse.json(recipe, { status: 200, statusText: "OK" });
   } catch (error) {
-    console.error("Error deleting recipe", error);
+    console.error("Error liking recipe", error);
     return NextResponse.json(error, {
       status: 500,
       statusText: "Internal Server Error",
