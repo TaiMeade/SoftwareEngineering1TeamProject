@@ -50,6 +50,10 @@ export async function POST(req: Request) {
       });
     }
 
+    await prisma.recipe.delete({
+      where: { id: data.id },
+    });
+
     console.log("Deleted recipe", recipe);
 
     return NextResponse.json(recipe, { status: 200, statusText: "OK" });
