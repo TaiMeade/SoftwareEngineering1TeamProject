@@ -6,10 +6,11 @@ import { cn } from "~/utils/tw";
 import { fmtDate } from "~/utils";
 import { type Recipe, type Comment } from "@prisma/client";
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
-
+import LikeButton from "../like/LikeButton";
 import RecipeToolbar from "./RecipeToolbar";
 
 interface RecipePageProps {
+  likes: number;
   recipe: Recipe & {
     author: { name: string | null };
     comments: (Comment & {
@@ -22,7 +23,7 @@ interface RecipePageProps {
   };
 }
 
-const RecipePage: React.FC<RecipePageProps> = async ({ recipe }) => {
+const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
   const session = await getAuth();
 
   const createdAt = fmtDate(recipe.createdAt);
@@ -118,6 +119,11 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe }) => {
             </span>
           ))}
         </div>
+      </div>
+
+      {/* Likes */}
+      <div className="">
+        <LikeButton numLikes={likes} />
       </div>
 
       {/* Comments */}

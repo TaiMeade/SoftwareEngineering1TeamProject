@@ -111,6 +111,13 @@ export const deleteRecipeSchema = z.object({
 });
 
 /**
+ * Update LikedBy schema
+ */
+export const updateLikedBySchema = z.object({
+  id: z.string().min(1),
+});
+
+/**
  * Create comment Schema
  */
 export const createCommentSchema = z.object({
