@@ -50,14 +50,10 @@ export async function POST(req: Request) {
       });
     }
 
-    const userThatLiked = await prisma.user.findUnique({
-      where: { id: session.user.id },
-    });
-
     await prisma.recipe.update({
       where: { id: data.id },
       data: {
-        likedBy: { userThatLiked },
+        likedBy: { connect: { id: session.user.id } },
       },
     });
 

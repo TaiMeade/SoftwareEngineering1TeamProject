@@ -35,8 +35,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
       toast.success("Recipe liked!");
 
       await sleep(1000);
-
-      router.push("/");
     } else toast.error("Failed to like recipe!");
   };
 
