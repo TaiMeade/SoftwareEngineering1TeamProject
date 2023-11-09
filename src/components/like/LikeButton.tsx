@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaThumbsUp } from "react-icons/fa";
+
 import { type Recipe } from "@prisma/client";
+
 import { toast } from "sonner";
 import { sleep } from "~/utils";
+
+import { FaThumbsUp } from "react-icons/fa";
 
 interface LikeButtonProps {
   numLikes: number;

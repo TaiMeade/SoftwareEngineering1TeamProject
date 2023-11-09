@@ -38,6 +38,10 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     },
   });
 
+  const likes = await prisma.recipe.count({
+    where: { id, likedBy: { some: { id: id } } },
+  });
+
   if (!recipe) {
     return <NotFound />; // notFound();
   }
@@ -46,7 +50,7 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     <div className="flex flex-col gap-12">
       <h1 className="text-4xl font-bold">Recipe Page</h1>
 
-      <RecipePage recipe={recipe} likes={recipe.likedBy.length} />
+      <RecipePage recipe={recipe} likes={likes} />
     </div>
   );
 };
