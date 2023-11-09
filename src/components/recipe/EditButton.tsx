@@ -1,5 +1,6 @@
 import { type Recipe } from "@prisma/client";
 import React from "react";
+import Link from "next/link";
 
 interface EditProps {
   recipe: Recipe;
@@ -7,10 +8,9 @@ interface EditProps {
 const EditButton = ({ recipe }: EditProps) => {
   return (
     <div>
-      <button className="btn-red btn flex flex-row items-center justify-center gap-2 text-lg disabled:btn-disabled ">
-        {" "}
-        Edit{" "}
-      </button>
+      <Link href="recipes/edit/" className="btn-grey btn">
+        Edit
+      </Link>
     </div>
   );
 };
