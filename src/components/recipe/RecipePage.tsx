@@ -123,7 +123,7 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
 
       {/* Likes */}
       <div className="">
-        <LikeButton numLikes={likes} />
+        <LikeButton numLikes={likes} recipe={recipe} />
       </div>
 
       {/* Comments */}

@@ -39,9 +39,9 @@ const AboutPage: NextPage = () => {
         <br></br>
       </ul>
 
-      <p className="text-center text-sm">
+      {/* No longer needed............<p className="text-center text-sm">
         (Unofficial) Copyright © 2023 Impastas
-      </p>
+      </p> */}
     </div>
   );
 };

@@ -8,8 +8,8 @@ import { toast } from "sonner";
 import { sleep } from "~/utils";
 
 interface LikeButtonProps {
-  numLikes: number;
   recipe: Recipe;
+  numLikes: number;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {

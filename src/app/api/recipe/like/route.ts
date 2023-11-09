@@ -42,20 +42,25 @@ export async function POST(req: Request) {
       });
     }
 
-    if (recipe.authorId !== session.user.id && session.user.role !== "ADMIN") {
-      console.error("Unauthorized request to like recipe");
+    if (recipe.authorId === session.user.id) {
+      console.error("Cannot like own recipe");
       return NextResponse.json(null, {
         status: 401,
         statusText: "Unauthorized",
       });
     }
 
+    const userThatLiked = await prisma.user.findUnique({
+      where: { id: session.user.id },
+    });
+
     await prisma.recipe.update({
-        where: { id: data.id },
-        data: {
-            likedBy: session.user,
-        }
-      });
+      where: { id: data.id },
+      data: {
+        likedBy: { userThatLiked },
+      },
+    });
+
 
     console.log("Liked recipe", recipe);
 
