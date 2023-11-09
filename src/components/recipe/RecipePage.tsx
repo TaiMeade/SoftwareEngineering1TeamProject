@@ -6,7 +6,7 @@ import { cn } from "~/utils/tw";
 import { fmtDate } from "~/utils";
 import { type Recipe, type Comment } from "@prisma/client";
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
-import LikeButton from "../like/LikeButton";
+import LikeButton from "./LikeButton";
 import RecipeToolbar from "./RecipeToolbar";
 
 interface RecipePageProps {
@@ -123,7 +123,7 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
 
       {/* Likes */}
       <div className="">
-        <LikeButton numLikes={likes} />
+        <LikeButton recipe={recipe} numLikes={likes} />
       </div>
 
       {/* Comments */}
