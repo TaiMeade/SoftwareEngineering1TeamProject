@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { type Recipe } from "@prisma/client";
-
-import { toast } from "sonner";
-import { sleep } from "~/utils";
-
+import React, { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
+import { type Recipe } from "@prisma/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface LikeButtonProps {
   recipe: Recipe;
@@ -35,9 +31,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
     });
 
     if (res.ok) {
-      toast.success("Recipe liked!");
-
-      await sleep(1000);
+      router.refresh();
     } else toast.error("Failed to like recipe!");
   };
 
@@ -54,7 +48,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
           <FaThumbsUp />
         </i>
       </button>
-      <span className=" text-sm">{like} likes</span>
+      <span className=" text-sm">{numLikes} likes</span>
     </div>
   );
 };
