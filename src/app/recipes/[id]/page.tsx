@@ -27,11 +27,7 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
       comments: {
         include: {
           author: {
-            select: {
-              name: true,
-              id: true,
-              username: true,
-            },
+            select: { name: true, id: true, username: true },
           },
         },
       },
@@ -44,8 +40,6 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
 
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">Recipe Page</h1>
-
       <RecipePage recipe={recipe} likes={recipe.likedBy.length} />
     </div>
   );

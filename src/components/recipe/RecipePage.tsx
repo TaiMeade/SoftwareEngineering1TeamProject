@@ -34,8 +34,6 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
 
   return (
     <div className="prose mx-auto w-full space-y-8 rounded-lg bg-white p-8 shadow-md lg:prose-lg">
-      <RecipeToolbar recipe={recipe} session={session} />
-
       <div
         className={cn(
           "h-72 w-full animate-pulse rounded-lg bg-gray-100",
@@ -125,6 +123,8 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
       <div className="">
         <LikeButton recipe={recipe} numLikes={likes} />
       </div>
+
+      <RecipeToolbar recipe={recipe} session={session} />
 
       {/* Comments */}
       {/* <ListComments

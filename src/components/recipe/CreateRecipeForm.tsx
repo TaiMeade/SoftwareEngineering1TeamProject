@@ -121,6 +121,7 @@ const CreateRecipeForm: React.FC = () => {
         <label htmlFor="ingredients" className="label mb-2 mt-4">
           <span className="label-text text-lg font-bold">Ingredients</span>
         </label>
+
         <ol className="list-decimal">
           {ingdnts.map((ing, idx) => (
             <li
