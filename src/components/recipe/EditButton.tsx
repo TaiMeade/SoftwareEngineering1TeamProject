@@ -21,8 +21,6 @@ const EditButton = ({ recipe }: EditProps) => {
         {"  "}
         Edit{"  "}
       </button>
-      {/* if(redirecter)
-      {redirect("/recipe/edit")} */}
     </div>
   );
 };

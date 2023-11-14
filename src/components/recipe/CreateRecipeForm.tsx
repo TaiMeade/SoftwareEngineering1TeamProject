@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Reorder } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { type Recipe, Tag } from "@prisma/client";
 import { type z } from "zod";
@@ -16,6 +17,7 @@ import NewDirection from "./NewDirection";
 import { FaSpinner } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
+import React from "react";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
@@ -138,11 +140,15 @@ const CreateRecipeForm: React.FC = () => {
           <span className="label-text text-lg font-bold">Directions</span>
         </label>
         <ol className="list-decimal">
-          {dirs.map((dir) => (
-            <li key={dir} className="list-item list-inside">
-              {dir}
-            </li>
-          ))}
+          <Reorder.Group axis="y" values={dirs} onReorder={setDirs}>
+            {dirs.map((dir) => (
+              <Reorder.Item key={dir} value={dir}>
+                <li key={dir} className="list-item list-inside">
+                  {dir}
+                </li>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
         </ol>
 
         <NewDirection setDirections={setDirs} />
