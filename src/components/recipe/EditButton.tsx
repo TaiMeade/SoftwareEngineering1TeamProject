@@ -9,7 +9,7 @@ interface EditProps {
 const EditButton = ({ recipe }: EditProps) => {
   const [redirecter, setRedirecter] = useState(false);
   if (redirecter) {
-    return redirect("/recipes/edit/");
+    return redirect(`/recipes/${recipe.id}/edit/`);
   }
 
   return (
