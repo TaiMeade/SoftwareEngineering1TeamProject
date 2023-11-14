@@ -1,6 +1,10 @@
 import { type Metadata, type NextPage } from "next";
-import UserNotFound from "~/components/profile/UserNotFound";
 import { prisma } from "~/server/db";
+
+import { generateAuthorSEO } from "~/utils/seo";
+import { omitProfile } from "~/utils";
+
+import UserNotFound from "~/components/profile/UserNotFound";
 
 interface RecipesPageProps {
   params: { id: string };
@@ -12,7 +16,7 @@ interface RecipesPageProps {
 const RECIPES_AMT = 25;
 
 // * Browse Random / Trending Recipes Page
-const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
+const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
 
   if (!id || id.length < 1) {
@@ -20,30 +24,49 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     return <UserNotFound />; // notFound();
   }
 
-  let user = await prisma.user.findFirst({
-    where: { id },
+  const user = await prisma.user.findFirst({
+    where: { OR: [{ username: id }, { id }] },
     include: { recipes: { take: RECIPES_AMT } },
   });
 
-  if (!user) {
-    user = await prisma.user.findFirst({
-      where: { username: id },
-      include: { recipes: { take: RECIPES_AMT } },
-    });
-  }
-
   if (!user) return <UserNotFound />; // notFound();
+
+  const safeUser = omitProfile(user);
 
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">User {id} Page</h1>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <h1 className="text-4xl font-bold">
+        User {safeUser.username ?? safeUser.name ?? safeUser.id} Page
+      </h1>
+
+      <pre className="max-w-full overflow-hidden">
+        {JSON.stringify(safeUser, null, 2)}
+      </pre>
     </div>
   );
 };
 
-export default RecipesPage;
+export default PublicProfilePage;
 
-export const metadata: Metadata = {
-  title: "iCook | User Page",
+// export const metadata: Metadata = {
+//   title: "iCook | User Page",
+// };
+
+export const generateMetadata = async ({
+  params,
+}: RecipesPageProps): Promise<Metadata> => {
+  const id = params.id;
+
+  if (!id || id.length < 1) return { title: "iCook | User Page" };
+
+  const profile = await prisma.user.findFirst({
+    where: { OR: [{ username: id }, { id }] },
+    include: { recipes: { take: RECIPES_AMT } },
+  });
+
+  if (!profile) return { title: "iCook | User Page" };
+
+  const safeProfile = omitProfile(profile);
+
+  return generateAuthorSEO(safeProfile);
 };

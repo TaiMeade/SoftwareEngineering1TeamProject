@@ -21,9 +21,12 @@ const RecipeToolbar: React.FC<RecipeToolbarProps> = ({ session, recipe }) => {
   return (
     <div className="flex w-full flex-row items-center justify-between gap-4 pb-6 pt-0">
       <ShareButton recipe={recipe} />
-      {canEdit && <EditButton recipe={recipe} />}
-      {canDelete && <DeleteButton recipe={recipe} />}
-      {canFeature && <FeatureButton recipe={recipe} />}
+
+      <div className="flex flex-1 flex-row items-center justify-end gap-2">
+        {canEdit && <EditButton recipe={recipe} />}
+        {canFeature && <FeatureButton recipe={recipe} />}
+        {canDelete && <DeleteButton recipe={recipe} />}
+      </div>
     </div>
   );
 };

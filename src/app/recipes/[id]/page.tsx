@@ -1,5 +1,7 @@
-import { type Metadata, type NextPage } from "next";
+import { type NextPage, type Metadata, type ResolvingMetadata } from "next";
+
 import { prisma } from "~/server/db";
+import { generateRecipeSEO } from "~/utils/seo";
 
 import NotFound from "~/components/recipe/NotFound";
 import RecipePage from "~/components/recipe/RecipePage";
@@ -40,6 +42,32 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
 
 export default RecipesPage;
 
-export const metadata: Metadata = {
-  title: "iCook | Recipe",
+export const generateMetadata = async (
+  { params }: RecipesPageProps,
+  _parent: ResolvingMetadata,
+): Promise<Metadata> => {
+  const id = params.id;
+
+  if (!id || id.length < 1) {
+    return { title: "iCook | Recipe" };
+  }
+
+  const recipe = await prisma.recipe.findUnique({
+    where: { id },
+    include: {
+      author: {
+        select: {
+          username: true,
+          name: true,
+          id: true,
+        },
+      },
+    },
+  });
+
+  if (!recipe) {
+    return { title: "iCook | Recipe" };
+  }
+
+  return generateRecipeSEO(recipe);
 };
