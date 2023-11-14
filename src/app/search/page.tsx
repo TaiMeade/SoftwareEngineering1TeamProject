@@ -8,9 +8,12 @@ type RecipeWithAuthor = Recipe & {
   author: { name: string | null };
 };
 
+type IFields = "tags" | "desc" | "author" | "title";
+
 const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
   const query = searchParams.q || "";
   const page = searchParams.p || "";
+  const category: IFields = (searchParams.c as IFields) || "title";
 
   let searchResults: RecipeWithAuthor[] = [];
 
@@ -18,8 +21,16 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
     searchResults = await prisma.recipe.findMany({
       where: {
         OR: [
-          { title: { contains: query } },
-          { description: { contains: query } },
+          category === "author"
+            ? { author: { name: { contains: query } } }
+            : category === "title"
+            ? { title: { contains: query } }
+            : category === "desc"
+            ? { description: { contains: query } }
+            : category === "tags"
+            ? { tags: { array_contains: query } }
+            : // Default to searching by title
+              { title: { contains: query } },
         ],
       },
       include: { author: { select: { name: true } } },

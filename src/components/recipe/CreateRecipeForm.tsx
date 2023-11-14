@@ -139,17 +139,25 @@ const CreateRecipeForm: React.FC = () => {
         <label htmlFor="directions" className="label mb-2 mt-4">
           <span className="label-text text-lg font-bold">Directions</span>
         </label>
-        <ol className="list-decimal">
-          <Reorder.Group axis="y" values={dirs} onReorder={setDirs}>
-            {dirs.map((dir) => (
-              <Reorder.Item key={dir} value={dir}>
-                <li key={dir} className="list-item list-inside">
-                  {dir}
-                </li>
-              </Reorder.Item>
-            ))}
-          </Reorder.Group>
-        </ol>
+
+        <Reorder.Group
+          axis="y"
+          values={dirs}
+          onReorder={setDirs}
+          as="ol"
+          className="list-decimal"
+        >
+          {dirs.map((dir) => (
+            <Reorder.Item
+              key={dir}
+              value={dir}
+              className="list-item list-inside"
+              as="li"
+            >
+              {dir}
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
 
         <NewDirection setDirections={setDirs} />
       </div>
