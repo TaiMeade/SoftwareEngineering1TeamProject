@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 import { updateLikedBySchema } from "~/utils/schemas";
+import { toast } from "sonner";
 
 export async function POST(req: Request) {
   console.log("Liking recipe");
@@ -44,6 +45,7 @@ export async function POST(req: Request) {
 
     if (recipe.authorId === session.user.id) {
       console.error("Cannot like own recipe");
+      toast.error("Cannot like own recipe");
       return NextResponse.json(null, {
         status: 401,
         statusText: "Cannot like own recipe",
@@ -55,7 +57,7 @@ export async function POST(req: Request) {
       select: { likedBy: true },
     });
 
-    // creating
+    // creating an array of user ID's to compare to
     const userIDArray = likedBy?.likedBy.map((user) => user.id);
 
     // Liked or unlike recipe
