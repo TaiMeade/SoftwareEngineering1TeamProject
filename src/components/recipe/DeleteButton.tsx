@@ -47,8 +47,8 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ recipe }) => {
           <BiTrash className="text-2xl text-gray-600" />
         </>
       }
-      btnClass="btn flex flex-row items-center justify-center gap-2 text-lg"
       className="flex flex-col items-start justify-center gap-2"
+      btnClass="btn btn-warning flex flex-row items-center justify-center gap-2 text-lg"
     >
       <h2 className="text-lg text-gray-600">
         Are you sure you want to delete this recipe?
