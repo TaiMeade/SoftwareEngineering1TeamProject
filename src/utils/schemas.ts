@@ -123,3 +123,10 @@ export const createCommentSchema = z.object({
   text: z.string().min(3).max(200),
   recipeId: z.string().min(1),
 });
+
+/**
+ * Feature recipe schema
+ */
+export const featureRecipeSchema = z.object({
+  id: z.string().min(1),
+});
