@@ -145,14 +145,14 @@ const CreateRecipeForm: React.FC = () => {
           values={dirs}
           onReorder={setDirs}
           as="ol"
-          className="list-decimal"
+          className="mb-2 list-decimal"
         >
           {dirs.map((dir) => (
             <Reorder.Item
               key={dir}
               value={dir}
-              className="list-item list-inside"
               as="li"
+              className="list-item list-inside p-2"
             >
               {dir}
             </Reorder.Item>
