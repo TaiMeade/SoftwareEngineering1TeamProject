@@ -6,14 +6,10 @@ import { prisma } from "~/server/db";
 import NotFound from "~/components/recipe/NotFound";
 
 const EditRecipePage: NextPage<RecipesPageProps> = async ({ params }) => {
-  const session = await getAuth();
   const id = params.id;
+  const session = await getAuth();
 
-  if (!session?.user?.id) {
-    return <NotFound />; // notFound();
-  }
-
-  if (!id || id.length < 1) {
+  if (!session?.user?.id || !id || id.length < 1) {
     return <NotFound />; // notFound();
   }
 
@@ -21,11 +17,7 @@ const EditRecipePage: NextPage<RecipesPageProps> = async ({ params }) => {
     where: { id },
   });
 
-  if (!recipe) {
-    return <NotFound />; // notFound();
-  }
-
-  if (recipe.authorId !== session.user.id) {
+  if (!recipe || recipe.authorId !== session.user.id) {
     return <NotFound />; // notFound();
   }
 

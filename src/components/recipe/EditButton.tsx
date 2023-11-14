@@ -1,25 +1,20 @@
 "use client";
 import { type Recipe } from "@prisma/client";
-import React, { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface EditProps {
   recipe: Recipe;
 }
-const EditButton = ({ recipe }: EditProps) => {
-  const [redirecter, setRedirecter] = useState(false);
-  if (redirecter) {
-    return redirect(`/recipes/${recipe.id}/edit/`);
-  }
+const EditButton: React.FC<EditProps> = ({ recipe }) => {
+  const router = useRouter();
 
   return (
     <div>
       <button
-        className="btn-red btn flex flex-row items-center justify-center gap-2 text-lg disabled:btn-disabled "
-        onClick={() => setRedirecter(true)}
+        className="btn btn-neutral text-lg"
+        onClick={() => void router.push(`/recipes/${recipe.id}/edit/`)}
       >
-        {"  "}
-        Edit{"  "}
+        Edit
       </button>
     </div>
   );
