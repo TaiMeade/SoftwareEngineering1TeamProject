@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       console.error("Recipe not found");
       return NextResponse.json(null, {
         status: 404,
-        statusText: "Not Found",
+        statusText: "Recipe Not Found",
       });
     }
 
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
       console.error("Cannot like own recipe");
       return NextResponse.json(null, {
         status: 401,
-        statusText: "Unauthorized",
+        statusText: "Cannot like own recipe",
       });
     }
 
@@ -58,7 +58,10 @@ export async function POST(req: Request) {
     // creating
     const userIDArray = likedBy?.likedBy.map((user) => user.id);
 
-    if (userIDArray?.includes(session.user.id)) {
+    // Liked or unlike recipe
+    const liked = userIDArray?.includes(session.user.id);
+
+    if (liked) {
       await prisma.recipe.update({
         where: { id: data.id },
         data: {
@@ -76,7 +79,8 @@ export async function POST(req: Request) {
       console.log("Liked recipe", recipe);
     }
 
-    return NextResponse.json(recipe, { status: 200, statusText: "OK" });
+    // Return if liked or not
+    return NextResponse.json(liked, { status: 200, statusText: "OK" });
   } catch (error) {
     console.error("Error liking recipe", error);
     return NextResponse.json(error, {

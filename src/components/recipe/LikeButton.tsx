@@ -1,10 +1,10 @@
 "use client";
-
-import React, { useState } from "react";
-import { FaThumbsUp } from "react-icons/fa";
-import { type Recipe } from "@prisma/client";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { type Recipe } from "@prisma/client";
+
+import { toast } from "sonner";
+
+import { FaThumbsUp } from "react-icons/fa";
 
 interface LikeButtonProps {
   recipe: Recipe;
@@ -14,15 +14,6 @@ interface LikeButtonProps {
 const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
   const router = useRouter();
 
-  // Handles increasing and decreasing number of likes...lines 10-15
-  const [like, setLike] = useState(numLikes);
-  const [isLiked, setIsLiked] = useState(false);
-
-  const likeHandler = () => {
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
-  };
-
   const likeRecipe = async () => {
     const res = await fetch("/api/recipe/like", {
       method: "POST",
@@ -31,24 +22,27 @@ const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
     });
 
     if (res.ok) {
+      // Like or unliked
+      const wasLiked = (await res.json()) as boolean;
+
+      if (wasLiked) toast.success(`Unliked recipe - ${recipe.title}`);
+      else toast.info(`Liked recipe - ${recipe.title}`);
+
       router.refresh();
-    } else toast.error("Failed to like recipe!");
+    } else toast.error(`Failed to like recipe - ${res.statusText}`);
   };
 
   return (
-    <div>
+    <div className="flex w-auto flex-row items-center justify-start gap-1">
       <button
-        className="rounded px-4 py-2 font-bold text-blue-400 hover:text-blue-500"
-        onClick={function () {
-          likeHandler();
-          void likeRecipe();
-        }}
+        onClick={() => void likeRecipe()}
+        className="btn btn-info btn-ghost text-xl text-blue-400 hover:text-blue-500"
       >
-        <i>
-          <FaThumbsUp />
-        </i>
+        <FaThumbsUp />
       </button>
-      <span className=" text-sm">{numLikes} likes</span>
+      <span>
+        {numLikes} {numLikes == 1 ? "like" : "likes"}
+      </span>
     </div>
   );
 };

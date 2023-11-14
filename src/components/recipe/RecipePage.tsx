@@ -1,11 +1,13 @@
-import Link from "next/link";
-import Image from "next/image";
 import { getAuth } from "~/server/session";
 
+import Link from "next/link";
+import Image from "next/image";
+
+import { type Recipe, type Comment } from "@prisma/client";
 import { cn } from "~/utils/tw";
 import { fmtDate } from "~/utils";
-import { type Recipe, type Comment } from "@prisma/client";
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
+
 import LikeButton from "./LikeButton";
 import RecipeToolbar from "./RecipeToolbar";
 
@@ -33,7 +35,7 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
   const ingredients = parseIngredients(recipe.ingredients);
 
   return (
-    <div className="prose mx-auto w-full space-y-8 rounded-lg bg-white p-8 shadow-md lg:prose-lg">
+    <div className="prose mx-auto w-full max-w-5xl space-y-8 rounded-lg bg-white p-8 shadow-md lg:prose-lg">
       <div
         className={cn(
           "h-72 w-full animate-pulse rounded-lg bg-gray-100",
