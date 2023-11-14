@@ -50,15 +50,31 @@ export async function POST(req: Request) {
       });
     }
 
-    await prisma.recipe.update({
+    const likedBy = await prisma.recipe.findUnique({
       where: { id: data.id },
-      data: {
-        likedBy: { connect: { id: session.user.id } },
-      },
+      select: { likedBy: true },
     });
 
+    // creating
+    const userIDArray = likedBy?.likedBy.map((user) => user.id);
 
-    console.log("Liked recipe", recipe);
+    if (userIDArray?.includes(session.user.id)) {
+      await prisma.recipe.update({
+        where: { id: data.id },
+        data: {
+          likedBy: { disconnect: { id: session.user.id } },
+        },
+      });
+      console.log("Unliked recipe", recipe);
+    } else {
+      await prisma.recipe.update({
+        where: { id: data.id },
+        data: {
+          likedBy: { connect: { id: session.user.id } },
+        },
+      });
+      console.log("Liked recipe", recipe);
+    }
 
     return NextResponse.json(recipe, { status: 200, statusText: "OK" });
   } catch (error) {
