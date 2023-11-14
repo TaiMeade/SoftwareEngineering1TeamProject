@@ -33,3 +33,10 @@ interface NextErrorPage {
   error: Error & { digest?: string };
   reset: () => void;
 }
+
+interface RecipesPageProps {
+  params: { id: string };
+  searchParams: {
+    [key: string]: string | string[];
+  };
+}

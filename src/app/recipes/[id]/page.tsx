@@ -4,13 +4,6 @@ import { prisma } from "~/server/db";
 import NotFound from "~/components/recipe/NotFound";
 import RecipePage from "~/components/recipe/RecipePage";
 
-interface RecipesPageProps {
-  params: { id: string };
-  searchParams: {
-    [key: string]: string | string[];
-  };
-}
-
 // * Browse Random / Trending Recipes Page
 const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;

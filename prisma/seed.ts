@@ -59,13 +59,15 @@ const generateRandomTags = (): string[] => {
 const createRandomRecipe = (authorId: string): Prisma.RecipeCreateInput => {
   return {
     author: { connect: { id: authorId } },
+    // title: faker.lorem.words({ min: 1, max: 3 }),
+    // Random Food Name
     title: faker.lorem.words({ min: 1, max: 3 }),
     createdAt: new Date(),
     updatedAt: new Date(),
     image: faker.image.urlLoremFlickr({
       category: "food",
       width: 1920,
-      height: 720,
+      height: 1080,
     }),
     description: faker.lorem.paragraph(),
     ingredients: {
@@ -87,9 +89,7 @@ const createRandomRecipe = (authorId: string): Prisma.RecipeCreateInput => {
         return ingredients;
       },
     },
-    tags: {
-      toJSON: () => generateRandomTags(),
-    },
+    tags: { toJSON: () => generateRandomTags() },
     directions: {
       toJSON: () => {
         const directions: string[] = [];
