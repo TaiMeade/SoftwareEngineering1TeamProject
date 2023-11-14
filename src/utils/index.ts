@@ -1,3 +1,4 @@
+import { type Recipe, type User } from "@prisma/client";
 import moment from "moment";
 
 export const NAV_ITEMS: NavItemProps[] = [
@@ -63,3 +64,17 @@ export const prettifyTag = (tag: string) => {
 };
 
 export const fmtDate = (date: Date) => moment(date).format("MMMM Do YYYY");
+
+type ProfileWithRecipe = User & { recipes: Recipe[] };
+
+export const omitProfile = (profile: ProfileWithRecipe) => {
+  return omit(
+    profile,
+    "password",
+    "email",
+    "role",
+    "emailVerified",
+    "createdAt",
+    "updatedAt",
+  );
+};
