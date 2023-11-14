@@ -11,7 +11,7 @@ const FeaturedRecipes: React.FC = async () => {
       comments: true,
       author: { select: { name: true } },
     },
-    orderBy: [{ weight: "desc" }, { likedBy: { _count: "desc" } }],
+    orderBy: [{ featured: "desc" }, { likedBy: { _count: "desc" } }],
   });
 
   return (

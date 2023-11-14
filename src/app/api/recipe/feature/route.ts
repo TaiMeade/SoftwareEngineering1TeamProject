@@ -41,13 +41,13 @@ export async function POST(req: Request) {
       });
     }
 
-    const featured = recipe?.weight === 0;
+    const featured = recipe?.featured === false;
 
     if (featured) {
       await prisma.recipe.update({
         where: { id: data.id },
         data: {
-          weight: 100,
+          featured: true,
         },
       });
       console.log("Featured recipe", recipe);
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       await prisma.recipe.update({
         where: { id: data.id },
         data: {
-          weight: 0,
+          featured: false,
         },
       });
       console.log("Unfeatured recipe", recipe);

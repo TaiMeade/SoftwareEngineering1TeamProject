@@ -50,7 +50,7 @@ model Recipe {
   title       String
   description String? @db.Text
   image       String?
-  weight      Int     @default(0)
+  featured    Boolean @default(false)
   // * Prisma mysql doesn't support array types, so we use Json instead
   ingredients Json?
   directions  Json?
