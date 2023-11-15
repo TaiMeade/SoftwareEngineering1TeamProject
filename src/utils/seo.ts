@@ -20,6 +20,7 @@ export const generateRecipeSEO = (recipe: RecipeWithAuthor): Metadata => {
   const authorURL = `${BASE_URL}/profile/${recipe.author.id}`;
 
   return {
+    metadataBase: new URL(`${BASE_URL}/recipes/${recipe.id}`),
     title: `iCook | ${recipe.title}`,
     authors: [{ name, url: authorURL }],
     description: recipe.description,
@@ -58,6 +59,7 @@ export const generateAuthorSEO = (author: SafeProfile): Metadata => {
   const profileImage = author.image || `${BASE_URL}/placeholder.png`;
 
   return {
+    metadataBase: new URL(`${BASE_URL}/profile/${author.id}`),
     title: `iCook | ${name}`,
     authors: [{ name, url: authorURL }],
     description: author.bio,

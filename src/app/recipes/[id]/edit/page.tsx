@@ -21,7 +21,11 @@ const EditRecipePage: NextPage<RecipesPageProps> = async ({ params }) => {
     return <NotFound />; // notFound();
   }
 
-  return <div>Just some place holder words</div>;
+  return (
+    <div className="flex flex-col gap-12">
+      <h1 className="text-4xl font-bold">Just some place holder words</h1>
+    </div>
+  );
 };
 
 export default EditRecipePage;

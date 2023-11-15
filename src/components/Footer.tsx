@@ -1,14 +1,28 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 import Link from "next/link";
+
 import { NAV_ITEMS } from "~/utils";
+import { cn } from "~/utils/tw";
 
 import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
 
-const Footer = () => {
+const Footer: React.FC = () => {
+  const pathname = usePathname();
+
   return (
-    <footer className="footer footer-center flex-col rounded bg-base-200 p-10 text-base-content">
+    <footer
+      className={cn(
+        "footer footer-center flex-col rounded bg-base-200 p-10 text-base-content",
+        pathname.includes("/profile") && "md:ml-24",
+        pathname.includes("/profile") && "mb-12 md:mb-0",
+      )}
+    >
       <nav className="grid grid-flow-col gap-4">
         <Link href="/" className="link-hover link">
-          Home
+          {/* Home */}
+          {pathname}
         </Link>
 
         {NAV_ITEMS.map((item) => (
@@ -19,10 +33,16 @@ const Footer = () => {
       </nav>
 
       <nav>
-        <div className="grid grid-flow-col gap-4 text-2xl text-gray-600">
-          <FaTwitter />
-          <FaYoutube />
-          <FaFacebook />
+        <div className="grid grid-flow-col gap-5 text-2xl text-gray-600 [&>*]:text-2xl [&>*]:transition-colors [&>*]:duration-100 [&>*]:ease-in-out">
+          <Link href="/" className="link-hover link hover:text-blue-500">
+            <FaTwitter />
+          </Link>
+          <Link href="/" className="link-hover link hover:text-red-500">
+            <FaYoutube />
+          </Link>
+          <Link href="/" className="link-hover link hover:text-blue-800">
+            <FaFacebook />
+          </Link>
         </div>
       </nav>
       <aside>

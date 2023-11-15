@@ -9,14 +9,12 @@ const EditButton: React.FC<EditProps> = ({ recipe }) => {
   const router = useRouter();
 
   return (
-    <div>
-      <button
-        className="btn btn-neutral text-lg"
-        onClick={() => void router.push(`/recipes/${recipe.id}/edit/`)}
-      >
-        Edit
-      </button>
-    </div>
+    <button
+      className="btn btn-neutral text-lg"
+      onClick={() => void router.push(`/recipes/${recipe.id}/edit/`)}
+    >
+      Edit
+    </button>
   );
 };
 

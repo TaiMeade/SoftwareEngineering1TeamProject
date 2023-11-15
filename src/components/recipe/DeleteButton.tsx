@@ -60,7 +60,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ recipe }) => {
         <button
           onClick={() => void deleteRecipe()}
           disabled={loading}
-          className="btn btn-primary flex flex-row items-center justify-center gap-2 text-lg disabled:btn-disabled "
+          className="btn btn-warning flex flex-row items-center justify-center gap-2 text-lg disabled:btn-disabled "
         >
           <span>Delete</span>
           <BiTrash className="text-2xl" />

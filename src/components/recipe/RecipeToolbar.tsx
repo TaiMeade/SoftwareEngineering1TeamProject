@@ -19,10 +19,12 @@ const RecipeToolbar: React.FC<RecipeToolbarProps> = ({ session, recipe }) => {
   const canFeature = isAdmin;
 
   return (
-    <div className="flex w-full flex-row items-center justify-between gap-4 pb-6 pt-0">
-      <ShareButton recipe={recipe} />
+    <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+      <div className="flex w-full justify-end sm:justify-start">
+        <ShareButton recipe={recipe} />
+      </div>
 
-      <div className="flex flex-1 flex-row items-center justify-end gap-2">
+      <div className="flex w-full flex-1 flex-row items-center justify-end space-x-3">
         {canEdit && <EditButton recipe={recipe} />}
         {canFeature && <FeatureButton recipe={recipe} />}
         {canDelete && <DeleteButton recipe={recipe} />}

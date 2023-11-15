@@ -53,7 +53,7 @@
 
 @layer components {
   .page {
-    @apply container relative z-0 min-h-screen max-w-5xl scroll-smooth p-4 pt-[calc(var(--navbar-height))]  antialiased;
+    @apply container relative z-0 min-h-[calc(100vh-9rem-var(--navbar-height))] max-w-5xl scroll-smooth p-4 pt-[calc(var(--navbar-height))]  antialiased;
   }
   .page > div {
     @apply py-8;

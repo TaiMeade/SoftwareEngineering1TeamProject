@@ -1,14 +1,18 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { sleep } from "~/utils";
 
 import { type Recipe } from "@prisma/client";
+
+import { FaStar } from "react-icons/fa";
 
 interface FeatureButtonProps {
   recipe: Recipe;
 }
 
 const FeatureButton: React.FC<FeatureButtonProps> = ({ recipe }) => {
+  const router = useRouter();
+
   const featureRecipe = async () => {
     const res = await fetch("/api/recipe/feature", {
       method: "POST",
@@ -22,19 +26,20 @@ const FeatureButton: React.FC<FeatureButtonProps> = ({ recipe }) => {
 
       if (wasFeatured) toast.success(`Featured recipe - ${recipe.title}`);
       else toast.info(`Unfeatured recipe - ${recipe.title}`);
-      await sleep(1000);
+
+      router.refresh();
     } else toast.error(`Failed to feature recipe - ${res.statusText}`);
   };
 
   return (
-    <div className="flex flex-row items-center justify-between gap-4">
-      <button
-        onClick={() => void featureRecipe()}
-        className="btn btn-primary flex flex-row items-center justify-center gap-2 text-lg disabled:btn-disabled "
-      >
-        <span>Feature</span>
-      </button>
-    </div>
+    <button
+      className="btn btn-primary text-lg disabled:btn-disabled"
+      onClick={() => void featureRecipe()}
+    >
+      <span>{recipe.featured ? "Unfeature" : "Feature"}</span>
+
+      <FaStar />
+    </button>
   );
 };
 
