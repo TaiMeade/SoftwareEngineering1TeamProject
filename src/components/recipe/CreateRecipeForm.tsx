@@ -16,10 +16,10 @@ import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
 
 import { FaSpinner } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
 import React from "react";
-import RemoveDirection from "./RemoveDirection";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
@@ -44,6 +44,12 @@ const CreateRecipeForm: React.FC = () => {
   const [dirs, setDirs] = useState<string[]>([]);
 
   const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
+
+  const RemoveDirection = (removeDir: string) => {
+    const newDirections = dirs.filter((dir) => dir !== removeDir);
+
+    setDirs(newDirections);
+  };
 
   async function onSubmit(data: FormData) {
     console.log("Submitting", data);
@@ -171,10 +177,9 @@ const CreateRecipeForm: React.FC = () => {
               >
                 {dir}
               </Reorder.Item>
-              <RemoveDirection
-                setDirections={setDirs}
-                currDirection={dir}
-              ></RemoveDirection>
+              <button onClick={() => RemoveDirection(dir)}>
+                <FaTrash />
+              </button>
             </>
           ))}
         </Reorder.Group>
