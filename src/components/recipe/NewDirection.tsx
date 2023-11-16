@@ -25,9 +25,7 @@ const NewDirection: React.FC<NewDirectionProps> = ({ setDirections }) => {
         <div className="flex flex-row items-center justify-start gap-2">
           <input
             id="newDir"
-            onChange={(e) => {
-              setNewDir(e.target.value);
-            }}
+            onChange={(e) => setNewDir(e.target.value)}
             type="text"
             placeholder="Direction"
             className="input input-bordered w-full"

@@ -4,8 +4,6 @@ import { prisma } from "~/server/db";
 
 import RecipeCard from "~/components/recipe/RecipeCard";
 
-
-
 type RecipeWithAuthor = Recipe & {
   author: { name: string | null };
 };
@@ -24,7 +22,15 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
       where: {
         OR: [
           category === "author"
-            ? { author: { name: { contains: query } } }
+            ? {
+                author: {
+                  OR: [
+                    { name: { contains: query } },
+                    { username: { contains: query } },
+                    { id: { contains: query } },
+                  ],
+                },
+              }
             : category === "title"
             ? { title: { contains: query } }
             : category === "desc"

@@ -1,8 +1,9 @@
 import { type Metadata, type NextPage } from "next";
-import dynamic from "next/dynamic";
 
 import { getAuth } from "~/server/session";
 import { prisma } from "~/server/db";
+
+import EditRecipeForm from "~/components/recipe/EditRecipeForm";
 
 import NotFound from "~/components/recipe/NotFound";
 
@@ -18,10 +19,6 @@ const EditRecipePage: NextPage<RecipesPageProps> = async ({ params }) => {
     where: { id },
   });
 
-  const EditRecipeForm = dynamic(
-    () => import("~/components/recipe/EditRecipeForm"),
-  );
-
   if (!recipe || recipe.authorId !== session.user.id) {
     return <NotFound />; // notFound();
   }
@@ -29,7 +26,7 @@ const EditRecipePage: NextPage<RecipesPageProps> = async ({ params }) => {
   return (
     <>
       <h1 className="text-4xl font-bold"> Edit Recipe</h1>
-     <EditRecipeForm />
+      <EditRecipeForm recipe={recipe} />
     </>
   );
 };

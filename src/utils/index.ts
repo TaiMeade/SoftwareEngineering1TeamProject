@@ -1,5 +1,4 @@
-import { type Recipe, type User } from "@prisma/client";
-import moment from "moment";
+import type { Recipe, User } from "@prisma/client";
 
 export const NAV_ITEMS: NavItemProps[] = [
   { label: "About", href: "/about" },
@@ -63,7 +62,15 @@ export const prettifyTag = (tag: string) => {
   return firstLetter + tag.slice(1)?.toLowerCase() || "";
 };
 
-export const fmtDate = (date: Date) => moment(date).format("MMMM Do YYYY");
+export const fmtDate = (date: Date) => {
+  // moment(date).format("MMMM Do YYYY");
+  const d = new Date(date);
+  const month = d.toLocaleString("default", { month: "long" }); // "January
+  const day = d.getDate();
+  const year = d.getFullYear();
+
+  return `${month} ${day} ${year}`;
+};
 
 type ProfileWithRecipe = User & { recipes: Recipe[] };
 

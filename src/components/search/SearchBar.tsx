@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
@@ -9,11 +8,14 @@ interface SearchBarProps {
   field?: string;
 }
 
+// const CATEGORIES = ["title", "desc", "tags", "author"];
+
 const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
-  const [search, setSearch] = useState(initialSearch || "");
-  const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const [value, setValue] = React.useState(field || "title");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const [search, setSearch] = useState(initialSearch || "");
+  const [category, setCategory] = useState(field || "title");
 
   useEffect(() => {
     const searchInput = searchRef?.current;
@@ -26,9 +28,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
     if (search.length === 0) {
       searchInput.focus();
     } else {
-      router.push(`/search?q=${search}&c=${value}`);
+      router.push(`/search?q=${search}&c=${category}`);
     }
-  }, [router, search, value]);
+  }, [router, search, category]);
 
   return (
     <div className="flex flex-row items-center justify-center ">
@@ -40,40 +42,38 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
         <option value="author">Author</option>
   </select>*/}
 
-
-    <select
-        onClick={() => router.push(`/search?q=${search}&c=${value}`)}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+      <select
+        onClick={() => router.push(`/search?q=${search}&c=${category}`)}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
         //className="w-"
         className="btn-square btn-accent flex w-fit flex-row items-center justify-center gap-2 rounded-r-none"
       >
         <option
-          onClick={() => router.push(`/search?q=${search}&c=${value}`)}
+          onClick={() => router.push(`/search?q=${search}&c=${category}`)}
           value="title"
         >
           Title
         </option>
         <option
-          onClick={() => router.push(`/search?q=${search}&c=${value}`)}
+          onClick={() => router.push(`/search?q=${search}&c=${category}`)}
           value="desc"
         >
           Description
         </option>
         <option
-          onClick={() => router.push(`/search?q=${search}&c=${value}`)}
+          onClick={() => router.push(`/search?q=${search}&c=${category}`)}
           value="tags"
         >
           Tags
         </option>
         <option
-          onClick={() => router.push(`/search?q=${search}&c=${value}`)}
+          onClick={() => router.push(`/search?q=${search}&c=${category}`)}
           value="author"
         >
           Author
         </option>
       </select>
-
 
       <input
         type="text"
@@ -85,7 +85,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
         className="input input-bordered hidden w-full rounded-none placeholder:text-sm md:block"
       />
       <button
-        onClick={() => router.push(`/search?q=${search}&c=${value}`)}
+        onClick={() => router.push(`/search?q=${search}&c=${category}`)}
         className="btn btn-accent flex flex-row items-center justify-center gap-2 rounded-l-none"
       >
         <BsSearch className="text-sm" />

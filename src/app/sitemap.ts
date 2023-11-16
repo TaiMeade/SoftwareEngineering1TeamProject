@@ -9,8 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipes = await prisma.recipe.findMany({
     take: AMT_RECIPES,
     select: { title: true, id: true },
-    // createdAt: "desc",
-    orderBy: { weight: "desc" },
+    orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
   });
 
   const sitemapRecipes: MetadataRoute.Sitemap = recipes.map((recipe) => ({

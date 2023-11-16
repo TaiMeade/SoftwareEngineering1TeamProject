@@ -7,7 +7,12 @@ import { type z } from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createRecipeSchema } from "~/utils/schemas";
+import {
+  createRecipeSchema,
+  parseDirections,
+  parseIngredients,
+  parseTags,
+} from "~/utils/schemas";
 
 import { toast } from "sonner";
 import { prettifyTag } from "~/utils";
@@ -17,17 +22,31 @@ import NewDirection from "./NewDirection";
 import { FaSpinner } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
-import React from "react";
-
-<link rel="stylesheet" href="globals.css"></link>
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
-const editRecipeForm: React.FC = () => {
+interface EditRecipeProps {
+  recipe: Recipe;
+}
+
+const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
   const router = useRouter();
+
+  const defTags = parseTags(recipe.tags);
+  const defIngs = parseIngredients(recipe.ingredients);
+  const defDirections = parseDirections(recipe.directions);
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     resolver: zodResolver(createRecipeSchema),
+    defaultValues: {
+      title: recipe.title,
+      description: recipe.description ?? "",
+      tags: defTags,
+      ingredients: defIngs,
+      cost: "$$",
+      directions: defDirections,
+      image: recipe.image ?? null,
+    },
   });
 
   const { startUpload } = useUploadThing("uploadRecipeImg", {
@@ -41,8 +60,8 @@ const editRecipeForm: React.FC = () => {
 
   const [file, setFile] = useState<File | null>(null);
 
-  const [dirs, setDirs] = useState<string[]>([]);
-  const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
+  const [dirs, setDirs] = useState<string[]>(defDirections);
+  const [ingdnts, setIngdnts] = useState<Ingredient[]>(defIngs);
 
   async function onSubmit(data: FormData) {
     console.log("Submitting", data);
@@ -124,16 +143,23 @@ const editRecipeForm: React.FC = () => {
           <span className="label-text text-lg font-bold">Ingredients</span>
         </label>
 
-        <ol className="list-decimal">
-          {ingdnts.map((ing, idx) => (
-            <li
-              key={ing.name + ing.quantity + ing.unit + idx.toString()}
+        <Reorder.Group
+          axis="y"
+          values={ingdnts}
+          onReorder={setIngdnts}
+          as="ol"
+          className="mb-2 list-decimal"
+        >
+          {ingdnts.map((ing) => (
+            <Reorder.Item
+              key={ing.name + ing.quantity + ing.unit}
+              value={ing}
               className="list-item list-inside"
             >
               {ing.name} {ing.quantity} {ing.unit}
-            </li>
+            </Reorder.Item>
           ))}
-        </ol>
+        </Reorder.Group>
 
         <NewIngredient setIngredients={setIngdnts} />
       </div>
@@ -240,7 +266,7 @@ const editRecipeForm: React.FC = () => {
           className="btn btn-primary transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
         >
           {!formState.isSubmitting ? (
-            "Create Recipe"
+            "Saved Edited Recipe"
           ) : (
             <FaSpinner className="m-1 animate-spin text-lg text-white" />
           )}
@@ -250,4 +276,4 @@ const editRecipeForm: React.FC = () => {
   );
 };
 
-export default editRecipeForm;
+export default EditRecipeForm;

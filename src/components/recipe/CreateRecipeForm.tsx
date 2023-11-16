@@ -19,9 +19,6 @@ import { FaSpinner } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
-import React from "react";
-
-<link rel="stylesheet" href="globals.css"></link>
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
@@ -140,10 +137,10 @@ const CreateRecipeForm: React.FC = () => {
           as="ol"
           className="mb-2 list-decimal"
         >
-          {ingdnts.map((ing, idx) => (
+          {ingdnts.map((ing) => (
             <>
               <Reorder.Item
-                key={ing.name + ing.quantity + ing.unit + idx.toString()}
+                key={ing.name + ing.quantity + ing.unit}
                 value={ing}
                 as="li"
                 className="list-item list-inside p-2"
@@ -177,11 +174,17 @@ const CreateRecipeForm: React.FC = () => {
                 as="li"
                 className="list-item list-inside p-2"
               >
-                {dir}
+                <div className="inline-flex flex-row items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => RemoveDirection(dir)}
+                    className="text-lg"
+                  >
+                    <FaTrash />
+                  </button>
+                  <span>{dir}</span>
+                </div>
               </Reorder.Item>
-              <button onClick={() => RemoveDirection(dir)}>
-                <FaTrash />
-              </button>
             </>
           ))}
         </Reorder.Group>

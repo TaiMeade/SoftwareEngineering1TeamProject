@@ -21,8 +21,7 @@ const Footer: React.FC = () => {
     >
       <nav className="grid grid-flow-col gap-4">
         <Link href="/" className="link-hover link">
-          {/* Home */}
-          {pathname}
+          Home
         </Link>
 
         {NAV_ITEMS.map((item) => (
