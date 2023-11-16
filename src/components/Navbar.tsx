@@ -21,7 +21,13 @@ const Navbar = async () => {
           iCook
         </Link>
       </h1>
-
+      {/*
+      <div className="mx-auto max-w-md flex-1">
+        <div className="hidden md:block">
+          <SearchFields />
+        </div>
+      </div>
+      */}
       <div className="mx-auto max-w-md flex-1">
         <div className="hidden md:block">
           <SearchBar />

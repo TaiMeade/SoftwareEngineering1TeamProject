@@ -4,6 +4,8 @@ import { prisma } from "~/server/db";
 
 import RecipeCard from "~/components/recipe/RecipeCard";
 
+
+
 type RecipeWithAuthor = Recipe & {
   author: { name: string | null };
 };
