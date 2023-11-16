@@ -86,13 +86,13 @@ const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
     });
 
     if (!res.ok) {
-      console.log("Error creating recipe");
-      toast.error("Error creating recipe: " + res.statusText);
+      console.log("Error editing recipe");
+      toast.error("Error editing recipe: " + res.statusText);
       return;
     }
     const res_data = (await res.json()) as Recipe;
 
-    toast.success(`Successfully creating recipe ${res_data.title}!`);
+    toast.success(`Successfully edited recipe ${res_data.title}!`);
 
     await new Promise((r) => setTimeout(r, 340));
     router.push(`/recipes/${res_data.id}`);
