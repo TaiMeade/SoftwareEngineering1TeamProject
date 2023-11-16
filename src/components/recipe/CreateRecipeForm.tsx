@@ -14,10 +14,12 @@ import { prettifyTag } from "~/utils";
 
 import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
+
 import { FaSpinner } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
 import React from "react";
+import RemoveDirection from "./RemoveDirection";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
@@ -40,6 +42,7 @@ const CreateRecipeForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
 
   const [dirs, setDirs] = useState<string[]>([]);
+
   const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
 
   async function onSubmit(data: FormData) {
@@ -122,16 +125,26 @@ const CreateRecipeForm: React.FC = () => {
           <span className="label-text text-lg font-bold">Ingredients</span>
         </label>
 
-        <ol className="list-decimal">
+        <Reorder.Group
+          axis="y"
+          values={ingdnts}
+          onReorder={setIngdnts}
+          as="ol"
+          className="mb-2 list-decimal"
+        >
           {ingdnts.map((ing, idx) => (
-            <li
-              key={ing.name + ing.quantity + ing.unit + idx.toString()}
-              className="list-item list-inside"
-            >
-              {ing.name} {ing.quantity} {ing.unit}
-            </li>
+            <>
+              <Reorder.Item
+                key={ing.name + ing.quantity + ing.unit + idx.toString()}
+                value={ing}
+                as="li"
+                className="list-item list-inside p-2"
+              >
+                {ing.name} {ing.quantity} {ing.unit}
+              </Reorder.Item>
+            </>
           ))}
-        </ol>
+        </Reorder.Group>
 
         <NewIngredient setIngredients={setIngdnts} />
       </div>
@@ -149,14 +162,20 @@ const CreateRecipeForm: React.FC = () => {
           className="mb-2 list-decimal"
         >
           {dirs.map((dir) => (
-            <Reorder.Item
-              key={dir}
-              value={dir}
-              as="li"
-              className="list-item list-inside p-2"
-            >
-              {dir}
-            </Reorder.Item>
+            <>
+              <Reorder.Item
+                key={dir}
+                value={dir}
+                as="li"
+                className="list-item list-inside p-2"
+              >
+                {dir}
+              </Reorder.Item>
+              <RemoveDirection
+                setDirections={setDirs}
+                currDirection={dir}
+              ></RemoveDirection>
+            </>
           ))}
         </Reorder.Group>
 
