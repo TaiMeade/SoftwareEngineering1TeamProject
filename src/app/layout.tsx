@@ -29,12 +29,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
-        {/* Stylesheet */}
-        <link
-          rel="stylesheet"
-          href="http://localhost:3000/styles/globals.css"
-        />
-
         <link
           rel="apple-touch-icon"
           sizes="180x180"

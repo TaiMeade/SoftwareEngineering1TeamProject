@@ -73,11 +73,12 @@ const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
       console.log("fileUrls", fileUrls);
     }
 
-    const res = await fetch("/api/recipe", {
+    const res = await fetch("/api/recipe/edit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...data,
+        id: recipe.id,
         directions: dirs ?? [],
         ingredients: ingdnts ?? [],
         image: fileUrls?.[0]?.url ?? null,

@@ -103,6 +103,13 @@ export const createRecipeSchema = z.object({
 });
 
 /**
+ * Edit recipe Schema
+ */
+export const editRecipeSchema = createRecipeSchema.extend({
+  id: z.string().min(1),
+});
+
+/**
  * Delete recipe Schema
  */
 export const deleteRecipeSchema = z.object({

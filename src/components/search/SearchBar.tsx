@@ -37,7 +37,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value as ISearchFields)}
-        onClick={() => router.push(`/search?q=${search}&c=${category}`)}
         className="btn btn-square btn-accent flex w-fit flex-row items-center justify-center rounded-r-none"
       >
         {CATEGORIES.map((cat) => (
