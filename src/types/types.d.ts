@@ -40,3 +40,5 @@ interface RecipesPageProps {
     [key: string]: string | string[];
   };
 }
+
+type ISearchFields = "tags" | "desc" | "author" | "title";

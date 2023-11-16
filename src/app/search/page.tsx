@@ -8,12 +8,10 @@ type RecipeWithAuthor = Recipe & {
   author: { name: string | null };
 };
 
-type IFields = "tags" | "desc" | "author" | "title";
-
 const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
   const query = searchParams.q || "";
   const page = searchParams.p || "";
-  const category: IFields = (searchParams.c as IFields) || "title";
+  const category: ISearchFields = (searchParams.c as ISearchFields) || "title";
 
   let searchResults: RecipeWithAuthor[] = [];
 
