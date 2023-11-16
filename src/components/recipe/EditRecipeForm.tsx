@@ -14,9 +14,7 @@ import { prettifyTag } from "~/utils";
 
 import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
-
 import { FaSpinner } from "react-icons/fa";
-import { FaTrash } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
 import React from "react";
@@ -25,7 +23,7 @@ import React from "react";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
-const CreateRecipeForm: React.FC = () => {
+const editRecipeForm: React.FC = () => {
   const router = useRouter();
 
   const { register, handleSubmit, formState } = useForm<FormData>({
@@ -44,14 +42,7 @@ const CreateRecipeForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
 
   const [dirs, setDirs] = useState<string[]>([]);
-
   const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
-
-  const RemoveDirection = (removeDir: string) => {
-    const newDirections = dirs.filter((dir) => dir !== removeDir);
-
-    setDirs(newDirections);
-  };
 
   async function onSubmit(data: FormData) {
     console.log("Submitting", data);
@@ -133,26 +124,16 @@ const CreateRecipeForm: React.FC = () => {
           <span className="label-text text-lg font-bold">Ingredients</span>
         </label>
 
-        <Reorder.Group
-          axis="y"
-          values={ingdnts}
-          onReorder={setIngdnts}
-          as="ol"
-          className="mb-2 list-decimal"
-        >
+        <ol className="list-decimal">
           {ingdnts.map((ing, idx) => (
-            <>
-              <Reorder.Item
-                key={ing.name + ing.quantity + ing.unit + idx.toString()}
-                value={ing}
-                as="li"
-                className="list-item list-inside p-2"
-              >
-                {ing.name} {ing.quantity} {ing.unit}
-              </Reorder.Item>
-            </>
+            <li
+              key={ing.name + ing.quantity + ing.unit + idx.toString()}
+              className="list-item list-inside"
+            >
+              {ing.name} {ing.quantity} {ing.unit}
+            </li>
           ))}
-        </Reorder.Group>
+        </ol>
 
         <NewIngredient setIngredients={setIngdnts} />
       </div>
@@ -170,19 +151,14 @@ const CreateRecipeForm: React.FC = () => {
           className="mb-2 list-decimal"
         >
           {dirs.map((dir) => (
-            <>
-              <Reorder.Item
-                key={dir}
-                value={dir}
-                as="li"
-                className="list-item list-inside p-2"
-              >
-                {dir}
-              </Reorder.Item>
-              <button onClick={() => RemoveDirection(dir)}>
-                <FaTrash />
-              </button>
-            </>
+            <Reorder.Item
+              key={dir}
+              value={dir}
+              as="li"
+              className="list-item list-inside p-2"
+            >
+              {dir}
+            </Reorder.Item>
           ))}
         </Reorder.Group>
 
@@ -274,4 +250,4 @@ const CreateRecipeForm: React.FC = () => {
   );
 };
 
-export default CreateRecipeForm;
+export default editRecipeForm;
