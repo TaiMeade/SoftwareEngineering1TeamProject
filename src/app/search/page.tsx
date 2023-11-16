@@ -30,7 +30,7 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
             : category === "desc"
             ? { description: { contains: query } }
             : category === "tags"
-            ? { tags: { array_contains: query } }
+            ? { tags: { array_contains: query.toUpperCase() } }
             : // Default to searching by title
               { title: { contains: query } },
         ],
