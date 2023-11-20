@@ -30,14 +30,11 @@ const Navbar: React.FC = async () => {
       <div className="navbar-end space-x-2">
         <ul className="flex flex-row items-center gap-3">
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              as="li"
-              className="link-hover link"
-            >
-              {item.label}
-            </Link>
+            <li key={item.label}>
+              <Link href={item.href} className="link-hover link">
+                {item.label}
+              </Link>
+            </li>
           ))}
 
           <li className="ml-2 flex items-center justify-center">

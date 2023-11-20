@@ -40,10 +40,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
     <div className="flex flex-row items-center justify-center">
       <select
         value={category}
+        defaultValue="Search by"
         onChange={(e) => setCategory(e.target.value as ISearchFields)}
         className="select select-bordered select-accent rounded-r-none"
       >
-        <option disabled={true} selected={category === undefined}>
+        <option value="Search by" disabled={true}>
           Search by
         </option>
 
@@ -51,7 +52,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
           <option
             key={cat}
             value={cat}
-            selected={cat === category}
             onClick={() => {
               if (!search) return;
 
