@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Colors Used in Tailwind Config */
+  /* * Colors Used in Tailwind Config */
   --icook-nav: rgb(245, 245, 245);
   --icook-primary: #2196f3;
   --icook-secondary: #ff9800;
@@ -14,6 +14,11 @@
 
   --navbar-height: 4rem;
   --sidebar-width: 16rem;
+  /* --sidebar-width: 4rem; */
+  --sidebar-height: calc(100dvh - var(--navbar-height));
+  --footer-height: 9rem;
+
+  --min-page-height: calc(100dvh - var(--navbar-height) - var(--footer-height));
 }
 
 @layer base {
@@ -53,7 +58,7 @@
 
 @layer components {
   .page {
-    @apply container relative z-0 min-h-[calc(100vh-9rem-var(--navbar-height))] max-w-5xl scroll-smooth p-4 pt-[calc(var(--navbar-height))] antialiased;
+    @apply container relative z-0 min-h-[var(--min-page-height)] max-w-5xl scroll-smooth p-4 pt-[calc(var(--navbar-height))] antialiased;
   }
   .page > div {
     @apply py-8;

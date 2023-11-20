@@ -64,7 +64,7 @@ const AuthSidebar: React.FC = () => {
           },
         }}
         transition={{ duration: 0.2 }}
-        className="fixed bottom-0 left-0 z-[10] flex w-full flex-col items-start justify-start bg-icook-neutral md:bottom-auto md:h-[calc(100vh-var(--navbar-height))] md:w-64"
+        className="fixed bottom-0 left-0 z-[10] flex w-full flex-col items-start justify-start bg-icook-neutral md:bottom-auto md:h-[var(--sidebar-height)] md:w-[var(--sidebar-width)]"
       >
         {/* // * Sidebar Content Below */}
         <div

@@ -19,13 +19,15 @@ const SignInButton: React.FC<SignInButtonProps> = ({ provider }) => {
       Icon = BsGoogle;
       break;
     default:
+      Icon = VscLoading;
       break;
   }
 
   return (
     <button
+      aria-label={`Sign in with ${provider.name}`}
       onClick={() => void signIn(provider.id)}
-      className="btn btn-secondary flex flex-row items-center justify-center space-x-2"
+      className="btn btn-primary flex flex-row items-center justify-center space-x-2"
     >
       <div>
         <Icon className="h-6 w-6" />
@@ -33,7 +35,7 @@ const SignInButton: React.FC<SignInButtonProps> = ({ provider }) => {
 
       <div className="h-full w-[0.05rem] bg-white" />
 
-      <p>Sign in with {provider.name}</p>
+      <p className="text-base">Sign in with {provider.name}</p>
     </button>
   );
 };
@@ -41,10 +43,7 @@ const SignInButton: React.FC<SignInButtonProps> = ({ provider }) => {
 export default SignInButton;
 
 const DefaultSignIn: React.FC = () => (
-  <button
-    onClick={() => void signIn("google")}
-    className="btn btn-secondary flex flex-row items-center justify-center space-x-2"
-  >
-    <p>Sign in</p>
+  <button onClick={() => void signIn("google")} className="btn btn-primary">
+    Sign in
   </button>
 );

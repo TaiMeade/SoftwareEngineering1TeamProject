@@ -8,38 +8,42 @@ import Avatar from "./auth/Avatar";
 
 import SearchBar from "./search/SearchBar";
 
-const Navbar = async () => {
+const Navbar: React.FC = async () => {
   const session = await getAuth();
 
+  // TODO: Display admin navbar below
   return (
     <nav
       role="navigation"
-      className="fixed z-10 flex h-[var(--navbar-height)] w-full items-center justify-between gap-4 border-b border-icook-text bg-icook-nav px-4 text-black"
+      className="navbar fixed z-10 h-[var(--navbar-height)] space-x-2 border-b border-icook-text bg-icook-nav px-4"
     >
-      <h1 className="">
+      <div className="navbar-start">
         <Link href="/" className="link-hover link text-4xl">
           iCook
         </Link>
-      </h1>
-
-      <div className="mx-auto max-w-md flex-1">
-        <div className="hidden md:block">
-          <SearchBar />
-        </div>
       </div>
 
-      <ul className="flex flex-row items-center gap-4">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.label} className="hover:text-gray-700 hover:underline">
-            <Link href={item.href}>{item.label}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="navbar-center hidden md:block">
+        <SearchBar />
+      </div>
 
-      <div className="flex flex-col items-center justify-between gap-4">
-        {/* If Signed in, show avatar */}
-        {/* If not signed in, show sign in button */}
-        {session?.user?.id ? <Avatar /> : <SignInButton />}
+      <div className="navbar-end space-x-2">
+        <ul className="flex flex-row items-center gap-3">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              as="li"
+              className="link-hover link"
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <li className="ml-2 flex items-center justify-center">
+            {session?.user?.id ? <Avatar /> : <SignInButton />}
+          </li>
+        </ul>
       </div>
     </nav>
   );

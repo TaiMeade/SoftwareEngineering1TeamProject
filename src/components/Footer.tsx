@@ -15,7 +15,6 @@ const Footer: React.FC = () => {
     <footer
       className={cn(
         "footer footer-center flex-col rounded bg-base-200 p-10 text-base-content",
-        pathname.includes("/profile") && "md:ml-24",
         pathname.includes("/profile") && "mb-12 md:mb-0",
       )}
     >

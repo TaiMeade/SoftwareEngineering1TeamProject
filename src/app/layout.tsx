@@ -60,10 +60,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       >
         <Providers session={session}>
           <Navbar />
-          <main className="page">
-            {children}
-            <Footer />
-          </main>
+          <main className="page">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

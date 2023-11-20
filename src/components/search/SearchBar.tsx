@@ -15,7 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
   const searchRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState(initialSearch || "");
-  const [category, setCategory] = useState<ISearchFields>(field || "title");
+  const [category, setCategory] = useState<ISearchFields | undefined>(field);
 
   useEffect(() => {
     const searchInput = searchRef?.current;
@@ -28,22 +28,36 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
     if (search.length === 0) {
       searchInput.focus();
     } else {
-      router.push(`/search?q=${search}&c=${category}`);
+      if (!category) {
+        router.push(`/search?q=${search}`);
+      } else {
+        router.push(`/search?q=${search}&c=${category}`);
+      }
     }
   }, [router, search, category]);
 
   return (
-    <div className="flex flex-row items-center justify-center ">
+    <div className="flex flex-row items-center justify-center">
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value as ISearchFields)}
-        className="btn btn-square btn-accent flex w-fit flex-row items-center justify-center rounded-r-none"
+        className="select select-bordered select-accent rounded-r-none"
       >
+        <option disabled={true} selected={category === undefined}>
+          Search by
+        </option>
+
         {CATEGORIES.map((cat) => (
           <option
             key={cat}
             value={cat}
-            onClick={() => router.push(`/search?q=${search}&c=${category}`)}
+            selected={cat === category}
+            onClick={() => {
+              if (!search) return;
+
+              setCategory(cat);
+              router.push(`/search?q=${search}&c=${category ?? ""}`);
+            }}
           >
             {(cat[0]?.toUpperCase() ?? "") + cat.slice(1)}
           </option>
@@ -56,10 +70,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ initialSearch, field }) => {
         placeholder="Search for a recipe..."
         defaultValue={initialSearch}
         onChange={(e) => setSearch(e.target.value)}
-        className="input input-bordered hidden w-full rounded-none placeholder:text-sm md:block"
+        className="input input-bordered hidden rounded-none placeholder:text-sm md:block"
       />
       <button
-        onClick={() => router.push(`/search?q=${search}&c=${category}`)}
+        onClick={() => {
+          if (!search) return;
+
+          if (!category) {
+            router.push(`/search?q=${search}`);
+          } else {
+            router.push(`/search?q=${search}&c=${category}`);
+          }
+        }}
         className="btn btn-accent flex flex-row items-center justify-center gap-2 rounded-l-none"
       >
         <BsSearch className="text-sm" />

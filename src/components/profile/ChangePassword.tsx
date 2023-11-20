@@ -1,84 +1,58 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type z } from "zod";
+import { updateUserSchema } from "~/utils/schemas";
+import { omit } from "~/utils";
 
 import { toast } from "sonner";
 
-import { updateUserSchema } from "~/utils/schemas";
+import { FaEyeSlash, FaRegEye } from "react-icons/fa";
+
+const updatePassSchema = updateUserSchema.extend({
+  verifyPassword: z.string().min(1),
+});
 
 interface ChangePasswordProps {
   password: string | null;
 }
 
+type FormValues = z.infer<typeof updatePassSchema>;
+
 const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<Error>();
+  const [peek, setPeek] = useState(false);
 
-  {
-    /*const session = await getAuth();
-
-  const password = await prisma.user.findUnique({
-    where: {
-      id: session?.user.id ?? "",
-    },
-    select: {
-      password: true,
-    },
-  });*/
-  }
-
-  const { register, handleSubmit, formState } = useForm<
-    z.infer<typeof updateUserSchema>
-  >({
+  const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       password: password || "",
+      verifyPassword: "",
     },
   });
 
-  const onFormSubmit = async (data: z.infer<typeof updateUserSchema>) => {
+  const onFormSubmit = async (data: FormValues) => {
+    const { password: password, verifyPassword } = data;
+
+    if (password != verifyPassword) {
+      toast.error("Passwords don't match");
+      return;
+    }
+
     const res = await fetch("/api/user", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(omit(data, "verifyPassword")),
     });
 
-    /* Used to access the input values */
-    const passwd = (document.getElementById("password") as HTMLInputElement)
-      .value;
-    const verifyPasswd = (
-      document.getElementById("verify-password") as HTMLInputElement
-    ).value;
-
-    if (!res.ok) {
-      console.log("Error updating user");
-      setError(new Error("Error updating user"));
-      setSuccess(false);
-      return;
-    } else if (!(passwd == verifyPasswd)) {
-      console.log("Passwords don't match");
-      setError(new Error("Passwords do not match"));
-      setSuccess(false);
-      return;
-    } else {
-      console.log("Success");
-      setSuccess(true);
+    if (res.ok) toast.success("Password changed");
+    else {
+      console.log("Error changing password", res.statusText);
+      toast.error("Error changing password");
     }
-
-    console.log(data);
   };
 
-  useEffect(() => {
-    if (success) {
-      toast.success("Successfully updated password!");
-    } else if (error) {
-      toast.error(error.message);
-    }
-  }, [success, error]);
-
-  // * Change password
   return (
     <form
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -87,23 +61,47 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ password }) => {
     >
       {/* Password */}
       <div className="flex flex-col gap-4">
-        <label htmlFor="password" className="text-2xl font-bold">
-          Change Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          {...register("password")}
-          className="icook-form-input"
-        />
-        <label htmlFor="verify-password" className="text-2xl font-bold">
-          Re-Enter Password
-        </label>
-        <input
-          id="verify-password"
-          type="password"
-          className="icook-form-input"
-        />
+        <div className="form-control">
+          <label htmlFor="password" className="label mb-2 text-2xl font-bold">
+            <span className="label-text text-2xl font-bold">
+              Change Password
+            </span>
+          </label>
+
+          <div className="btn-group btn-group-horizontal">
+            <input
+              id="password"
+              type={peek ? "text" : "password"}
+              {...register("password")}
+              className="input input-bordered w-full rounded-r-none"
+            />
+
+            <button
+              type="button"
+              onClick={() => setPeek(!peek)}
+              className="btn btn-neutral"
+            >
+              {peek ? <FaEyeSlash /> : <FaRegEye />}
+            </button>
+          </div>
+        </div>
+
+        <div className="form-control">
+          <label
+            htmlFor="verifyPassword"
+            className="label mb-2 text-2xl font-bold"
+          >
+            <span className="label-text text-2xl font-bold">
+              Re-Enter Password
+            </span>
+          </label>
+          <input
+            id="verifyPassword"
+            type="password"
+            {...register("verifyPassword")}
+            className="input input-bordered w-full"
+          />
+        </div>
 
         {formState.errors?.password && (
           <p className="text-sm text-red-500">
