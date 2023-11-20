@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Reorder } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { type Recipe, Tag } from "@prisma/client";
+import { Tag, type Recipe } from "@prisma/client";
 import { type z } from "zod";
 
 import { useForm } from "react-hook-form";
@@ -48,6 +48,27 @@ const CreateRecipeForm: React.FC = () => {
     const newDirections = dirs.filter((dir) => dir !== removeDir);
 
     setDirs(newDirections);
+  };
+
+  const RemoveIngredient = (removeIng: Ingredient) => {
+    let idx = 0;
+    for (let i = 0; i < ingdnts.length; i++) {
+      const curIng = ingdnts[i];
+      if (!curIng) continue;
+
+      if (
+        curIng.name === removeIng.name &&
+        curIng.quantity === removeIng.quantity &&
+        curIng.unit === removeIng.unit
+      ) {
+        idx = i;
+        break;
+      }
+    }
+
+    const newIngredients = ingdnts.filter((_, i) => i !== idx);
+
+    setIngdnts(newIngredients);
   };
 
   async function onSubmit(data: FormData) {
@@ -138,16 +159,25 @@ const CreateRecipeForm: React.FC = () => {
           className="mb-2 list-decimal"
         >
           {ingdnts.map((ing) => (
-            <>
-              <Reorder.Item
-                key={ing.name + ing.quantity + ing.unit}
-                value={ing}
-                as="li"
-                className="list-item list-inside p-2"
-              >
-                {ing.name} {ing.quantity} {ing.unit}
-              </Reorder.Item>
-            </>
+            <Reorder.Item
+              key={`${ing.name}-${ing.quantity}-${ing.unit}`}
+              value={ing}
+              as="li"
+              className="list-item list-inside p-2"
+            >
+              <div className="inline-flex flex-row items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => RemoveIngredient(ing)}
+                  className="text-lg"
+                >
+                  <FaTrash />
+                </button>
+                <span>
+                  {ing.name} {ing.quantity} {ing.unit}
+                </span>
+              </div>
+            </Reorder.Item>
           ))}
         </Reorder.Group>
 
@@ -167,32 +197,29 @@ const CreateRecipeForm: React.FC = () => {
           className="mb-2 list-decimal"
         >
           {dirs.map((dir) => (
-            <>
-              <Reorder.Item
-                key={dir}
-                value={dir}
-                as="li"
-                className="list-item list-inside p-2"
-              >
-                <div className="inline-flex flex-row items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => RemoveDirection(dir)}
-                    className="text-lg"
-                  >
-                    <FaTrash />
-                  </button>
-                  <span>{dir}</span>
-                </div>
-              </Reorder.Item>
-            </>
+            <Reorder.Item
+              key={dir}
+              value={dir}
+              as="li"
+              className="list-item list-inside p-2"
+            >
+              <div className="inline-flex flex-row items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => RemoveDirection(dir)}
+                  className="text-lg"
+                >
+                  <FaTrash />
+                </button>
+                <span>{dir}</span>
+              </div>
+            </Reorder.Item>
           ))}
         </Reorder.Group>
 
         <NewDirection setDirections={setDirs} />
       </div>
 
-      {/* This section is for selecting tags...ugly at the moment */}
       <div className="form-control">
         <label htmlFor="tags" className="label mb-1 mt-4 font-bold">
           <span className="label-text text-lg font-bold">Tags</span>
@@ -224,7 +251,6 @@ const CreateRecipeForm: React.FC = () => {
         )}
       </div>
 
-      {/* This section is for selecting the rough cost estimate */}
       <div className="form-control">
         <label htmlFor="image" className="label mb-1 mt-4 ">
           <span className="label-text text-lg font-bold">Upload an Image</span>

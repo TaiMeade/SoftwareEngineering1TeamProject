@@ -38,7 +38,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/eslint": "^8.44.7",
-    "@types/node": "^18.18.9",
+    "@types/node": "^18.18.10",
     "@types/prettier": "^2.7.3",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
@@ -47,7 +47,7 @@
     "autoprefixer": "^10.4.16",
     "cross-env": "^7.0.3",
     "daisyui": "^3.9.4",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "eslint-config-next": "^13.5.6",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -60,7 +60,7 @@
     "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.3.5",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

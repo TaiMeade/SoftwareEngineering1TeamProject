@@ -1,9 +1,10 @@
 import "~/styles/globals.css";
 import { type Metadata } from "next";
 
+import { getAuth } from "~/server/session";
+
 import { cn } from "~/utils/tw";
 import { Poppins, Noto_Sans } from "next/font/google";
-import { getAuth } from "~/server/session";
 
 import Providers from "~/components/Providers";
 import Navbar from "~/components/Navbar";
