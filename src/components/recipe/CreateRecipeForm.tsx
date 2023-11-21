@@ -51,24 +51,8 @@ const CreateRecipeForm: React.FC = () => {
   };
 
   const RemoveIngredient = (removeIng: Ingredient) => {
-    let idx = 0;
-    for (let i = 0; i < ingdnts.length; i++) {
-      const curIng = ingdnts[i];
-      if (!curIng) continue;
-
-      if (
-        curIng.name === removeIng.name &&
-        curIng.quantity === removeIng.quantity &&
-        curIng.unit === removeIng.unit
-      ) {
-        idx = i;
-        break;
-      }
-    }
-
-    const newIngredients = ingdnts.filter((_, i) => i !== idx);
-
-    setIngdnts(newIngredients);
+    const newIngdnts = ingdnts.filter((ingdnt) => ingdnt !== removeIng);
+    setIngdnts(newIngdnts);
   };
 
   async function onSubmit(data: FormData) {

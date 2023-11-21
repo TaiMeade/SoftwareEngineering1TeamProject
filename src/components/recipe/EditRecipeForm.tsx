@@ -19,7 +19,9 @@ import { prettifyTag } from "~/utils";
 
 import NewIngredient from "./NewIngredient";
 import NewDirection from "./NewDirection";
+
 import { FaSpinner } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { useUploadThing } from "~/utils/ut";
 import { type UploadFileResponse } from "uploadthing/client";
 
@@ -61,7 +63,19 @@ const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
   const [file, setFile] = useState<File | null>(null);
 
   const [dirs, setDirs] = useState<string[]>(defDirections);
+
   const [ingdnts, setIngdnts] = useState<Ingredient[]>(defIngs);
+
+  const RemoveDirection = (removeDir: string) => {
+    const newDirections = dirs.filter((dir) => dir !== removeDir);
+
+    setDirs(newDirections);
+  };
+
+  const RemoveIngredient = (removeIng: Ingredient) => {
+    const newIngdnts = ingdnts.filter((ingdnt) => ingdnt !== removeIng);
+    setIngdnts(newIngdnts);
+  };
 
   async function onSubmit(data: FormData) {
     console.log("Submitting", data);
@@ -157,7 +171,18 @@ const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
               value={ing}
               className="list-item list-inside"
             >
-              {ing.name} {ing.quantity} {ing.unit}
+              <div className="inline-flex flex-row items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => RemoveIngredient(ing)}
+                  className="text-lg"
+                >
+                  <FaTrash />
+                </button>
+                <span>
+                  {ing.name} {ing.quantity} {ing.unit}
+                </span>
+              </div>
             </Reorder.Item>
           ))}
         </Reorder.Group>
@@ -184,7 +209,16 @@ const EditRecipeForm: React.FC<EditRecipeProps> = ({ recipe }) => {
               as="li"
               className="list-item list-inside p-2"
             >
-              {dir}
+              <div className="inline-flex flex-row items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => RemoveDirection(dir)}
+                  className="text-lg"
+                >
+                  <FaTrash />
+                </button>
+                <span>{dir}</span>
+              </div>
             </Reorder.Item>
           ))}
         </Reorder.Group>
