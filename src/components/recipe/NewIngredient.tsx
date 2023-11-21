@@ -35,25 +35,43 @@ const NewIngredient: React.FC<NewIngredientProps> = ({ setIngredients }) => {
           }}
           type="text"
           placeholder="Name"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addIngredient();
+            }
+          }}
           className="input input-bordered w-full"
         />
         <input
           id="quantity"
+          type="text"
+          placeholder="Quantity"
           onChange={(e) => {
             setNewIng({ ...newIng, quantity: e.target.value });
           }}
-          type="text"
-          placeholder="Quantity"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addIngredient();
+            }
+          }}
           className="input input-bordered w-full"
         />
 
         <input
           id="unit"
+          type="text"
+          placeholder="Unit"
           onChange={(e) => {
             setNewIng({ ...newIng, unit: e.target.value });
           }}
-          type="text"
-          placeholder="Unit"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addIngredient();
+            }
+          }}
           className="input input-bordered w-full"
         />
       </div>

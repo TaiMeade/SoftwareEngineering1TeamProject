@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Reorder } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Tag, type Recipe } from "@prisma/client";
-import { type z } from "zod";
+import type { z } from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,31 +22,27 @@ import { type UploadFileResponse } from "uploadthing/client";
 
 type FormData = z.infer<typeof createRecipeSchema>;
 
+const resolver = zodResolver(createRecipeSchema);
+
 const CreateRecipeForm: React.FC = () => {
   const router = useRouter();
 
-  const { register, handleSubmit, formState } = useForm<FormData>({
-    resolver: zodResolver(createRecipeSchema),
+  const { startUpload } = useUploadThing("uploadRecipeImg", {
+    onUploadBegin: (filename) => console.log("Uploading", filename),
+    onClientUploadComplete: (res) => console.log(res?.map((r) => r.url)),
+    onUploadError: (err) => console.error("Error", err),
   });
 
-  const { startUpload } = useUploadThing("uploadRecipeImg", {
-    onUploadBegin: () => {
-      console.log("upload begin");
-    },
-    onClientUploadComplete: (res) => {
-      console.log(res?.map((r) => r.url));
-    },
+  const { register, handleSubmit, formState } = useForm<FormData>({
+    resolver,
   });
 
   const [file, setFile] = useState<File | null>(null);
-
   const [dirs, setDirs] = useState<string[]>([]);
-
   const [ingdnts, setIngdnts] = useState<Ingredient[]>([]);
 
   const RemoveDirection = (removeDir: string) => {
     const newDirections = dirs.filter((dir) => dir !== removeDir);
-
     setDirs(newDirections);
   };
 
@@ -101,9 +97,14 @@ const CreateRecipeForm: React.FC = () => {
         </label>
         <input
           id="title"
-          {...register("title")}
           type="text"
           placeholder="Title"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
+          {...register("title")}
           className="input input-bordered w-full"
         />
         {formState.errors?.title && (
@@ -120,6 +121,11 @@ const CreateRecipeForm: React.FC = () => {
         <textarea
           id="description"
           placeholder="Description"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
           {...register("description")}
           className="textarea textarea-bordered textarea-lg"
         />
@@ -273,7 +279,7 @@ const CreateRecipeForm: React.FC = () => {
       <div className="form-control mt-2 flex flex-col gap-4">
         <button
           type="submit"
-          disabled={formState.isSubmitting || formState.isSubmitted}
+          disabled={formState.isSubmitting}
           className="btn btn-primary transition-all disabled:cursor-not-allowed disabled:hover:bg-zinc-900"
         >
           {!formState.isSubmitting ? (
