@@ -9,7 +9,10 @@ const RecipesPage: NextPage = async () => {
   const recipes = await prisma.recipe.findMany({
     take: AMT_OF_RECIPES,
     include: { author: { select: { name: true } } },
-    orderBy: { comments: { _count: "desc" } },
+    orderBy: [
+      { likedBy: { _count: "desc" } },
+      { comments: { _count: "desc" } },
+    ],
   });
 
   return (
@@ -30,6 +33,8 @@ const RecipesPage: NextPage = async () => {
 };
 
 export default RecipesPage;
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "iCook | Browse",

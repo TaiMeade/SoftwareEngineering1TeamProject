@@ -86,6 +86,10 @@ model Comment {
   recipeId String
   recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
+  // * Replies to this comment
+  replies       Comment[] @relation("Replies")
+  parentComment Comment[] @relation("Replies")
+
   @@index([authorId])
   @@index([recipeId])
 }

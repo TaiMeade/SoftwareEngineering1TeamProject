@@ -11,7 +11,13 @@ const config = {
   reactStrictMode: true,
   i18n: { locales: ["en"], defaultLocale: "en" },
   images: {
-    domains: ["lh3.googleusercontent.com", "utfs.io", "loremflickr.com"],
+    domains: [
+      "lh3.googleusercontent.com",
+      "utfs.io",
+      "loremflickr.com",
+      "avatars.githubusercontent.com",
+      "cloudflare-ipfs.com",
+    ],
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,

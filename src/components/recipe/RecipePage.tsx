@@ -3,26 +3,19 @@ import { getAuth } from "~/server/session";
 import Link from "next/link";
 import Image from "next/image";
 
-import { type Recipe, type Comment } from "@prisma/client";
+import type { Recipe } from "@prisma/client";
+
 import { cn } from "~/utils/tw";
 import { fmtDate } from "~/utils";
 import { parseDirections, parseIngredients, parseTags } from "~/utils/schemas";
 
 import LikeButton from "./LikeButton";
 import RecipeToolbar from "./RecipeToolbar";
+import CommentsList from "../comment/CommentsList";
 
 interface RecipePageProps {
   likes: number;
-  recipe: Recipe & {
-    author: { name: string | null };
-    comments: (Comment & {
-      author: {
-        name: string | null;
-        id: string;
-        username: string | null;
-      };
-    })[];
-  };
+  recipe: Recipe & { author: { name: string | null } };
 }
 
 const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
@@ -123,11 +116,7 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
       <RecipeToolbar recipe={recipe} session={session} />
 
       {/* Comments */}
-      {/* <ListComments
-        recipeId={recipe.id}
-        comments={recipe.comments}
-        session={session}
-      /> */}
+      <CommentsList recipeId={recipe.id} />
     </div>
   );
 };

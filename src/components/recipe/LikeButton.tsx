@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { type Recipe } from "@prisma/client";
+import type { Recipe } from "@prisma/client";
 
 import { toast } from "sonner";
 
@@ -21,15 +21,17 @@ const LikeButton: React.FC<LikeButtonProps> = ({ numLikes, recipe }) => {
       body: JSON.stringify({ id: recipe.id }),
     });
 
-    if (res.ok) {
-      // Like or unliked
-      const wasLiked = (await res.json()) as boolean;
+    if (!res.ok) {
+      return toast.error(`Failed to like recipe - ${res.statusText}`);
+    }
 
-      if (wasLiked) toast.success(`Unliked recipe - ${recipe.title}`);
-      else toast.info(`Liked recipe - ${recipe.title}`);
+    // Like or unliked
+    const wasLiked = (await res.json()) as boolean;
 
-      router.refresh();
-    } else toast.error(`Failed to like recipe - ${res.statusText}`);
+    if (wasLiked) toast.info(`Unliked recipe - ${recipe.title}`);
+    else toast.success(`Liked recipe - ${recipe.title}`);
+
+    router.refresh();
   };
 
   return (

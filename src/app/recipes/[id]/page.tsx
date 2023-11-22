@@ -19,13 +19,6 @@ const RecipesPage: NextPage<RecipesPageProps> = async ({ params }) => {
     include: {
       likedBy: { select: { _count: true } },
       author: { select: { name: true } },
-      comments: {
-        include: {
-          author: {
-            select: { name: true, id: true, username: true },
-          },
-        },
-      },
     },
   });
 

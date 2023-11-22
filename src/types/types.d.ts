@@ -42,3 +42,24 @@ interface RecipesPageProps {
 }
 
 type ISearchFields = "tags" | "desc" | "author" | "title";
+
+type IComment = {
+  id: string;
+  recipeId: string;
+  authorId: string;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type CommentWithAuthor = IComment & {
+  author: {
+    id: string;
+    name: string | null;
+    username: string | null;
+    image: string | null;
+  };
+};
+type PrismaComment = CommentWithAuthor & {
+  replies: PrismaComment[];
+};

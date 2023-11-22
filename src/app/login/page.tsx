@@ -76,6 +76,7 @@ const EmailPassForm: React.FC = () => (
         type="email"
         placeholder="email"
         className="input input-bordered"
+        autoComplete="email"
         required
       />
     </div>
@@ -86,6 +87,7 @@ const EmailPassForm: React.FC = () => (
       <input
         type="password"
         placeholder="password"
+        autoComplete="current-password"
         className="input input-bordered"
         required
       />
