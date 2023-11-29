@@ -1,0 +1,14 @@
+Check comments + username + bio for bad words
+
+Remove non-letter / non-number chars from username and maybe bio too
+
+Check create recipe ingredient naems for bad words and 
+
+check that they are valid ingredient units?
+
+Searching for tags doesn't support multiple tags
+
+Updating user image doesn't automatically update the image in the navbar / auth sidebar
+
+After creating new recipe, must refresh in profile to view recipe.
+

@@ -145,14 +145,14 @@ const CreateRecipeForm: React.FC = () => {
           axis="y"
           values={ingdnts}
           onReorder={setIngdnts}
-          as="ol"
+          // as="ol"
           className="mb-2 list-decimal"
         >
           {ingdnts.map((ing) => (
             <Reorder.Item
               key={`${ing.name}-${ing.quantity}-${ing.unit}`}
               value={ing}
-              as="li"
+              // as="li"
               className="list-item list-inside p-2"
             >
               <div className="inline-flex flex-row items-center gap-2">
@@ -183,14 +183,14 @@ const CreateRecipeForm: React.FC = () => {
           axis="y"
           values={dirs}
           onReorder={setDirs}
-          as="ol"
+          // as="ol"
           className="mb-2 list-decimal"
         >
           {dirs.map((dir) => (
             <Reorder.Item
               key={dir}
               value={dir}
-              as="li"
+              // as="li"
               className="list-item list-inside p-2"
             >
               <div className="inline-flex flex-row items-center gap-2">
