@@ -108,6 +108,9 @@ model Report {
   reportedUserId String
   reportedUser   User   @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
 
+  // * Resolved
+  resolved Boolean @default(false)
+
   @@index([reporterId])
   @@index([reportedUserId])
 }
