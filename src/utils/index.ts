@@ -28,6 +28,13 @@ export const SIDEBAR_ITEMS: NavItemProps[] = [
   { label: "Logout", href: "/logout" },
 ];
 
+export const ADMIN_SIDEBAR_ITEMS: NavItemProps[] = [
+  { label: "Admin", href: "/admin/" },
+  { label: "Users", href: "/admin/users" },
+  { label: "Recipes", href: "/admin/recipes" },
+  { label: "Reports", href: "/admin/reports" },
+];
+
 // * Function to sleep for a given amount of time
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 

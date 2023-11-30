@@ -146,9 +146,9 @@ model User {
   likedRecipes Recipe[] @relation("LikedRecipes")
 
   // * Reports
-  // TODO: Add reports to user model and store this users created reports
   reportsSend     Report[] @relation("ReportedUsers")
   reportsReceived Report[] @relation("UserReports")
+  canPost         Boolean  @default(true)
 
   @@index([username])
   @@index([email])

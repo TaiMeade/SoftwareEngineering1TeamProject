@@ -5,6 +5,7 @@ import ShareButton from "./ShareButton";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import FeatureButton from "./FeatureButton";
+import ReportButton from "../report/ReportButton";
 
 interface RecipeToolbarProps {
   session: Session | null;
@@ -17,11 +18,18 @@ const RecipeToolbar: React.FC<RecipeToolbarProps> = ({ session, recipe }) => {
   const canDelete = isAdmin || isOwner;
   const canEdit = isOwner;
   const canFeature = isAdmin;
+  const canReport = session?.user?.id && session?.user.id !== recipe.authorId;
 
   return (
     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
-      <div className="flex w-full justify-end sm:justify-start">
+      <div className="flex w-full flex-wrap justify-end gap-2 sm:justify-start">
         <ShareButton recipe={recipe} />
+        {canReport && (
+          <ReportButton
+            reportedId={recipe.authorId}
+            reporterId={session.user.id}
+          />
+        )}
       </div>
 
       <div className="flex w-full flex-1 flex-row items-center justify-end space-x-3">

@@ -138,3 +138,12 @@ export const createCommentSchema = z.object({
 export const featureRecipeSchema = z.object({
   id: z.string().min(1),
 });
+
+/**
+ * Create Report Schema
+ */
+export const createReportSchema = z.object({
+  reporterId: z.string().min(1),
+  reportedId: z.string().min(1),
+  reason: z.string().min(1),
+});

@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+
 import { useSession } from "next-auth/react";
-
-import { SIDEBAR_ITEMS } from "~/utils";
-
 import { useMediaQuery } from "~/utils/hooks/useMediaQuery";
+
+import { ADMIN_SIDEBAR_ITEMS } from "~/utils";
 
 import Link from "next/link";
 
@@ -16,15 +16,15 @@ import {
   domAnimation,
 } from "framer-motion";
 
-import SidebarUser from "../SidebarUser";
 import { AiFillCaretDown } from "react-icons/ai";
+import SidebarUser from "../SidebarUser";
 
 const sidebarVariants: Variants = {
   open: { y: 0, transition: { duration: 0.2 } },
   closed: { y: "100%", transition: { duration: 0.2 } },
 };
 
-const AuthSidebar: React.FC = () => {
+const AdminSidebar: React.FC = () => {
   const { data: session } = useSession();
 
   const controls = useAnimationControls();
@@ -71,7 +71,7 @@ const AuthSidebar: React.FC = () => {
           className="flex w-full flex-col items-center justify-start border-b border-gray-600 px-6 "
         >
           <div className="flex w-full items-center justify-between space-x-14 py-5 text-left text-white focus:text-indigo-400 focus:outline-none">
-            <p className="text-sm uppercase leading-5">Profile Overview</p>
+            <p className="text-sm uppercase leading-5">Admin Panel</p>
 
             {isMobile && (
               <button
@@ -102,7 +102,7 @@ const AuthSidebar: React.FC = () => {
           </div>
 
           <div className="flex w-full flex-col items-start justify-start space-y-1">
-            {SIDEBAR_ITEMS.map((item) => (
+            {ADMIN_SIDEBAR_ITEMS.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
@@ -120,4 +120,4 @@ const AuthSidebar: React.FC = () => {
   );
 };
 
-export default AuthSidebar;
+export default AdminSidebar;

@@ -2,9 +2,9 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { getAuth } from "~/server/session";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// import dynamic from "next/dynamic";
-// const AdminLayout = dynamic(() => import("~/components/admin/AdminLayout"));
+const AdminLayout = dynamic(() => import("~/components/admin/Layout"));
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   const session = await getAuth();
@@ -15,8 +15,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <div className="-mt-8">
-      {/* <AdminLayout>{children}</AdminLayout> */}
-      {children}
+      <AdminLayout>{children}</AdminLayout>
     </div>
   );
 }
