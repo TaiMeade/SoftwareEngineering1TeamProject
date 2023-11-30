@@ -94,6 +94,24 @@ model Comment {
   @@index([recipeId])
 }
 
+// * Reports for recipe model
+model Report {
+  id        String   @id @default(cuid())
+  reason    String   @db.Text
+  createdAt DateTime @default(now())
+
+  // * Relationships
+  reporterId String
+  reporter   User   @relation("ReportedUsers", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  // * User being reported
+  reportedUserId String
+  reportedUser   User   @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
+
+  @@index([reporterId])
+  @@index([reportedUserId])
+}
+
 // * All Models Below Are Necessary for Next auth
 model User {
   id            String    @id @default(cuid())
@@ -123,6 +141,11 @@ model User {
   // * Users Saved / Favorited Recipes
   savedRecipes Recipe[] @relation("SavedRecipes")
   likedRecipes Recipe[] @relation("LikedRecipes")
+
+  // * Reports
+  // TODO: Add reports to user model and store this users created reports
+  reportsSend     Report[] @relation("ReportedUsers")
+  reportsReceived Report[] @relation("UserReports")
 
   @@index([username])
   @@index([email])
