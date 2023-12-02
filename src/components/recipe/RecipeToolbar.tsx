@@ -28,6 +28,7 @@ const RecipeToolbar: React.FC<RecipeToolbarProps> = ({ session, recipe }) => {
           <ReportButton
             reportedId={recipe.authorId}
             reporterId={session.user.id}
+            reportedRecipeId={recipe.id}
           />
         )}
       </div>

@@ -105,8 +105,9 @@ model Report {
   reporter   User   @relation("ReportedUsers", fields: [reporterId], references: [id], onDelete: Cascade)
 
   // * User being reported
-  reportedUserId String
-  reportedUser   User   @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedUserId   String
+  reportedUser     User    @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedRecipeId String?
 
   // * Resolved
   resolved Boolean @default(false)
@@ -146,6 +147,7 @@ model User {
   likedRecipes Recipe[] @relation("LikedRecipes")
 
   // * Reports
+  // TODO: Add reports to user model and store this users created reports
   reportsSend     Report[] @relation("ReportedUsers")
   reportsReceived Report[] @relation("UserReports")
   canPost         Boolean  @default(true)
