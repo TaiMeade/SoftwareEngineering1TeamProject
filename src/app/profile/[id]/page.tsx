@@ -4,7 +4,10 @@ import { prisma } from "~/server/db";
 import { generateAuthorSEO } from "~/utils/seo";
 import { omitProfile } from "~/utils";
 
+import Image from "next/image";
+
 import UserNotFound from "~/components/profile/UserNotFound";
+import RecipeCard from "~/components/recipe/RecipeCard";
 
 interface RecipesPageProps {
   params: { id: string };
@@ -33,15 +36,39 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
 
   const safeUser = omitProfile(user);
 
-  return (
-    <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">
-        User {safeUser.username ?? safeUser.name ?? safeUser.id} Page
-      </h1>
+  const recipes = await prisma.recipe.findMany({
+    where: { authorId: safeUser.id },
+    include: { author: { select: { name: true } }, _count: true },
+    orderBy: { createdAt: "desc" },
+  });
 
+  return (
+    <div className="flex flex-col items-center gap-12">
+      {safeUser.image && (
+        <Image
+          src={safeUser.image}
+          alt="User Profile Picture"
+          width={128}
+          height={128}
+          className="h-32 w-32 rounded-full border border-slate-800 object-cover transition-all duration-300 ease-in-out hover:scale-110"
+        />
+      )}
+      <h1 className="text-4xl font-bold">
+        {safeUser.username ?? safeUser.name ?? safeUser.id}
+        {/*&lsquo;s Page*/}
+      </h1>
+      <h2>{safeUser.bio ?? " "}</h2>
+
+      <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {recipes?.map((recipe) => (
+          <RecipeCard recipe={recipe} key={recipe.id} />
+        ))}
+      </div>
+      {/*
       <pre className="max-w-full overflow-hidden">
         {JSON.stringify(safeUser, null, 2)}
       </pre>
+  */}
     </div>
   );
 };
