@@ -15,6 +15,17 @@ export async function POST(req: Request) {
     });
   }
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  if (!user?.canPost) {
+    return NextResponse.json(null, {
+      status: 401,
+      statusText: "Unauthorized",
+    });
+  }
+
   const parsed = createRecipeSchema.safeParse(await req.json());
 
   if (!parsed.success) {

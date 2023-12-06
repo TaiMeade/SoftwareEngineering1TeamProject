@@ -4,14 +4,14 @@ import { redirect } from "next/navigation";
 import { getAuth } from "~/server/session";
 import { prisma } from "~/server/db";
 
-import Image from "next/image";
+import ReportedComment from "~/components/report/ReportedComment";
 
 // const AMT_RECIPES = 10;
 
 const ReportedCommentsPage: NextPage<PageProps> = async () => {
   const session = await getAuth();
-  if (!session?.user?.id) return redirect("/login");
 
+  if (!session?.user?.id) return redirect("/login");
   if (session.user.role !== "ADMIN") return redirect("/");
 
   const reportedComments = await prisma.report.findMany({
@@ -25,65 +25,13 @@ const ReportedCommentsPage: NextPage<PageProps> = async () => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-start justify-center gap-12">
       <h1 className="text-4xl font-bold">Reported Comments Page</h1>
-      <div className="flex flex-row items-center gap-4">
-        {session.user.image && (
-          <Image
-            src={session.user.image}
-            alt="User Profile Picture"
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-full object-cover transition-all duration-300 ease-in-out hover:scale-110"
-          />
-        )}
-        <h2 className="text-3xl font-medium">
-          Welcome,{" "}
-          {" " + (session.user.username ?? session.user.name ?? "User")}.
-        </h2>
-      </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-col gap-4">
         {/* Map over reported comments */}
         {reportedComments.map((report) => (
-          <div
-            key={report.id}
-            className="flex flex-col gap-2 rounded-md border border-gray-400 p-4"
-          >
-            <div className="flex flex-row items-center gap-4">
-              {report.reporter.image && (
-                <Image
-                  src={report.reporter.image}
-                  alt="User Profile Picture"
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 rounded-full object-cover transition-all duration-300 ease-in-out hover:scale-110"
-                />
-              )}
-              <h2 className="text-3xl font-medium">
-                {report.reporter.username}
-              </h2>
-              <h2 className="text-3xl font-medium">reported</h2>
-              {report.reportedUser.image && (
-                <Image
-                  src={report.reportedUser.image}
-                  alt="User Profile Picture"
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 rounded-full object-cover transition-all duration-300 ease-in-out hover:scale-110"
-                />
-              )}
-              <h2 className="text-3xl font-medium">
-                {report.reportedUser.username}
-              </h2>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h2 className="text-3xl font-medium">Comment:</h2>
-              <p className="text-2xl font-normal">
-                {report.reportedComment?.text}
-              </p>
-            </div>
-          </div>
+          <ReportedComment key={report.id} report={report} />
         ))}
       </div>
       <div className="w-full pb-8" />
