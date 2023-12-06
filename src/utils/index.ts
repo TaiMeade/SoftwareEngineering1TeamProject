@@ -30,9 +30,10 @@ export const SIDEBAR_ITEMS: NavItemProps[] = [
 
 export const ADMIN_SIDEBAR_ITEMS: NavItemProps[] = [
   { label: "Admin", href: "/admin/" },
+  { label: "All Reports", href: "/admin/reports" },
   { label: "Users", href: "/admin/users" },
   { label: "Recipes", href: "/admin/recipes" },
-  { label: "Reports", href: "/admin/reports" },
+  { label: "Comments", href: "/admin/comments" },
 ];
 
 // * Function to sleep for a given amount of time

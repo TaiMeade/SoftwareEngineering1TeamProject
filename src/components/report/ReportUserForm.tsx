@@ -15,7 +15,8 @@ import { FaSpinner } from "react-icons/fa";
 interface ReportUserFormProps {
   reporterId: string;
   reportedId: string;
-  reportedRecipeId: string;
+  reportedRecipeId?: string;
+  reportedCommentId?: string;
 }
 
 type FormData = z.infer<typeof createReportSchema>;
@@ -26,6 +27,7 @@ const ReportUserForm: React.FC<ReportUserFormProps> = ({
   reportedId,
   reporterId,
   reportedRecipeId,
+  reportedCommentId,
 }) => {
   // TODO: Bug modal not closing after submit
   const router = useRouter();
@@ -85,6 +87,16 @@ const ReportUserForm: React.FC<ReportUserFormProps> = ({
           type="text"
           {...register("reportedRecipeId")}
           value={reportedRecipeId}
+          className="input input-bordered w-full"
+        />
+      </div>
+
+      <div className="form-control hidden">
+        <input
+          id="reportedCommentId"
+          type="text"
+          {...register("reportedCommentId")}
+          value={reportedCommentId}
           className="input input-bordered w-full"
         />
       </div>

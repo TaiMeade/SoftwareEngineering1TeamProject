@@ -8,13 +8,15 @@ const ReportUserForm = dynamic(() => import("./ReportUserForm"));
 interface ReportButtonProps {
   reportedId: string;
   reporterId: string;
-  reportedRecipeId: string;
+  reportedRecipeId?: string;
+  reportedCommentId?: string;
 }
 
 const ReportButton: React.FC<ReportButtonProps> = ({
   reportedId,
   reporterId,
   reportedRecipeId,
+  reportedCommentId,
 }) => {
   return (
     <Modal
@@ -36,6 +38,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
         reportedId={reportedId}
         reporterId={reporterId}
         reportedRecipeId={reportedRecipeId}
+        reportedCommentId={reportedCommentId}
       />
     </Modal>
   );
