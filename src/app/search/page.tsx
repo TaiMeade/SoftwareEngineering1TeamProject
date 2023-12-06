@@ -15,6 +15,9 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
 
   let searchResults: RecipeWithAuthor[] = [];
 
+  const tags = query.toUpperCase().split(" ");
+  console.log("Tags: ", tags);
+
   if (query.length > 0) {
     searchResults = await prisma.recipe.findMany({
       where: {
@@ -34,7 +37,7 @@ const SearchPage: NextPage<PageProps> = async ({ searchParams }: PageProps) => {
             : category === "desc"
             ? { description: { contains: query } }
             : category === "tags"
-            ? { tags: { array_contains: query.toUpperCase() } }
+            ? { tags: { array_contains: query.toUpperCase().split(" ") } }
             : // Default to searching by title
               { title: { contains: query } },
         ],
