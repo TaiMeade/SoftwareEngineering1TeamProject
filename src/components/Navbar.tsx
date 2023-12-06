@@ -12,7 +12,6 @@ import MobileNav from "./MobileNav";
 const Navbar: React.FC = async () => {
   const session = await getAuth();
 
-  // TODO: Display admin navbar below
   return (
     <nav
       role="navigation"
@@ -55,3 +54,5 @@ const Navbar: React.FC = async () => {
 };
 
 export default Navbar;
+
+export const dynamic = "force-dynamic";

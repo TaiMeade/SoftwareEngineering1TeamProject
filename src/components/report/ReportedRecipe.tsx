@@ -1,7 +1,7 @@
 import type { Recipe, Report } from "@prisma/client";
 
 import Image from "next/image";
-import Link from "next/link";
+
 import RecipeCard from "../recipe/RecipeCard";
 import ResolveReport from "./ResolveReport";
 
@@ -59,16 +59,7 @@ const ReportedRecipe: React.FC<ReportedRecipeProps> = ({ report }) => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex flex-row items-center justify-start gap-4">
-          <Link
-            href={`/recipes/${report.reportedUserId}`}
-            className="link-hover link text-xl font-medium"
-          >
-            Reported Recipe:
-          </Link>
-
-          <ResolveReport reportId={report.id} isResolved={report.resolved} />
-        </div>
+        <ResolveReport reportId={report.id} isResolved={report.resolved} />
         <div>
           <RecipeCard
             recipe={{

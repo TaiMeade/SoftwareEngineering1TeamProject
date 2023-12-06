@@ -1,15 +1,18 @@
-Check comments + username + bio for bad words
+Filter Non-Characters:
+  Username
+  Bio
 
-Remove non-letter / non-number chars from username and maybe bio too
+Filter Bad Words:
+  Comments
+  Recipe Name
+  Recipe Description
+  Username
+  Ingredient Names
 
-Check create recipe ingredient naems for bad words and 
+Not Important:
+  check that they are valid ingredient units?
 
-check that they are valid ingredient units?
+Sort of Done:
+  Updating user image doesn't automatically update the image in the navbar / auth sidebar
 
-Searching for tags doesn't support multiple tags
-
-Updating user image doesn't automatically update the image in the navbar / auth sidebar
-
-After creating new recipe, must refresh in profile to view recipe.
-
-User Profile page
+  After creating new recipe, must refresh in profile to view recipe.

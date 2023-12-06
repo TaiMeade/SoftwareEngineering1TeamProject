@@ -13,9 +13,7 @@ const UserProfilePage: NextPage = async () => {
   const session = await getAuth();
 
   // * If the user is not logged in, redirect them to the login page.
-  if (!session?.user?.id) {
-    return redirect("/login");
-  }
+  if (!session?.user?.id) return redirect("/login");
 
   const recipes = await prisma.recipe.findMany({
     where: { authorId: session.user.id },
@@ -78,3 +76,5 @@ export default UserProfilePage;
 export const metadata: Metadata = {
   title: "iCook | Profile",
 };
+
+export const dynamic = "force-dynamic";

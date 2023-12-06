@@ -1,9 +1,10 @@
+import { getAuth } from "~/server/session";
 import { fmtDate } from "~/utils";
 
-import NewComment from "./NewComment";
 import UserImg from "./UserImg";
+
+import NewComment from "./NewComment";
 import ReportButton from "../report/ReportButton";
-import { getAuth } from "~/server/session";
 
 interface CommentProps {
   recipeId: string;

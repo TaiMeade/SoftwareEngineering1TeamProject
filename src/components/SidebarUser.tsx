@@ -40,3 +40,5 @@ const SidebarUser: React.FC<{ session: Session | null }> = ({ session }) => {
 };
 
 export default SidebarUser;
+
+export const dynamic = "force-dynamic";
