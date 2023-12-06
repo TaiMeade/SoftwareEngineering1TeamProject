@@ -25,7 +25,7 @@ const ReportsPage: NextPage<PageProps> = async () => {
       <h1 className="text-4xl font-bold">Reports Page</h1>
 
       <div className="flex w-full flex-col gap-4">
-        {/* Map over reported recipes */}
+        {/* Map over reports */}
         {reports.map((report) => (
           <Report key={report.id} report={report} />
         ))}

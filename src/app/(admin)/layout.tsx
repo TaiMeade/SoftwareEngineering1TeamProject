@@ -15,7 +15,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <div className="-mt-8">
-      <AdminLayout>{children}</AdminLayout>
+      <AdminLayout>
+        <div className="pt-4">{children}</div>
+      </AdminLayout>
     </div>
   );
 }
