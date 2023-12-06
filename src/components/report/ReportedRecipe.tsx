@@ -1,26 +1,28 @@
-import type { Report } from "@prisma/client";
+import type { Recipe, Report } from "@prisma/client";
 
 import Image from "next/image";
 import Link from "next/link";
+import RecipeCard from "../recipe/RecipeCard";
 import ResolveReport from "./ResolveReport";
 
-interface ReportedCommentProps {
+interface ReportedRecipeProps {
   report: Report & {
-    reporter: { image: string | null; username: string | null };
-    reportedUser: { image: string | null; username: string | null };
-    reportedComment: {
-      id: string;
-      text: string;
-      createdAt: Date;
-      updatedAt: Date;
-      authorId: string;
-      recipeId: string;
-    } | null;
+    reporter: {
+      image: string | null;
+      username: string | null;
+      name: string | null;
+    };
+    reportedUser: {
+      image: string | null;
+      username: string | null;
+      name: string | null;
+    };
+    reportedRecipe: Recipe | null;
   };
 }
 
-const ReportedComment: React.FC<ReportedCommentProps> = ({ report }) => {
-  if (!report.reportedComment) return null;
+const ReportedRecipe: React.FC<ReportedRecipeProps> = ({ report }) => {
+  if (!report.reportedRecipe) return null;
 
   return (
     <div className="flex w-full flex-col gap-2 rounded-md border border-gray-400 p-4">
@@ -59,18 +61,25 @@ const ReportedComment: React.FC<ReportedCommentProps> = ({ report }) => {
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-start gap-4">
           <Link
-            href={`/recipes/${report.reportedComment.recipeId}#comment-${report.reportedComment.id}`}
+            href={`/recipes/${report.reportedUserId}`}
             className="link-hover link text-xl font-medium"
           >
-            Reported Comment:
+            Reported Recipe:
           </Link>
 
           <ResolveReport reportId={report.id} isResolved={report.resolved} />
         </div>
-        <p className="text-base font-normal">{report.reportedComment?.text}</p>
+        <div>
+          <RecipeCard
+            recipe={{
+              ...report.reportedRecipe,
+              author: { name: report.reportedUser.name },
+            }}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-export default ReportedComment;
+export default ReportedRecipe;

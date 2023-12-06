@@ -42,5 +42,5 @@ const ReportedCommentsPage: NextPage<PageProps> = async () => {
 export default ReportedCommentsPage;
 
 export const metadata: Metadata = {
-  title: "iCook | Profile",
+  title: "iCook | Reported Comments",
 };

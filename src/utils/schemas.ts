@@ -149,3 +149,10 @@ export const createReportSchema = z.object({
   reportedRecipeId: z.string().optional().nullable(),
   reportedCommentId: z.string().optional().nullable(),
 });
+
+/**
+ * Resolve report schema
+ */
+export const resolveReportSchema = z.object({
+  reportId: z.string().min(1),
+});

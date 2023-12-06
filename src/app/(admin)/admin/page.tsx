@@ -98,5 +98,5 @@ const AdminPage: NextPage = async () => {
 export default AdminPage;
 
 export const metadata: Metadata = {
-  title: "iCook | Profile",
+  title: "iCook | Admin",
 };

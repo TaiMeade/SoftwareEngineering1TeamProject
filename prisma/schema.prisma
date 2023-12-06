@@ -122,7 +122,10 @@ model Report {
   reportedComment   Comment? @relation(fields: [reportedCommentId], references: [id], onDelete: Cascade)
 
   // * Resolved
-  resolved Boolean @default(false)
+  resolved   Boolean   @default(false)
+  resolvedAt DateTime?
+  // resolvedById String?
+  // resolvedBy   User?   @relation(fields: [resolvedById], references: [id], onDelete: Cascade)
 
   @@index([reporterId])
   @@index([reportedUserId])
