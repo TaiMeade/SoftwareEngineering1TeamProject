@@ -105,9 +105,11 @@ model Report {
   reporter   User   @relation("ReportedUsers", fields: [reporterId], references: [id], onDelete: Cascade)
 
   // * User being reported
-  reportedUserId   String
-  reportedUser     User    @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
-  reportedRecipeId String?
+  reportedUserId String
+  reportedUser   User   @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
+
+  reportedRecipeId  String?
+  reportedCommentId String?
 
   // * Resolved
   resolved Boolean @default(false)
