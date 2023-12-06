@@ -34,6 +34,8 @@ const ReportUserForm: React.FC<ReportUserFormProps> = ({
 
   const { register, handleSubmit, formState } = useForm<FormData>({ resolver });
 
+  console.log("Form State Errors: ", formState.errors);
+
   async function onSubmit(data: FormData) {
     console.log("Creating Report with: ", data);
 

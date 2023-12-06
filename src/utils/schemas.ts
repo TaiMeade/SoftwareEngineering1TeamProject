@@ -146,6 +146,6 @@ export const createReportSchema = z.object({
   reporterId: z.string().min(1),
   reportedId: z.string().min(1),
   reason: z.string().min(1),
-  reportedRecipeId: z.string().min(1).optional().nullable(), // .optional() allows it to be undefined
-  reportedCommentId: z.string().min(1).optional().nullable(), // .optional() allows it to be undefined
+  reportedRecipeId: z.string().optional().nullable(),
+  reportedCommentId: z.string().optional().nullable(),
 });
