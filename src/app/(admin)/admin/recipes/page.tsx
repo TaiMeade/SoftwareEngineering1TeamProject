@@ -15,7 +15,10 @@ const ReportedRecipesPage: NextPage<PageProps> = async () => {
   if (session.user.role !== "ADMIN") return redirect("/");
 
   const reportedRecipes = await prisma.report.findMany({
-    where: { reportedRecipe: { isNot: null } },
+    where: {
+      reportedRecipe: { isNot: null },
+      resolved: false,
+    },
     include: {
       reporter: { select: { name: true, username: true, image: true } },
       reportedUser: { select: { name: true, username: true, image: true } },
