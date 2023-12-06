@@ -70,6 +70,9 @@ model Recipe {
   savedBy User[] @relation("SavedRecipes")
   likedBy User[] @relation("LikedRecipes")
 
+  // * Reports on this recipe
+  Report Report[]
+
   @@index([authorId])
 }
 
@@ -90,6 +93,9 @@ model Comment {
   replies       Comment[] @relation("Replies")
   parentComment Comment[] @relation("Replies")
 
+  // * Reports on this comment
+  Report Report[]
+
   @@index([authorId])
   @@index([recipeId])
 }
@@ -108,14 +114,20 @@ model Report {
   reportedUserId String
   reportedUser   User   @relation("UserReports", fields: [reportedUserId], references: [id], onDelete: Cascade)
 
-  reportedRecipeId  String?
+  // * Optional Recipe or Comment being reported
+  reportedRecipeId String?
+  reportedRecipe   Recipe? @relation(fields: [reportedRecipeId], references: [id], onDelete: Cascade)
+
   reportedCommentId String?
+  reportedComment   Comment? @relation(fields: [reportedCommentId], references: [id], onDelete: Cascade)
 
   // * Resolved
   resolved Boolean @default(false)
 
   @@index([reporterId])
   @@index([reportedUserId])
+  @@index([reportedRecipeId])
+  @@index([reportedCommentId])
 }
 
 // * All Models Below Are Necessary for Next auth

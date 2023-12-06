@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 
 import { getAuth } from "~/server/session";
 
-import { Tag } from "@prisma/client";
 import { prisma } from "~/server/db";
 
 import Link from "next/link";

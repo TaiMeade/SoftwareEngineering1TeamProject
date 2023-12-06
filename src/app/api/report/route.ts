@@ -34,7 +34,13 @@ export async function POST(req: Request) {
         reason: data.reason,
         reportedUser: { connect: { id: data.reportedId } },
         reporter: { connect: { id: session.user.id } },
-        reportedRecipeId: data.reportedRecipeId,
+        // Optional Reported CommentId or RecipeId
+        ...(data.reportedCommentId && {
+          reportedComment: { connect: { id: data.reportedCommentId } },
+        }),
+        ...(data.reportedRecipeId && {
+          reportedRecipe: { connect: { id: data.reportedRecipeId } },
+        }),
       },
     });
 
