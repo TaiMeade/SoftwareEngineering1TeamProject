@@ -13,6 +13,9 @@ const ReportsPage: NextPage<PageProps> = async () => {
   if (session.user.role !== "ADMIN") return redirect("/");
 
   const reports = await prisma.report.findMany({
+    where: {
+      resolved: false,
+    },
     include: {
       reporter: { select: { name: true, username: true, image: true } },
       reportedUser: { select: { name: true, username: true, image: true } },

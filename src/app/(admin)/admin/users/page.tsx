@@ -18,6 +18,7 @@ const ReportedUsersPage: NextPage<PageProps> = async () => {
     where: {
       reportedComment: { is: null },
       reportedRecipe: { is: null },
+      resolved: false,
     },
     include: {
       reporter: { select: { name: true, username: true, image: true } },

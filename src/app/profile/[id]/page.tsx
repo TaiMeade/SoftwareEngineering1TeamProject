@@ -5,9 +5,11 @@ import { generateAuthorSEO } from "~/utils/seo";
 import { omitProfile } from "~/utils";
 
 import Image from "next/image";
+import { getAuth } from "~/server/session";
 
 import UserNotFound from "~/components/profile/UserNotFound";
 import RecipeCard from "~/components/recipe/RecipeCard";
+import ReportButton from "~/components/report/ReportButton";
 
 interface RecipesPageProps {
   params: { id: string };
@@ -21,6 +23,7 @@ const RECIPES_AMT = 25;
 // * Browse Random / Trending Recipes Page
 const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
   const id = params.id;
+  const session = await getAuth();
 
   if (!id || id.length < 1) {
     console.log("No ID");
@@ -52,6 +55,9 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
           height={128}
           className="h-32 w-32 rounded-full border border-slate-800 object-cover transition-all duration-300 ease-in-out hover:scale-110"
         />
+      )}
+      {session?.user?.id && (
+        <ReportButton reportedId={safeUser.id} reporterId={session?.user.id} />
       )}
       <h1 className="text-4xl font-bold">
         {safeUser.username ?? safeUser.name ?? safeUser.id}
