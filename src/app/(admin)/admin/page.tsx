@@ -5,8 +5,6 @@ import { prisma } from "~/server/db";
 
 import Image from "next/image";
 
-const NUM_USERS = 10;
-
 const AdminPage: NextPage = async () => {
   const session = await getAuth();
 
@@ -15,24 +13,10 @@ const AdminPage: NextPage = async () => {
     return redirect("/login");
   }
 
-  const usersWithReports = await prisma.user.findMany({
-    take: NUM_USERS,
-    where: { reportsReceived: { some: { resolved: false } } },
-    select: {
-      id: true,
-      username: true,
-      name: true,
-      image: true,
-      bio: true,
-      reportsReceived: {
-        include: {
-          reporter: { select: { username: true } },
-          reportedUser: { select: { username: true } },
-        },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const NUM_USERS = await prisma.user.count();
+  const NUM_RECIPES = await prisma.recipe.count();
+  const NUM_COMMENTS = await prisma.comment.count();
+  const NUM_REPORTS = await prisma.report.count();
 
   return (
     <div>
@@ -53,42 +37,11 @@ const AdminPage: NextPage = async () => {
         </h2>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {usersWithReports.map((user) => (
-          <div
-            key={user.id}
-            className="flex flex-row items-center gap-4 rounded-lg bg-gray-100 p-4"
-          >
-            {user.image && (
-              <Image
-                src={user.image}
-                alt="User Profile Picture"
-                width={64}
-                height={64}
-                className="h-16 w-16 rounded-full object-cover transition-all duration-300 ease-in-out hover:scale-110"
-              />
-            )}
-            <div className="flex flex-col gap-1">
-              <h3 className="text-xl font-medium">{user.username}</h3>
-              <p className="text-gray-500">{user.bio}</p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="text-lg font-medium">Reports</h3>
-              {user.reportsReceived.map((report) => (
-                <div
-                  key={report.id}
-                  className="flex flex-col gap-1 rounded-lg bg-gray-200 p-2"
-                >
-                  <p className="text-gray-500">
-                    {report.reporter.username} reported{" "}
-                    {report.reportedUser.username}
-                  </p>
-                  <p className="text-gray-500">{report.reason}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-col gap-6 py-12">
+        <h2 className="text-2xl font-medium">Total Users: {NUM_USERS}</h2>
+        <h2 className="text-2xl font-medium">Total Recipes: {NUM_RECIPES}</h2>
+        <h2 className="text-2xl font-medium">Total Comments: {NUM_COMMENTS}</h2>
+        <h2 className="text-2xl font-medium">Total Reports: {NUM_REPORTS}</h2>
       </div>
       <div className="w-full pb-8" />
     </div>
