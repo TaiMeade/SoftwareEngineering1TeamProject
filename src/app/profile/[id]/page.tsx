@@ -53,7 +53,7 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
           alt="User Profile Picture"
           width={128}
           height={128}
-          className="h-32 w-32 rounded-full border border-slate-800 object-cover transition-all duration-300 ease-in-out hover:scale-110"
+          className="h-32 w-32 rounded-full border border-slate-800 object-cover transition-all duration-300 ease-in-out"
         />
       )}
       {session?.user?.id && (
