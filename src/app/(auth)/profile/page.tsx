@@ -42,16 +42,20 @@ const UserProfilePage: NextPage = async () => {
           {" " + (session.user.username ?? session.user.name ?? "User")}.
         </h2>
       </div>
+      {session.user.role == "ADMIN" && (
+        <h2>
+          <Link href="/admin/">Admin Profile</Link>
+        </h2>
+      )}
       <h2>{session.user.bio ?? " "}</h2>
 
       <Link href="/recipes/create" className="btn btn-primary">
-            Create Recipe
+        Create Recipe
       </Link>
 
       <h1 className="text-2xl font-bold">Previously Created Recipes </h1>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2">
-
         {recipes?.map((recipe) => (
           <RecipeCard recipe={recipe} key={recipe.id} />
         ))}
