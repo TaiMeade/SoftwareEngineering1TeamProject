@@ -1,3 +1,5 @@
+Delete/Edit Comments
+
 Filter Non-Characters:
   Username
   Bio
@@ -8,6 +10,7 @@ Filter Bad Words:
   Recipe Description
   Username
   Ingredient Names
+
 
 Not Important:
   check that they are valid ingredient units?
