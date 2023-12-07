@@ -63,8 +63,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         </div>
 
         <div className="card-actions min-h-[1.3rem]">
-          <div className="flex flex-row items-end justify-end space-x-1 collapse">
-            {tags?.map((tag) => (
+          <div className="flex flex-row items-end justify-end space-x-1">
+            {tags?.slice(0, 4).map((tag) => (
               <Tag key={tag} tag={tag} />
             ))}
           </div>
