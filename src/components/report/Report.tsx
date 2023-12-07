@@ -1,10 +1,10 @@
-import type { Report } from "@prisma/client";
+import type { Report as IReport } from "@prisma/client";
 
 import Image from "next/image";
 import ResolveReport from "./ResolveReport";
 
 interface ReportProps {
-  report: Report & {
+  report: IReport & {
     reporter: { image: string | null; username: string | null };
     reportedUser: { image: string | null; username: string | null };
   };

@@ -98,8 +98,8 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
           </Link>
         </div>
 
-        <div className="flex flex-row items-center justify-center space-x-3 auto flex-wrap">
-          {tags?.map((tag: string, index: number) => (
+        <div className="flex flex-row flex-wrap items-center justify-center space-x-3">
+          {tags?.slice(0, 5).map((tag: string, index: number) => (
             <div
               key={index}
               className="rounded-full bg-blue-100 px-[.75rem] py-1 text-base text-blue-600"
