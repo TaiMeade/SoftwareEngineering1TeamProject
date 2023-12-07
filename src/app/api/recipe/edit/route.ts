@@ -26,6 +26,19 @@ export async function POST(req: Request) {
     });
   }
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { canPost: true },
+  });
+
+  if (!user?.canPost) {
+    console.error("Unauthorized request to edit recipe");
+    return NextResponse.json(null, {
+      status: 401,
+      statusText: "Unauthorized",
+    });
+  }
+
   const data = parsed.data;
 
   const recipeExists = await prisma.recipe.findUnique({
