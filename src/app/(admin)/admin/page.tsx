@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getAuth } from "~/server/session";
 import { prisma } from "~/server/db";
 
+import Link from "next/link";
+
 import Image from "next/image";
 
 const AdminPage: NextPage = async () => {
@@ -34,6 +36,11 @@ const AdminPage: NextPage = async () => {
         <h2 className="text-3xl font-medium">
           Welcome,{" "}
           {" " + (session.user.username ?? session.user.name ?? "User")}.
+        </h2>
+      </div>
+      <div>
+        <h2>
+          <Link href="/profile/">Enter Non-Admin Profile</Link>
         </h2>
       </div>
 

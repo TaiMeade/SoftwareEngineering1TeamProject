@@ -44,7 +44,7 @@ const UserProfilePage: NextPage = async () => {
       </div>
       {session.user.role == "ADMIN" && (
         <h2>
-          <Link href="/admin/">Admin Profile</Link>
+          <Link href="/admin/">Enter Admin Profile</Link>
         </h2>
       )}
       <h2>{session.user.bio ?? " "}</h2>
