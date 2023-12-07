@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 import { createCommentSchema } from "~/utils/schemas";
+import Filter from "bad-words";
 
 export async function POST(req: Request) {
   console.log("Creating comment");
@@ -38,11 +39,13 @@ export async function POST(req: Request) {
   }
 
   const data = parsed.data;
+  const filter = new Filter();
+  const cleanText = filter.clean(data.text);
 
   try {
     const comment = await prisma.comment.create({
       data: {
-        text: data.text,
+        text: cleanText,
         author: { connect: { id: session.user.id } },
         recipe: { connect: { id: data.recipeId } },
         // If the comment is a reply, we need to connect it to the parent comment
