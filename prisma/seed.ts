@@ -107,7 +107,7 @@ const main = async () => {
   console.log("✨ Start");
 
   // * Delete all recipes
-  await prisma.recipe.deleteMany();
+  // await prisma.recipe.deleteMany();
 
   // * Get first admin user
   const admin = await getFirstAdminUser();
@@ -117,11 +117,7 @@ const main = async () => {
 
   for (let i = 0; i < NUM_RECIPES_TO_CREATE; i++) {
     const recipe = createRandomRecipe(admin.id);
-    transactions.push(
-      prisma.recipe.create({
-        data: recipe,
-      }),
-    );
+    transactions.push(prisma.recipe.create({ data: recipe }));
   }
 
   await prisma.$transaction(transactions);
