@@ -156,3 +156,10 @@ export const createReportSchema = z.object({
 export const resolveReportSchema = z.object({
   reportId: z.string().min(1),
 });
+
+/**
+ * Ban User Schema
+ */
+export const banUserSchema = z.object({
+  userId: z.string().min(1),
+});

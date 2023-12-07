@@ -10,6 +10,7 @@ import { getAuth } from "~/server/session";
 import UserNotFound from "~/components/profile/UserNotFound";
 import RecipeCard from "~/components/recipe/RecipeCard";
 import ReportButton from "~/components/report/ReportButton";
+import BanButton from "~/components/admin/BanButton";
 
 interface RecipesPageProps {
   params: { id: string };
@@ -59,9 +60,11 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
       {session?.user?.id && (
         <ReportButton reportedId={safeUser.id} reporterId={session?.user.id} />
       )}
+      {session?.user?.role === "ADMIN" && (
+        <BanButton userId={safeUser.id} canPost={safeUser.canPost} />
+      )}
       <h1 className="text-4xl font-bold">
         {safeUser.username ?? safeUser.name ?? safeUser.id}
-        {/*&lsquo;s Page*/}
       </h1>
       <h2>{safeUser.bio ?? " "}</h2>
 
@@ -70,20 +73,11 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
           <RecipeCard recipe={recipe} key={recipe.id} />
         ))}
       </div>
-      {/*
-      <pre className="max-w-full overflow-hidden">
-        {JSON.stringify(safeUser, null, 2)}
-      </pre>
-  */}
     </div>
   );
 };
 
 export default PublicProfilePage;
-
-// export const metadata: Metadata = {
-//   title: "iCook | User Page",
-// };
 
 export const generateMetadata = async ({
   params,
