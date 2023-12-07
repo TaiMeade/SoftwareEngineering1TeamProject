@@ -98,7 +98,7 @@ const RecipePage: React.FC<RecipePageProps> = async ({ recipe, likes }) => {
           </Link>
         </div>
 
-        <div className="flex flex-row items-center justify-center space-x-3">
+        <div className="flex flex-row items-center justify-center space-x-3 auto flex-wrap">
           {tags?.map((tag: string, index: number) => (
             <div
               key={index}
