@@ -57,12 +57,17 @@ const PublicProfilePage: NextPage<RecipesPageProps> = async ({ params }) => {
           className="h-32 w-32 rounded-full border border-slate-800 object-cover transition-all duration-300 ease-in-out"
         />
       )}
-      {session?.user?.id && (
-        <ReportButton reportedId={safeUser.id} reporterId={session?.user.id} />
-      )}
-      {session?.user?.role === "ADMIN" && (
-        <BanButton userId={safeUser.id} canPost={safeUser.canPost} />
-      )}
+      <div className="flex flex-row items-center gap-4">
+        {session?.user?.id && (
+          <ReportButton
+            reportedId={safeUser.id}
+            reporterId={session?.user.id}
+          />
+        )}
+        {session?.user?.role === "ADMIN" && (
+          <BanButton userId={safeUser.id} canPost={safeUser.canPost} />
+        )}
+      </div>
       <h1 className="text-4xl font-bold">
         {safeUser.username ?? safeUser.name ?? safeUser.id}
       </h1>

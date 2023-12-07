@@ -29,7 +29,7 @@ const BanButton: React.FC<BanButtonProps> = ({ userId, canPost }) => {
 
     const data = (await res.json()) as boolean;
 
-    if (data) toast.success("User has been unbanned!");
+    if (!data) toast.success("User has been unbanned!");
     else
       toast.warning("User has been banned! They can no longer post recipes.");
 
@@ -41,7 +41,7 @@ const BanButton: React.FC<BanButtonProps> = ({ userId, canPost }) => {
     <button
       onClick={() => void onSubmit()}
       disabled={isLoading}
-      className="btn btn-accent flex flex-row items-center justify-center gap-2 text-lg disabled:cursor-not-allowed disabled:opacity-50"
+      className="btn btn-secondary flex flex-row items-center justify-center gap-2 text-lg disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isLoading ? (
         "Loading..."

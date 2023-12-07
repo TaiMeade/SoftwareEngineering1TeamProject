@@ -42,14 +42,14 @@ export async function POST(req: Request) {
   const data = parsed.data;
 
   try {
-    const isBanned = await prisma.user.findUnique({
+    const initialUser = await prisma.user.findUnique({
       where: { id: data.userId },
       select: { canPost: true },
     });
 
-    const canPost = await prisma.user.update({
+    const { canPost } = await prisma.user.update({
       where: { id: data.userId },
-      data: { canPost: !isBanned },
+      data: { canPost: !initialUser?.canPost },
     });
 
     console.log("Ban User:", canPost);
