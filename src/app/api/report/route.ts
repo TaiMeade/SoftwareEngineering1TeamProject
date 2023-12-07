@@ -28,6 +28,16 @@ export async function POST(req: Request) {
 
   const data = parsed.data;
 
+  // Check if user is reporting themselves
+  if (data.reportedId === session.user.id) {
+    console.error("User is reporting themselves");
+
+    return NextResponse.json(null, {
+      status: 400,
+      statusText: "Bad Request",
+    });
+  }
+
   try {
     const report = await prisma.report.create({
       data: {
