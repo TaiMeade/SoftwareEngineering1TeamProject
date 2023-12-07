@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 import { createRecipeSchema } from "~/utils/schemas";
+import Filter from "bad-words";
 
 export async function POST(req: Request) {
   console.log("Creating recipe");
@@ -38,13 +39,17 @@ export async function POST(req: Request) {
   }
 
   const data = parsed.data;
+  const filter = new Filter();
+
+  const recipeTitle = filter.clean(data.title);
+  const newDescription = filter.clean(data.description);
 
   try {
     // console.log("data.ingredients ", data.ingredients);
     const recipe = await prisma.recipe.create({
       data: {
-        title: data.title,
-        description: data.description,
+        title: recipeTitle,
+        description: newDescription,
         authorId: session.user.id,
         image: data.image,
         createdAt: new Date(),
