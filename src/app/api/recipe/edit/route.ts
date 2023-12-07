@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "~/server/db";
 import { getAuth } from "~/server/session";
 import { editRecipeSchema } from "~/utils/schemas";
+import Filter from "bad-words";
 
 export async function POST(req: Request) {
   console.log("Editing recipe");
@@ -60,14 +61,17 @@ export async function POST(req: Request) {
       statusText: "Unauthorized",
     });
   }
-
+  const filter = new Filter();
+  const recipeTitle = filter.clean(data.title);
+  const newDescription = filter.clean(data.description);
   try {
     // console.log("data.ingredients ", data.ingredients);
+
     const recipe = await prisma.recipe.update({
       where: { id: data.id },
       data: {
-        title: data.title,
-        description: data.description,
+        title: recipeTitle,
+        description: newDescription,
         authorId: session.user.id,
         image: data.image,
         createdAt: new Date(),
