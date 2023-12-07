@@ -149,9 +149,9 @@ const NewComment: React.FC<NewCommentProps> = ({ recipeId, commentId }) => {
                 </button>
               </div>
             </form>
-            <pre>
+            {/* <pre>
               <code>Is submitting: {isSubmitting ? "true" : "false"}</code>
-            </pre>
+            </pre> */}
           </motion.div>
         )}
       </AnimatePresence>

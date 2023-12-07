@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getAuth } from "~/server/session";
 import { prisma } from "~/server/db";
 
+import Link from "next/link";
+
 import Image from "next/image";
 
 import RecipeCard from "~/components/recipe/RecipeCard";
@@ -42,25 +44,13 @@ const UserProfilePage: NextPage = async () => {
       </div>
       <h2>{session.user.bio ?? " "}</h2>
 
+      <Link href="/recipes/create" className="btn btn-primary">
+            Create Recipe
+      </Link>
+
       <h1 className="text-2xl font-bold">Previously Created Recipes </h1>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2">
-        <RecipeCard
-          recipe={{
-            id: "create",
-            author: { name: session?.user?.name ?? "User" },
-            authorId: session?.user?.id ?? "",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            title: "Create a new recipe!",
-            description: "Create a new recipe!",
-            directions: [],
-            image: "/placeholder.png",
-            ingredients: [],
-            tags: [],
-            featured: true,
-          }}
-        />
 
         {recipes?.map((recipe) => (
           <RecipeCard recipe={recipe} key={recipe.id} />
@@ -78,3 +68,24 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
+
+//saved from old Create Recipe Button
+
+/*
+      <RecipeCard
+          recipe={{
+            id: "create",
+            author: { name: session?.user?.name ?? "User" },
+            authorId: session?.user?.id ?? "",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            title: "Create a new recipe!",
+            description: "Create a new recipe!",
+            directions: [],
+            image: "/placeholder.png",
+            ingredients: [],
+            tags: [],
+            featured: true,
+          }}
+        />
+*/
