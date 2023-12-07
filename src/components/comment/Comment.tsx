@@ -5,6 +5,7 @@ import UserImg from "./UserImg";
 
 import NewComment from "./NewComment";
 import ReportButton from "../report/ReportButton";
+import DeleteComment from "./DeleteComment";
 
 interface CommentProps {
   recipeId: string;
@@ -37,15 +38,20 @@ const Comment: React.FC<CommentProps> = async ({ recipeId, comment }) => {
               </span>
             </div>
           </div>
-
-          {/* Include ReportButton component for each comment */}
-          {session.user.id !== comment.author.id && (
-            <ReportButton
-              reportedId={comment.author.id}
-              reporterId={session.user.id}
-              reportedCommentId={comment.id}
-            />
-          )}
+          <div className="flex w-full flex-1 flex-row items-center justify-end space-x-3">
+            {/* Include ReportButton and DeleteButton component for each comment */}
+            {(session.user.role === "ADMIN" ||
+              session.user.id === comment.author.id) && (
+              <DeleteComment comment={comment} />
+            )}
+            {session.user.id !== comment.author.id && (
+              <ReportButton
+                reportedId={comment.authorId}
+                reporterId={session.user.id}
+                reportedRecipeId={comment.id}
+              />
+            )}
+          </div>
         </div>
       </div>
       <p className="!my-0 pt-1 text-gray-700">{comment.text}</p>
