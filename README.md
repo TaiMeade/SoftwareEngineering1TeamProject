@@ -36,11 +36,11 @@ If you want this to be run how it will be run on a server, and without the rando
 
 ## Authors and acknowledgment
 
-Xander Waugh
-Tai Meade
-Cullen Danilowicz
-Kaleb Cantrell
-Fletcher Mutert
+* Xander Waugh
+* Tai Meade
+* Cullen Danilowicz
+* Kaleb Cantrell
+* Fletcher Mutert
 
 ## Project status
 
